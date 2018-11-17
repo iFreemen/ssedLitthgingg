@@ -16,17 +16,17 @@ import com.heqichao.springBootDemo.base.entity.User;
  */
 public interface UserMapper {
 	
-	@Select("SELECT id,parent_id,account,company,contact,phone,fax,email,site,remark,competence"
-			+ " FROM user "
+	@Select("SELECT id,parent_uid,account,company,contact,phone,fax,email,site,remark,competence"
+			+ " FROM users "
 			+ "where ACCOUNT = #{account}  "
 			+ "and PASSWORD = #{password} "
-			+ "and STATUS = 'Y' ")
+			+ "and valid = 'N' ")
 	public User getUserInfo(@Param("account") String account,@Param("password") String password);
 	
-	@Select("<script>SELECT id,parent_id,account,company,contact,phone,fax,email,site,remark,competence"
-			+ " FROM user "
-			+ "where STATUS = 'Y'  "
-			+ "<if test=\"competence == 3 \"> and id = #{id} or parent_id = #{id} </if>"
+	@Select("<script>SELECT id,parent_uid,account,company,contact,phone,fax,email,site,remark,competence"
+			+ " FROM users "
+			+ "where valid = 'N'  "
+			+ "<if test=\"competence == 3 \"> and id = #{id} or parent_uid = #{id} </if>"
 			+ "<if test =\"sAccount !=null  and sAccount!='' \"> and account like CONCAT(CONCAT('%',#{sAccount}),'%')  </if>"
 			+ "<if test =\"sCompany !=null  and sCompany!='' \"> and company like CONCAT(CONCAT('%',#{sCompany}),'%')  </if>"
 			+ "<if test =\"sCompetence !=null  and sCompetence!=0 \"> and competence = #{sCompetence}  </if>"
@@ -37,26 +37,26 @@ public interface UserMapper {
 							@Param("sCompany")String sCompany,
 							@Param("sCompetence")Integer sCompetence);
 	
-	@Select("select id,company from user where competence = 3 and STATUS = 'Y'")
+	@Select("select id,company from users where competence = 3 and valid = 'N'")
 	public List<User> getCompanySelectList();
 	
-	@Select("select count(1)>0 from user where (ACCOUNT = #{account} or company = #{company}) and STATUS = 'Y' ")
+	@Select("select count(1)>0 from users where (ACCOUNT = #{account} or company = #{company}) and valid = 'N' ")
 	public boolean duplicatedAccount(@Param("account")String account,@Param("company")String company);
 	
-	@Select("select id from user where ACCOUNT = #{account} and password = #{password} and STATUS = 'Y' limit 1")
+	@Select("select id from users where ACCOUNT = #{account} and password = #{password} and valid = 'N' limit 1")
 	public Integer checkPassword(@Param("account") String account,@Param("password") String password);
 	
-	@Insert("insert into user (parent_id,account,password,company,contact,phone,fax,email,site,remark,competence,STATUS,create_time,update_uid)"
-			+ " values(#{parentId},#{account},#{password},#{company},#{contact},#{phone},#{fax},#{email},#{site},#{remark},#{competence}, 'Y', sysdate(), #{upadteUID}) ")
+	@Insert("insert into users (parent_uid,account,password,company,contact,phone,fax,email,site,remark,competence,valid,add_date,udp_uid)"
+			+ " values(#{parentId},#{account},#{password},#{company},#{contact},#{phone},#{fax},#{email},#{site},#{remark},#{competence}, 'N', sysdate(), #{upadteUID}) ")
 	public int insertUser(User user);
 	
-	@Update("update user set password=#{password}, update_time = sysdate(), update_uid = #{udid} where id=#{id} and STATUS = 'Y' ")
+	@Update("update users set password=#{password}, udp_date = sysdate(), udp_uid = #{udid} where id=#{id} and valid = 'N' ")
 	public int updateUserPassword(@Param("id")Integer uid,@Param("udid")Integer udid,@Param("password") String password);
 	
-	@Update("update user set company=#{company}, contact=#{contact}, phone=#{phone}, fax=#{fax}, email=#{email}, site=#{site}, remark=#{remark}, update_time = sysdate(), update_uid = #{id} where id=#{id} and STATUS = 'Y' ")
+	@Update("update users set company=#{company}, contact=#{contact}, phone=#{phone}, fax=#{fax}, email=#{email}, site=#{site}, remark=#{remark}, udp_date = sysdate(), udp_uid = #{id} where id=#{id} and valid = 'N' ")
 	public int updateUserInfo(User user);
 	
-	@Update("update user set  update_time = sysdate(), update_uid = #{udid}, STATUS = 'N' where id=#{id} and STATUS = 'Y' ")
+	@Update("update users set  udp_date = sysdate(), udp_uid = #{udid}, valid = 'N' where id=#{id} and valid = 'N' ")
 	public int delUserById(@Param("id")Integer uid,@Param("udid")Integer udid);
 
 }
