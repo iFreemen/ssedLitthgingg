@@ -16,31 +16,31 @@ import com.heqichao.springBootDemo.base.entity.Equipment;
  */
 public interface EquipmentMapper {
 	
-	@Select("SELECT id,eid,type,amount,range,alarms,IFNULL((select max(ligntningCount) from lightning_log where devEUI = equipment.eid and lightning_log.STATUS = '1111'),0) as total,e_status,online_time,remark,own_id"
-			+ " FROM equipment where id = #{id}  and STATUS = 'Y' ")
+	@Select("SELECT id,dev_id,type,amount,range,alarms,IFNULL((select max(ligntningCount) from lightning_log where devEUI = equipment.eid and lightning_log.valid = '1111'),0) as total,e_status,online_time,remark,uid"
+			+ " FROM equipments where id = #{id}  and valid = 'N' ")
 	public Equipment getEquipmentById(@Param("id") Integer id);
 	
-	@Select("SELECT eid FROM equipment where own_id = #{uid}  and STATUS = 'Y' ")
+	@Select("SELECT dev_id FROM equipments where uid = #{uid}  and valid = 'N' ")
 	public List<String> getUserEquipmentIdList(@Param("uid") Integer uid);
 	
-	@Select("SELECT e.eid FROM equipment e,user u where e.own_id = u.parent_id  and u.id=#{uid} and e.STATUS = 'Y' ")
+	@Select("SELECT e.dev_id FROM equipments e,users u where e.uid = u.uid  and u.id=#{uid} and e.valid = 'N' ")
 	public List<String> getUserEquipmentIdListByParent(@Param("uid") Integer uid);
 	
-	@Select("SELECT eid FROM equipment where e_status = #{status}  and STATUS = 'Y' ")
+	@Select("SELECT dev_id FROM equipments where online = #{status}  and valid = 'N' ")
 	public List<String> getEquipmentByStatus(@Param("status") String  status);
 	
-	@Select("SELECT eid FROM equipment where STATUS = 'Y' ")
+	@Select("SELECT dev_id FROM equipments where valid = 'N' ")
 	public List<String> getEquipmentIdListAll();
 	
 	@Select("<script>SELECT id,eid,e_type,IFNULL(amount,0) as amount,e_range,"
-			+ "IFNULL((select max(ligntningCount) from lightning_log where devEUI = equipment.eid and lightning_log.STATUS = '1111'),0) as total,"
-			+ "IFNULL(alarms,0) as alarms,e_status,online_time,remark,own_id,tags "
-			+ " FROM equipment where STATUS = 'Y'  "
-			+ "<if test=\"competence == 3 \"> and own_id = #{id}  </if>"
-			+ "<if test=\"competence == 4 \"> and own_id = #{parentId}  </if>"
+			+ "IFNULL((select max(ligntningCount) from lightning_log where devEUI = equipments.eid and lightning_log.valid = '1111'),0) as total,"
+			+ "IFNULL(alarms,0) as alarms,e_status,online_time,remark,uid,tags "
+			+ " FROM equipments where valid = 'N'  "
+			+ "<if test=\"competence == 3 \"> and uid = #{id}  </if>"
+			+ "<if test=\"competence == 4 \"> and uid = #{parentId}  </if>"
 			+ "<if test =\"sEid !=null  and sEid!='' \"> and eid like CONCAT(CONCAT('%',#{sEid}),'%')  </if>"
 			+ "<if test =\"sType !=null  and sType!='' \"> and e_type like CONCAT(CONCAT('%',#{sType}),'%')  </if>"
-			+ "<if test =\"sStatus !=null  and sStatus!='' \"> and e_status = #{sStatus}  </if>"
+			+ "<if test =\"sStatus !=null  and sStatus!='' \"> and e_valid = #{sStatus}  </if>"
 			+ " </script>")
 	public List<Equipment> getEquipments(
 			@Param("competence")Integer competence,
@@ -50,24 +50,24 @@ public interface EquipmentMapper {
 			@Param("sType")String sType,
 			@Param("sStatus")String sStatus);
 	
-	@Insert("insert into equipment (eid,e_type,amount,e_range,alarms,e_status,online_time,remark,own_id,status,update_uid)"
-			+ " values(#{eid},#{eType},#{amount},#{eRange},#{alarms},#{eStatus},sysdate(),#{remark},#{ownId},'Y',#{updateUid}) ")
+	@Insert("insert into equipments (eid,e_type,amount,e_range,alarms,e_status,online_time,remark,uid,status,update_uid)"
+			+ " values(#{eid},#{eType},#{amount},#{eRange},#{alarms},#{eStatus},sysdate(),#{remark},#{ownId},'N',#{updateUid}) ")
 	public int insertEquipment(Equipment equ);
 	
 
 	
-	@Update("update equipment set  update_time = sysdate(), update_uid = #{udid}, STATUS = 'N' where id=#{id} and STATUS = 'Y' ")
+	@Update("update equipments set  update_time = sysdate(), update_uid = #{udid}, valid = 'N' where id=#{id} and valid = 'N' ")
 	public int delEquById(@Param("id")Integer eid,@Param("udid")Integer udid);
 	
-	@Update("update equipment set  e_status = #{status} where eid=#{eid} and STATUS = 'Y' ")
+	@Update("update equipments set  e_valid = #{status} where eid=#{eid} and valid = 'N' ")
 	public int setEquStatus(@Param("eid")String eid,@Param("status")String status);
 	
-	@Select("select count(1)>0 from equipment where eid = #{eid} and STATUS = 'Y' ")
+	@Select("select count(1)>0 from equipments where eid = #{eid} and valid = 'N' ")
 	public boolean duplicatedEid(@Param("eid")String eid);
 
-	@Update("update equipment set  e_range = #{range} where eid=#{eid} and STATUS = 'Y'")
+	@Update("update equipments set  e_range = #{range} where eid=#{eid} and valid = 'N'")
 	 int updateRange(@Param("eid")String eid,@Param("range")Integer range);
 
-	@Select("select e_range from equipment where eid = #{eid} and STATUS = 'Y'")
+	@Select("select e_range from equipments where eid = #{eid} and valid = 'N'")
 	Integer queryRange(@Param("eid")String eid);
 }
