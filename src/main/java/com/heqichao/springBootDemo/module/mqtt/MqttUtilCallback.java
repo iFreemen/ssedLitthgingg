@@ -83,8 +83,8 @@ public class MqttUtilCallback implements MqttCallback {
             logger.error( devId+":"+LightningLogService.OFF_LINE+" 设备下线！！！");
             LightningLog log =new LightningLog();
             log.setDevEUI(devId);
-            log.setCreateTime(date);
-            log.setUpdateTime(date);
+           // log.setCreateTime(date);
+           // log.setUpdateTime(date);
             log.setStatus(LightningLogService.OFF_LINE);
             mqttUtilCallback.lightningLogService.save(log);
 
@@ -93,8 +93,8 @@ public class MqttUtilCallback implements MqttCallback {
         }else{
             LightningLog log =MqttUtil.saveTransData(mes);
             if(log!=null){
-                log.setCreateTime(date);
-                log.setUpdateTime(date);
+            //    log.setCreateTime(date);
+            //    log.setUpdateTime(date);
                 mqttUtilCallback.lightningLogService.save(log);
                 WarningLogService warningLogService=ApplicationContextUtil.getBean(WarningLogService.class);
                 logger.error( devId+":"+log.getStatus()+"  ！！！");
@@ -109,8 +109,8 @@ public class MqttUtilCallback implements MqttCallback {
                         //故障提醒
                         WarningLog warningLog=new WarningLog();
                         warningLog.setDevEUI(devId);
-                        warningLog.setCreateTime(date);
-                        warningLog.setUpdateTime(date);
+                    //    warningLog.setCreateTime(date);
+                    //    warningLog.setUpdateTime(date);
                         warningLog.setStatus(WarningLogService.FAULT);
                         warningLog.setData(log.getData());
                   /*  warningLog.setDataLen(log.getDataLen());
