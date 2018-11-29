@@ -40,12 +40,12 @@ import java.util.List;
  *
  */
 @Component
-public class MqttUtilCallback implements MqttCallback {
+public class MqttUtilCallbackBK implements MqttCallback {
 
 
-    public static MqttUtilCallback mqttUtilCallback;
+    public static MqttUtilCallbackBK mqttUtilCallback;
 
-    public MqttUtilCallback(){}
+    public MqttUtilCallbackBK(){}
 
     @PostConstruct
     public void init() {
@@ -81,9 +81,10 @@ public class MqttUtilCallback implements MqttCallback {
         logger.info("接收消息内容 : " + mes);
         if(LightningLogService.OFF_LINE.equalsIgnoreCase(mes)) {
             logger.error( devId+":"+LightningLogService.OFF_LINE+" 设备下线！！！");
-            //下线继续沿用原逻辑？？
             LightningLog log =new LightningLog();
             log.setDevEUI(devId);
+           // log.setCreateTime(date);
+           // log.setUpdateTime(date);
             log.setStatus(LightningLogService.OFF_LINE);
             mqttUtilCallback.lightningLogService.save(log);
 
@@ -92,7 +93,9 @@ public class MqttUtilCallback implements MqttCallback {
         }else{
             LightningLog log =MqttUtil.saveTransData(mes);
             if(log!=null){
-               // mqttUtilCallback.lightningLogService.save(log);
+            //    log.setCreateTime(date);
+            //    log.setUpdateTime(date);
+                mqttUtilCallback.lightningLogService.save(log);
                 WarningLogService warningLogService=ApplicationContextUtil.getBean(WarningLogService.class);
                 logger.error( devId+":"+log.getStatus()+"  ！！！");
                 if(LightningLogService.HEART_BEAT_ERROR.equals(log.getStatus())){
@@ -106,9 +109,18 @@ public class MqttUtilCallback implements MqttCallback {
                         //故障提醒
                         WarningLog warningLog=new WarningLog();
                         warningLog.setDevEUI(devId);
+                    //    warningLog.setCreateTime(date);
+                    //    warningLog.setUpdateTime(date);
                         warningLog.setStatus(WarningLogService.FAULT);
                         warningLog.setData(log.getData());
-
+                  /*  warningLog.setDataLen(log.getDataLen());
+                    warningLog.setDevicePath(log.getDevicePath());
+                    warningLog.setfCnt(log.getfCnt());
+                    warningLog.setfPort(log.getfPort());
+                    warningLog.setFunctionCode(log.getFunctionCode());
+                    warningLog.setGatewayCount(log.getGatewayCount());
+                    warningLog.setLoRaSNR(log.getLoRaSNR());
+                    warningLog.setRssi(log.getRssi());*/
                         warningLog.setTime(log.getTime());
                         warningLogService.save(warningLog);
                     }

@@ -156,13 +156,21 @@ public class MqttUtil {
         }
     }
 
+    /**
+     * 根据模板转换信息
+     * @param mes
+     */
+    public static void saveModelValue(String devId,String mes){
+        JSONObject jsonObject = JSON.parseObject(mes);
+    }
 
     public static LightningLog saveTransData(String mes){
 
         EquipmentService equipmentService=  ApplicationContextUtil.getBean(EquipmentService.class);
         LightningLog log =new LightningLog();
         JSONObject jsonObject = JSON.parseObject(mes);
-        String devEUI=jsonObject.getString("devEUI"); //设备id
+        //设备id
+        String devEUI=jsonObject.getString("devEUI");
 
         double range =DEFAULE_RANGE;
         Integer ra= equipmentService.queryRange(devEUI);
@@ -267,21 +275,7 @@ public class MqttUtil {
         }
 
         return null;
-
     }
 
-    public static void main(String[] args) {
-        String a ="000186A0";
-        double l =(double)Long.parseLong(a,16)/1000;
-        System.out.println(l);
-       /* NumberFormat nbf= NumberFormat.getInstance();
-        nbf.setMinimumFractionDigits(1);
-        System.out.println(nbf.format(l/1000*100));
 
-        double bb =1363;
-        System.out.println(bb/1000);
-
-        long cc =1363;
-        System.out.println(cc/1000);*/
-    }
 }

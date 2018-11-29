@@ -19,7 +19,7 @@ File: Topbar,Left-sidebar,Right-sidebar
 .topbar .topbar-left {
   background: #33b86c;
   float: left;
-  height: 70px;
+  /* height: 70px; */
   position: relative;
   width: 240px;
   z-index: 1;

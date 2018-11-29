@@ -22,8 +22,8 @@ public enum AttrEnum implements AttrAnalyze{
                 result=DATA_ERROR;
             }else{
                 char[] srcContext = context.toCharArray();
-                String data = MathUtil.convertTwoBytesToUnSignedInt(srcContext[0]+"",srcContext[1]+"");
-                result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumber_format(),data);
+                String data = MathUtil.convertTwoBytesToUnSignedInt(srcContext[0]+srcContext[1]+"",srcContext[2]+srcContext[3]+"");
+                result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
             }
             return result;
         }
@@ -37,14 +37,14 @@ public enum AttrEnum implements AttrAnalyze{
                 result=DATA_ERROR;
             }else{
                 char[] srcContext = context.toCharArray();
-                String data=MathUtil.convertTwoBytesToSignedInt(srcContext[0]+"",srcContext[1]+"");
-                result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumber_format(),data);
+                String data=MathUtil.convertTwoBytesToSignedInt(srcContext[0]+srcContext[1]+"",srcContext[2]+srcContext[3]+"");
+                result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
             }
             return result;
         }
     },
 
-    INT_TYPE__FOUR_NOSIGNED_ABCD("INT_TYPE","数值型","FOUR_NOSIGNED_ABCD","4字节无符号整数(AB CD)",4){
+    INT_TYPE_FOUR_NOSIGNED_ABCD("INT_TYPE","数值型","FOUR_NOSIGNED_ABCD","4字节无符号整数(AB CD)",4){
         @Override
         public String execute(ModelAttr modelAttr, String context) {
             String result="";
@@ -52,13 +52,13 @@ public enum AttrEnum implements AttrAnalyze{
                 result=DATA_ERROR;
             }else{
                 char[] srcContext = context.toCharArray();
-                String data=MathUtil.convertFourBytesToUnSignedInt(srcContext[0]+"",srcContext[1]+"",srcContext[2]+"",srcContext[3]+"");
-                result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumber_format(),data);
+                String data=MathUtil.convertFourBytesToUnSignedInt(srcContext[0]+srcContext[1]+"",srcContext[2]+srcContext[3]+"",srcContext[4]+srcContext[5]+"",srcContext[6]+srcContext[7]+"");
+                result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
             }
             return result;
         }
     },
-    INT_TYPE__FOUR_NOSIGNED_CDAB("INT_TYPE","数值型","FOUR_NOSIGNED_CDAB","4字节无符号整数(CD AB)",4){
+    INT_TYPE_FOUR_NOSIGNED_CDAB("INT_TYPE","数值型","FOUR_NOSIGNED_CDAB","4字节无符号整数(CD AB)",4){
         @Override
         public String execute(ModelAttr modelAttr, String context) {
             String result="";
@@ -66,29 +66,14 @@ public enum AttrEnum implements AttrAnalyze{
                 result=DATA_ERROR;
             }else{
                 char[] srcContext = context.toCharArray();
-                String data=MathUtil.convertFourBytesToUnSignedInt(srcContext[2]+"",srcContext[3]+"",srcContext[0]+"",srcContext[1]+"");
-                result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumber_format(),data);
-            }
-            return result;
-        }
-    },
-
-    INT_TYPE__FOUR_SIGNED_ABCD("INT_TYPE","数值型","FOUR_SIGNED_ABCD","4字节有符号整数(AB CD)",4){
-        @Override
-        public String execute(ModelAttr modelAttr, String context) {
-            String result="";
-            if(!check(context)){
-                result=DATA_ERROR;
-            }else{
-                char[] srcContext = context.toCharArray();
-                String data=MathUtil.convertFourBytesToSignedInt(srcContext[0]+"",srcContext[1]+"",srcContext[2]+"",srcContext[3]+"");
-                result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumber_format(),data);
+                String data=MathUtil.convertFourBytesToUnSignedInt(srcContext[4]+srcContext[5]+"",srcContext[6]+srcContext[7]+"",srcContext[0]+srcContext[1]+"",srcContext[2]+srcContext[3]+"");
+                result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
             }
             return result;
         }
     },
 
-    INT_TYPE__FOUR_SIGNED_CDAB("INT_TYPE","数值型","FOUR_SIGNED_CDAB","4字节有符号整数(CD AB)",4){
+    INT_TYPE_FOUR_SIGNED_ABCD("INT_TYPE","数值型","FOUR_SIGNED_ABCD","4字节有符号整数(AB CD)",4){
         @Override
         public String execute(ModelAttr modelAttr, String context) {
             String result="";
@@ -96,13 +81,14 @@ public enum AttrEnum implements AttrAnalyze{
                 result=DATA_ERROR;
             }else{
                 char[] srcContext = context.toCharArray();
-                String data=MathUtil.convertFourBytesToSignedInt(srcContext[2]+"",srcContext[3]+"",srcContext[0]+"",srcContext[1]+"");
-                result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumber_format(),data);
+                String data=MathUtil.convertFourBytesToSignedInt(srcContext[0]+srcContext[1]+"",srcContext[2]+srcContext[3]+"",srcContext[4]+srcContext[5]+"",srcContext[6]+srcContext[7]+"");
+                result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
             }
             return result;
         }
     },
-    INT_TYPE__FOUR_FLOAT_ABCD("INT_TYPE","数值型","FOUR_FLOAT_ABCD","4字节浮点型(AB CD)",4){
+
+    INT_TYPE_FOUR_SIGNED_CDAB("INT_TYPE","数值型","FOUR_SIGNED_CDAB","4字节有符号整数(CD AB)",4){
         @Override
         public String execute(ModelAttr modelAttr, String context) {
             String result="";
@@ -110,13 +96,13 @@ public enum AttrEnum implements AttrAnalyze{
                 result=DATA_ERROR;
             }else{
                 char[] srcContext = context.toCharArray();
-                String data= MathUtil.getFloat(""+srcContext[0]+srcContext[1]+srcContext[2]+srcContext[3]);
-                result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumber_format(),data);
+                String data=MathUtil.convertFourBytesToSignedInt(srcContext[4]+srcContext[5]+"",srcContext[6]+srcContext[7]+"",srcContext[0]+srcContext[1]+"",srcContext[2]+srcContext[3]+"");
+                result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
             }
             return result;
         }
     },
-    INT_TYPE__FOUR_FLOAT_CDAB("INT_TYPE","数值型","FOUR_FLOAT_CDAB","4字节浮点型(CD AB)",4){
+    INT_TYPE_FOURFLOAT_ABCD("INT_TYPE","数值型","FOURFLOAT_ABCD","4字节浮点型(AB CD)",4){
         @Override
         public String execute(ModelAttr modelAttr, String context) {
             String result="";
@@ -124,8 +110,22 @@ public enum AttrEnum implements AttrAnalyze{
                 result=DATA_ERROR;
             }else{
                 char[] srcContext = context.toCharArray();
-                String data= MathUtil.getFloat(""+srcContext[3]+srcContext[4]+srcContext[0]+srcContext[1]);
-                result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumber_format(),data);
+                String data= MathUtil.getFloat(""+srcContext[0]+srcContext[1]+srcContext[2]+srcContext[3]+srcContext[4]+srcContext[5]+srcContext[6]+srcContext[7]);
+                result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
+            }
+            return result;
+        }
+    },
+    INT_TYPE_FOURFLOAT_CDAB("INT_TYPE","数值型","FOURFLOAT_CDAB","4字节浮点型(CD AB)",4){
+        @Override
+        public String execute(ModelAttr modelAttr, String context) {
+            String result="";
+            if(!check(context)){
+                result=DATA_ERROR;
+            }else{
+                char[] srcContext = context.toCharArray();
+                String data= MathUtil.getFloat(""+srcContext[4]+srcContext[5]+srcContext[6]+srcContext[7]+srcContext[0]+srcContext[1]+srcContext[2]+srcContext[3]);
+                result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
             }
             return result;
         }
@@ -138,10 +138,9 @@ public enum AttrEnum implements AttrAnalyze{
             if(!check(context)){
                 result=DATA_ERROR;
             }else{
-                char[] srcContext = context.toCharArray();
-                if("0".equals(srcContext[0]) && "0".equals(srcContext[1])){
+                if("0000".equals(context)){
                     result="正常";
-                }else if("0".equals(srcContext[0]) && "1".equals(srcContext[1])){
+                }else if("0001".equals(context)){
                     result="报警";
                 }else{
                     result=DATA_ERROR;
@@ -159,7 +158,7 @@ public enum AttrEnum implements AttrAnalyze{
                 result=DATA_ERROR;
             }else{
                 char[] srcContext = context.toCharArray();
-                result= "20"+srcContext[0]+"-"+srcContext[1]+"-"+srcContext[2]+" "+srcContext[3]+":"+srcContext[4]+":"+srcContext[5];
+                result= "20"+srcContext[0]+srcContext[1]+"-"+srcContext[2]+srcContext[3]+"-"+srcContext[4]+srcContext[5]+" "+srcContext[6]+srcContext[7]+":"+srcContext[8]+srcContext[9]+":"+srcContext[10]+srcContext[11];
             }
             return result;
         }
@@ -172,10 +171,9 @@ public enum AttrEnum implements AttrAnalyze{
             if(!check(context)){
                 result=DATA_ERROR;
             }else{
-                char[] srcContext = context.toCharArray();
-                if("0".equals(srcContext[0]) && "0".equals(srcContext[1])){
+                if("0000".equals(context)){
                     result="开";
-                }else if("0".equals(srcContext[0]) && "1".equals(srcContext[1])){
+                }else if("0001".equals(context)){
                     result="关";
                 }else{
                     result=DATA_ERROR;
@@ -188,7 +186,18 @@ public enum AttrEnum implements AttrAnalyze{
     WAVE_TYPE("WAVE_TYPE","雷击波形",null){
         @Override
         public String execute(ModelAttr modelAttr, String context) {
-            return null;
+            //按照2字节有符号整形解析
+            String result="";
+            if(!check(context)){
+                result=DATA_ERROR;
+            }else{
+                char[] srcContext = context.toCharArray();
+                for(int i=0;i<srcContext.length;i=i+4){
+                    String data=MathUtil.convertTwoBytesToSignedInt(srcContext[i]+srcContext[i+1]+"",srcContext[i+2]+srcContext[i+3]+"");
+                    result=result+data+",";
+                }
+            }
+            return result;
         }
     }
     ;
@@ -255,7 +264,7 @@ public enum AttrEnum implements AttrAnalyze{
             flag = false;
         }else{
             if(this.getLength() != null){
-                if(context.length() != this.getLength()){
+                if(context.length()*2 != this.getLength()){
                     flag=false;
                 }
             }
