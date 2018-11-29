@@ -9,60 +9,60 @@ import org.springframework.stereotype.Component;
 @Component("model_attr")
 public class ModelAttr extends BaseEntity {
     //模板ID
-    private Integer model_id;
+    private Integer modelId;
     //属性名
-    private String attr_name;
+    private String attrName;
     //数据类型
-    private String data_type;
+    private String dataType;
    //数值类型
-    private String value_type;
+    private String valueType;
     //小数位数
-    private String number_format;
+    private Integer numberFormat;
     //单位
     private String unit;
     //公式
     private String expression;
     //排序
-    private int order_no;
+    private int orderNo;
 
-    public Integer getModel_id() {
-        return model_id;
+    public Integer getModelId() {
+        return modelId;
     }
 
-    public void setModel_id(Integer model_id) {
-        this.model_id = model_id;
+    public void setModelId(Integer modelId) {
+        this.modelId = modelId;
     }
 
-    public String getAttr_name() {
-        return attr_name;
+    public String getAttrName() {
+        return attrName;
     }
 
-    public void setAttr_name(String attr_name) {
-        this.attr_name = attr_name;
+    public void setAttrName(String attrName) {
+        this.attrName = attrName;
     }
 
-    public String getData_type() {
-        return data_type;
+    public String getDataType() {
+        return dataType;
     }
 
-    public void setData_type(String data_type) {
-        this.data_type = data_type;
+    public void setDataType(String dataType) {
+        this.dataType = dataType;
     }
 
-    public String getValue_type() {
-        return value_type;
+    public String getValueType() {
+        return valueType;
     }
 
-    public void setValue_type(String value_type) {
-        this.value_type = value_type;
+    public void setValueType(String valueType) {
+        this.valueType = valueType;
     }
 
-    public String getNumber_format() {
-        return number_format;
+    public Integer getNumberFormat() {
+        return numberFormat;
     }
 
-    public void setNumber_format(String number_format) {
-        this.number_format = number_format;
+    public void setNumberFormat(Integer numberFormat) {
+        this.numberFormat = numberFormat;
     }
 
     public String getUnit() {
@@ -81,11 +81,11 @@ public class ModelAttr extends BaseEntity {
         this.expression = expression;
     }
 
-    public int getOrder_no() {
-        return order_no;
+    public int getOrderNo() {
+        return orderNo;
     }
 
-    public void setOrder_no(int order_no) {
-        this.order_no = order_no;
+    public void setOrderNo(int orderNo) {
+        this.orderNo = orderNo;
     }
 }

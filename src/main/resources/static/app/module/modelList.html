@@ -1,0 +1,90 @@
+<div class="container" >
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">模板列表</h3>
+                </div>
+
+                <div class="panel-body">
+                    <form role="form" class="form-horizontal">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <label  class="col-sm-1 control-label">模板名称</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="quereyData.model_name" placeholder="模糊搜索">
+                                </div>
+                                <div class="col-sm-2">
+                                    <button class="btn btn-primary   waves-effect waves-light" btn-loading="loading" ng-click="init()">搜索</button>
+                                    <button type="button" class="btn btn-primary waves-effect waves-light" ng-click="addModel()">新建模板 <i class="fa fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                       <!-- <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div  class="col-sm-1 "></div>
+                                <div class="col-sm-11">
+                                    <button type="button" class="btn btn-primary waves-effect waves-light" ng-click="addModel()">新建模板 <i class="fa fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>-->
+
+                    </form>
+
+                    <div class="row" style="margin-top: 10px">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>模板名称</th>
+                                        <th>创建时间</th>
+                                        <th>创建人</th>
+                                        <th>最后修改时间</th>
+                                        <th>最后修改人</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="entity in data"  >
+                                        <td ng-bind="entity.modelName" ng-click="gotoModel(entity)" ></td>
+                                        <td ng-bind="entity.addDate" ng-click="gotoModel(entity)" ></td>
+                                        <td ng-bind="entity.addUid"  ng-click="gotoModel(entity)"></td>
+                                        <td ng-bind="entity.udpDate" ng-click="gotoModel(entity)" ></td>
+                                        <td ng-bind="entity.udpUid"  ng-click="gotoModel(entity)"></td>
+                                        <td >
+                                          <!--  <a ng-click="gotoModel(entity)" class="on-default edit-row" style="cursor:pointer">详情</a>-->
+                                            <!--<a ng-click="deleteModel(entity)" class="on-default edit-row" style="cursor:pointer">删除</a>-->
+                                           <!-- <a class="on-default edit-row"  ng-if="entity.isEdit != true " ng-click="gotoModel(entity)" ><i class="fa fa-pencil"></i></a>-->
+                                            <a class="on-default remove-row"  ng-click="deleteModel(entity)"><i class="fa fa-trash-o" style="color: #ef5350"></i></a>
+                                        </td>
+                                    </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- 分页 -->
+                       <!-- <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="" style="text-align: center">
+                                <ul class="pagination m-b-5">
+                                    <li ng-repeat="obj in pageArr">
+                                        <a ng-if="obj.show" ng-click="changePage(obj.num)"  ng-class="{true:'page-put'}[quereyData.page==obj.num]" ng-bind="obj.num"></a>
+                                        <a ng-if="obj.hide" >...</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>-->
+                        <page-info pages="pages" curpage="quereyData.page" change="changePage(page)"></page-info>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

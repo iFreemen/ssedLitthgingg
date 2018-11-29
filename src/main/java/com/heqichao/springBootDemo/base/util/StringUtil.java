@@ -65,4 +65,23 @@ public class StringUtil {
 	    }
 	    return strs;
 	}
+
+	/**
+	 * 合并字符串数组
+	 * @param str
+	 * @param frex 分割符
+	 * @return
+	 */
+	public static String getString(String[] str,String frex){
+		String returnStr ="";
+		if(str!=null && str.length >0){
+			for(String s :str){
+				returnStr=returnStr+s+frex;
+			}
+			if(StringUtil.isNotEmpty(frex)){
+				returnStr=returnStr.substring(0,returnStr.length()-frex.length());
+			}
+		}
+		return  returnStr;
+	}
 }
