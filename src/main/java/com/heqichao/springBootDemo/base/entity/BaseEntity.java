@@ -15,17 +15,17 @@ public class BaseEntity implements Serializable {
 
     //保存时间
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
-    protected Date add_date;
+    protected Date addDate;
 
     //更新时间
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
-    protected Date udp_date;
+    protected Date udpDate;
 
     //保存人
-    protected Integer add_uid;
+    protected Integer addUid;
 
     //更新人
-    protected Integer udp_uid;
+    protected Integer udpUid;
 
     public Integer getId() {
         return id;
@@ -33,36 +33,30 @@ public class BaseEntity implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+	public Date getAddDate() {
+		return addDate;
+	}
+	public void setAddDate(Date addDate) {
+		this.addDate = addDate;
+	}
+	public Date getUdpDate() {
+		return udpDate;
+	}
+	public void setUdpDate(Date udpDate) {
+		this.udpDate = udpDate;
+	}
+	public Integer getAddUid() {
+		return addUid;
+	}
+	public void setAddUid(Integer addUid) {
+		this.addUid = addUid;
+	}
+	public Integer getUdpUid() {
+		return udpUid;
+	}
+	public void setUdpUid(Integer udpUid) {
+		this.udpUid = udpUid;
+	}
 
-    public Date getAdd_date() {
-        return add_date;
-    }
-
-    public void setAdd_date(Date add_date) {
-        this.add_date = add_date;
-    }
-
-    public Date getUdp_date() {
-        return udp_date;
-    }
-
-    public void setUdp_date(Date udp_date) {
-        this.udp_date = udp_date;
-    }
-
-    public Integer getAdd_uid() {
-        return add_uid;
-    }
-
-    public void setAdd_uid(Integer add_uid) {
-        this.add_uid = add_uid;
-    }
-
-    public Integer getUdp_uid() {
-        return udp_uid;
-    }
-
-    public void setUdp_uid(Integer udp_uid) {
-        this.udp_uid = udp_uid;
-    }
+    
 }

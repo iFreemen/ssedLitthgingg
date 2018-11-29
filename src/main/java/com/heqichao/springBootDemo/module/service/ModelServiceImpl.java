@@ -44,11 +44,11 @@ public class ModelServiceImpl implements ModelService {
             for(Map map:attrs){
                 ModelAttr modelAttr =new ModelAttr();
                 BeanUtil.copyProperties(modelAttr,map);
-                if(modelAttr.getUdp_date()==null){
-                    modelAttr.setUdp_date(date);
+                if(modelAttr.getUdpDate()==null){
+                    modelAttr.setUdpDate(date);
                 }
-               if(modelAttr.getUdp_uid()==null){
-                   modelAttr.setUdp_uid(userId);
+               if(modelAttr.getUdpUid()==null){
+                   modelAttr.setUdpUid(userId);
                }
                 modelAttr.setModel_id(modelId);
                 list.add(modelAttr);

@@ -11,6 +11,12 @@ var demoApp =angular.module("demoApp", ["ngRoute"]);
 	}).when("/module/userList", {
 		templateUrl: "app/module/userList.html",
 		controller: userCtrl
+	}).when("/module/equGroups", {
+		templateUrl: "app/module/equGroups.html",
+		controller: equGroupsCtrl
+	}).when("/module/equAdd", {
+		templateUrl: "app/module/equAdd.html",
+		controller: equAddCtrl
 	}).when("/module/equView", {
 		templateUrl: "app/module/equipmentView.html",
 		controller: equCtrl

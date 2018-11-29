@@ -32,15 +32,14 @@ public interface EquipmentMapper {
 	@Select("SELECT dev_id FROM equipments where valid = 'N' ")
 	public List<String> getEquipmentIdListAll();
 	
-	@Select("<script>SELECT id,eid,e_type,IFNULL(amount,0) as amount,e_range,"
-			+ "IFNULL((select max(ligntningCount) from lightning_log where devEUI = equipments.eid and lightning_log.valid = '1111'),0) as total,"
-			+ "IFNULL(alarms,0) as alarms,e_status,online_time,remark,uid,tags "
+	@Select("<script>SELECT id,name,dev_id,type_cd,model_id,group_id,group_adm_id,app_id,"
+			+ "verification,support_code,supporter,site,remark,online,uid,udp_date"
 			+ " FROM equipments where valid = 'N'  "
 			+ "<if test=\"competence == 3 \"> and uid = #{id}  </if>"
 			+ "<if test=\"competence == 4 \"> and uid = #{parentId}  </if>"
-			+ "<if test =\"sEid !=null  and sEid!='' \"> and eid like CONCAT(CONCAT('%',#{sEid}),'%')  </if>"
-			+ "<if test =\"sType !=null  and sType!='' \"> and e_type like CONCAT(CONCAT('%',#{sType}),'%')  </if>"
-			+ "<if test =\"sStatus !=null  and sStatus!='' \"> and e_valid = #{sStatus}  </if>"
+			+ "<if test =\"sEid !=null  and sEid!='' \"> and dev_id like CONCAT(CONCAT('%',#{sEid}),'%')  </if>"
+			+ "<if test =\"sType !=null  and sType!='' \"> and type_cd like CONCAT(CONCAT('%',#{sType}),'%')  </if>"
+			+ "<if test =\"sStatus !=null  and sStatus!='' \"> and online = #{sStatus}  </if>"
 			+ " </script>")
 	public List<Equipment> getEquipments(
 			@Param("competence")Integer competence,

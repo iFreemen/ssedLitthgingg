@@ -82,39 +82,39 @@ public class EquipmentServiceImpl implements EquipmentService {
 
 	@Override
     public ResponeResult insertEqu(Map map) {
-    	Equipment equ = new Equipment(map);
-    	Integer uid = ServletUtil.getSessionUser().getId();
-    	Integer cmp = ServletUtil.getSessionUser().getCompetence();
-    	Integer oid = StringUtil.objectToInteger(StringUtil.getStringByMap(map,"seleCompany"));
-    	if(equ.getEid() == null || uid == null || cmp == 4) {
-    		return new ResponeResult(true,"Add Equipment Input Error!","errorMsg");
-    	}
-    	if(eMapper.duplicatedEid(equ.getEid())) {
-    		return new ResponeResult(true,"杆塔Id重复","errorMsg");
-    	}
-    	if(cmp == 2 && oid == null) {
-    		return new ResponeResult(true,"Add Equipment Input Error!","errorMsg");
-		}else {
-    		if(cmp == 2) {
-    			equ.setOwnId(oid);
-    		}else {
-    			equ.setOwnId(uid);
-    		}
-    		equ.setUpdateUid(uid);
-    		equ.seteStatus("N");
-    		if(eMapper.insertEquipment(equ)>0) {
-    			List<String> mqId = new ArrayList<String>();
-    			mqId.add(equ.getEid());
-    			try {
-					MqttUtil.subscribeTopicMes(mqId);
-					return new ResponeResult();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-				}
-    		}
-    	}
+//    	Equipment equ = new Equipment(map);
+//    	Integer uid = ServletUtil.getSessionUser().getId();
+//    	Integer cmp = ServletUtil.getSessionUser().getCompetence();
+//    	Integer oid = StringUtil.objectToInteger(StringUtil.getStringByMap(map,"seleCompany"));
+//    	if(equ.getEid() == null || uid == null || cmp == 4) {
+//    		return new ResponeResult(true,"Add Equipment Input Error!","errorMsg");
+//    	}
+//    	if(eMapper.duplicatedEid(equ.getEid())) {
+//    		return new ResponeResult(true,"杆塔Id重复","errorMsg");
+//    	}
+//    	if(cmp == 2 && oid == null) {
+//    		return new ResponeResult(true,"Add Equipment Input Error!","errorMsg");
+//		}else {
+//    		if(cmp == 2) {
+//    			equ.setOwnId(oid);
+//    		}else {
+//    			equ.setOwnId(uid);
+//    		}
+//    		equ.setUpdateUid(uid);
+//    		equ.seteStatus("N");
+//    		if(eMapper.insertEquipment(equ)>0) {
+//    			List<String> mqId = new ArrayList<String>();
+//    			mqId.add(equ.getEid());
+//    			try {
+//					MqttUtil.subscribeTopicMes(mqId);
+//					return new ResponeResult();
+//				} catch (Exception e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//					 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+//				}
+//    		}
+//    	}
     	return  new ResponeResult(true,"Add Equipment fail","errorMsg");
     }
     

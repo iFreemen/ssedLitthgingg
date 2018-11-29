@@ -20,12 +20,16 @@ public class Model extends BaseEntity{
     public void setModel_name(String model_name) {
         this.model_name = model_name;
     }
+    
+    public Model() {
+    	
+    }
 
     public Model(String model_name, Integer userId, Date date) {
         this.model_name = model_name;
-        this.add_uid=userId;
-        this.udp_uid=userId;
-        this.add_date=date;
-        this.udp_date=date;
+        this.addUid=userId;
+        this.udpUid=userId;
+        this.addDate=date;
+        this.udpDate=date;
     }
 }
