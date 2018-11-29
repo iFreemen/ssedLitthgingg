@@ -11,25 +11,27 @@ import java.util.Date;
 @Component("model")
 public class Model extends BaseEntity{
     //模板名字
-    private String model_name;
+    private String modelName;
 
-    public String getModel_name() {
-        return model_name;
+    public String getModelName() {
+        return modelName;
     }
 
-    public void setModel_name(String model_name) {
-        this.model_name = model_name;
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
     }
     
     public Model() {
     	
     }
 
-    public Model(String model_name, Integer userId, Date date) {
-        this.model_name = model_name;
+
+    public Model(String modelName, Integer userId, Date date) {
+        this.modelName = modelName;
         this.addUid=userId;
         this.udpUid=userId;
         this.addDate=date;
         this.udpDate=date;
     }
+
 }

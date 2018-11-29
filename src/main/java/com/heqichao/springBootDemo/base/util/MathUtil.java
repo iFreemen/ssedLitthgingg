@@ -21,7 +21,7 @@ public class MathUtil {
     public static String getFloat(String src){
         String result=CHANGE_ERROR;
         try{
-            double data =Float.intBitsToFloat(Integer.parseInt(src,16));
+            float data =Float.intBitsToFloat(Integer.parseInt(src,16));
             result=data+"";
         }catch (Exception e){
             logger.error("数据转换异常 ："+src,e);
@@ -30,7 +30,7 @@ public class MathUtil {
     }
 
 
-    public static String expressAndFormat(String expression,String num ,String data){
+    public static String expressAndFormat(String expression,Integer num ,String data){
         String result="";
         if(StringUtil.isEmpty(data)){
             return result;
@@ -45,15 +45,8 @@ public class MathUtil {
             }
         }
         int format=0;
-        if(StringUtil.isNotEmpty(num)){
-           try{
-               format=Integer.parseInt(num);
-               if(format<=0){
-                   format=0;
-               }
-           }catch (Exception e){
-               logger.error("小数位数值有误 ："+expression,e);
-           }
+        if(num!=null && num>0){
+            format=num;
         }
         NumberFormat nbf= NumberFormat.getInstance();
         nbf.setMinimumFractionDigits(format);

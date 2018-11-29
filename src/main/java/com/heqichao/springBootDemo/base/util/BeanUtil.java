@@ -12,6 +12,7 @@ import java.util.Map;
 import com.heqichao.springBootDemo.base.entity.BaseEntity;
 import com.heqichao.springBootDemo.base.exception.ResponeException;
 //import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.Converter;
 
@@ -105,8 +106,8 @@ public class BeanUtil {
 			if ((dest instanceof Map)) {
 				copyBeanProperties(dest, orig);
 			} else {
-				org.springframework.beans.BeanUtils.copyProperties(orig,dest);
-				//BeanUtils.copyProperties(dest, orig);
+				//org.springframework.beans.BeanUtils.copyProperties(orig,dest);
+				BeanUtils.copyProperties(dest, orig);
 			}
 		} catch (Exception e) {
 		

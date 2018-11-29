@@ -2,37 +2,39 @@ package com.heqichao.springBootDemo.module.mapper;
 
 import com.heqichao.springBootDemo.module.entity.Model;
 import com.heqichao.springBootDemo.module.entity.ModelAttr;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by heqichao on 2018-7-15.
  */
 public interface ModelAttrMapper {
 
-    @Update("<script>"
+    @Delete("<script>"
             +"delete from model_attr where model_id = #{modelID} "
             +"</script>")
-    int deleteByModelId( @Param("modelID") String modelID);
+    int deleteByModelId( @Param("modelID") Integer modelID);
+
+    @Delete("<script>"
+            +"delete from model_attr where id = #{id} "
+            +"</script>")
+    int deleteById(@Param("id") Integer id);
 
     @Select("<script>"
             +"select * from model_attr  where model_id = #{modelID}  order by order_no"
             +"</script>")
-     List<ModelAttr> queryByModelId( @Param("modelID") String modelID);
+    Set<ModelAttr> queryByModelId(@Param("modelID") Integer modelID);
 
     @Insert("<script>"
-            +"insert into model_attr (id,add_date,udp_date,add_uid,udp_uid,model_id,attr_name,data_type,value_type,number_format,unit,expression,order_no) values "
+            +"insert into model_attr (add_date,udp_date,add_uid,udp_uid,model_id,attr_name,data_type,value_type,number_format,unit,expression,order_no) values "
             + "<foreach  collection=\"list\"  separator=\",\" item=\"o\" >"
-                    + "(#{o.id},#{o.add_date},#{o.udp_date},#{o.add_uid},#{o.udp_uid},#{o.model_id},#{o.attr_name},#{o.data_type},#{o.value_type},"
-                    + "#{o.number_format},#{o.unit}, #{o.expression}, #{o.order_no}）"
+            + "(#{o.addDate},#{o.udpDate},#{o.addUid},#{o.udpUid},#{o.modelId},#{o.attrName},#{o.dataType},#{o.valueType},#{o.numberFormat},#{o.unit},#{o.expression},#{o.orderNo})"
             + "</foreach>"
             +"</script>")
-    int saveModelAttr(@Param("list") List<Model> list);
+    int saveModelAttr(@Param("list") List<ModelAttr> list);
 
 
 }

@@ -78,6 +78,9 @@ public class RequestContext {
 
 
     public Map getParamMap() {
+        if(paramMap==null){
+            return new HashMap();
+        }
         return paramMap;
     }
 
