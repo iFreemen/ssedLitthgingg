@@ -13,10 +13,10 @@ public class GroupsEntity extends BaseEntity {
 	private static final long serialVersionUID = -8774676476245067282L;
 
 	
-	private String text;
+	private String name;
 	private Integer uid;//所属用户
 	private Integer pid;//父节点id
-	private Integer isRoot;//是否有子节点：0没有;1有
+	private Integer grpSort;//父节点id
 	private String valid;//有效标志，N为正常
 	
 	private List<GroupsEntity> children;
@@ -29,10 +29,9 @@ public class GroupsEntity extends BaseEntity {
     public String toString() {
         return "Groups{" +
                 "id='" + super.id + '\'' +
-                ", name='" + text + '\'' +
+                ", name='" + name + '\'' +
                 ", uid='" + uid + '\'' +
                 ", pid='" + pid + '\'' +
-                ", isRoot='" + isRoot + '\'' +
                 ", valid='" + valid + '\'' +
                 ", children=" + children +
                 '}';
@@ -41,11 +40,20 @@ public class GroupsEntity extends BaseEntity {
 	
 
 	public String getText() {
-		return text;
+		return name;
 	}
 
 	public void setText(String text) {
-		this.text = text;
+		this.name = text;
+	}
+	
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Integer getUid() {
@@ -66,12 +74,12 @@ public class GroupsEntity extends BaseEntity {
 	}
 	
 
-	public Integer getIsRoot() {
-		return isRoot;
+	public Integer getGrpSort() {
+		return grpSort;
 	}
 
-	public void setIsRoot(Integer isRoot) {
-		this.isRoot = isRoot;
+	public void setGrpSort(Integer grpSort) {
+		this.grpSort = grpSort;
 	}
 
 	public String getValid() {

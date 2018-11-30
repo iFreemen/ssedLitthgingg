@@ -3,9 +3,11 @@ package com.heqichao.springBootDemo.base.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.mapping.StatementType;
 
 import com.heqichao.springBootDemo.base.entity.GroupsEntity;
 import com.heqichao.springBootDemo.base.entity.User;
@@ -17,20 +19,11 @@ import com.heqichao.springBootDemo.base.entity.User;
  */
 public interface EquGroupsMapper {
 	
-	@Select("SELECT id,parent_uid,account,company,contact,phone,fax,email,site,remark,competence"
-			+ " FROM users "
-			+ "where ACCOUNT = #{account}  "
-			+ "and PASSWORD = #{password} "
-			+ "and valid = 'N' ")
-	public User getUserInfo(@Param("account") String account,@Param("password") String password);
-	
-	@Select("<script>SELECT c.id,c.name,c.is_root,t.descendant,c.add_date FROM group_equ AS c " + 
+	@Select("<script>SELECT c.id,c.name,c.pid,c.grp_sort FROM group_equ AS c " + 
 			"    INNER JOIN group_tree t on c.id = t.descendant " + 
-			"    WHERE t.ancestor = 1 and c.valid = 'N' and uid = #{uid} "
-			+ "<if test=\"competence == 3 \"> and id = #{uid}  </if>"
-			+ " </script>")
-	public List<GroupsEntity> getGroups(@Param("competence")Integer competence,
-							@Param("uid")Integer uid);
+			"    WHERE t.ancestor = 1 and c.valid = 'N' and (uid = #{uid} or uid = 0 )"
+			+ " order by grp_sort </script>")
+	public List<GroupsEntity> getGroups(@Param("uid")Integer uid);
 	
 	@Select("select id,company from users where competence = 3 and valid = 'N'")
 	public List<User> getCompanySelectList();
@@ -51,7 +44,32 @@ public interface EquGroupsMapper {
 	@Update("update users set company=#{company}, contact=#{contact}, phone=#{phone}, fax=#{fax}, email=#{email}, site=#{site}, remark=#{remark}, udp_date = sysdate(), udp_uid = #{id} where id=#{id} and valid = 'N' ")
 	public int updateUserInfo(User user);
 	
-	@Update("update users set  udp_date = sysdate(), udp_uid = #{udid}, valid = 'N' where id=#{id} and valid = 'N' ")
-	public int delUserById(@Param("id")Integer uid,@Param("udid")Integer udid);
+	@Select({ "call p_insert_groups("
+			+ "#{name,mode=IN,jdbcType=VARCHAR},"
+			+ "#{treeRoot,mode=IN,jdbcType=INTEGER},"
+			+ "#{uid,mode=IN,jdbcType=INTEGER},"
+			+ "#{aid,mode=IN,jdbcType=INTEGER},"
+			+ "#{gSort,mode=IN,jdbcType=INTEGER})" })
+	@Options(statementType=StatementType.CALLABLE)
+	public void insertGroups(
+			@Param("name") String name,
+			@Param("treeRoot")Integer treeRoot,
+			@Param("uid")Integer uid,
+			@Param("aid")Integer aid,
+			@Param("gSort")Integer gSort);
+	
+	@Select({ "call p_update_groups("
+			+ "#{name,mode=IN,jdbcType=VARCHAR},"
+			+ "#{gid,mode=IN,jdbcType=INTEGER},"
+			+ "#{treeRoot,mode=IN,jdbcType=INTEGER},"
+			+ "#{uid,mode=IN,jdbcType=INTEGER},"
+			+ "#{gSort,mode=IN,jdbcType=INTEGER})" })
+	@Options(statementType=StatementType.CALLABLE)
+	public void updateGroups(
+			@Param("name") String name,
+			@Param("gid")Integer gid,
+			@Param("treeRoot")Integer treeRoot,
+			@Param("uid")Integer uid,
+			@Param("gSort")Integer gSort);
 
 }

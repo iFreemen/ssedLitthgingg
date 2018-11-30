@@ -1,5 +1,7 @@
 package com.heqichao.springBootDemo.base.service;
 
+import com.heqichao.springBootDemo.base.param.ResponeResult;
+
 /**
  * @author Muzzy Xu.
  * 
@@ -8,7 +10,9 @@ package com.heqichao.springBootDemo.base.service;
 
 public interface GroupsService {
 	Integer ADMINCMP = 2;
-	void getGroups();
+	ResponeResult getGroups();
+	ResponeResult insertGroup();
+	ResponeResult updateGroup();
 
 
 

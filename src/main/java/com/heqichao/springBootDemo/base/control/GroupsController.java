@@ -22,8 +22,16 @@ public class GroupsController extends BaseController{
     
     @RequestMapping(value = "/getEquGroups")
     public ResponeResult getGroups() {
-    	gService.getGroups();
-    	return new ResponeResult();
+    	return gService.getGroups();
+    }
+    
+    @RequestMapping(value = "/addGroup")
+    public ResponeResult addGroups() {
+    	return gService.insertGroup();
+    }
+    @RequestMapping(value = "/editGroup")
+    public ResponeResult editGroups() {
+    	return gService.updateGroup();
     }
 
 }
