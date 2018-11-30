@@ -57,6 +57,6 @@ public class LiteLog extends BaseEntity {
         this.message = message;
         this.currenState = currenState;
         this.eventTime = eventTime;
-        this.add_date =new Date();
+        this.addDate =new Date();
     }
 }

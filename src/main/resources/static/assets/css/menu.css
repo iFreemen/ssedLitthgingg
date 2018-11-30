@@ -446,3 +446,98 @@ body.fixed-left .side-menu.left {
   font-size: 9px;
   line-height: 30px;
 }
+
+.dev_group_list ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    color: #666;
+}
+.dev_group_list ul li {
+    white-space: nowrap;
+    line-height: 30px;
+    font-size: 14px;
+    border-bottom: 1px dotted #dedede;
+}
+.dev_group_list ul li span {
+    width:18px;
+    line-height: 40px;
+    vertical-align: top;
+    text-align: center;
+    font-size: 18px;
+    display: inline-block;
+}
+.dev_group_list ul li span:before {
+    font-family: "Ionicons";
+    font-size: 26px;
+}
+.dev_group_list .tree_ico.unexpand-node:before {
+    content: '\f10a';
+    cursor: pointer;
+}
+.dev_group_list .tree_ico.expand-node:before {
+    content: '\f104';
+    cursor: pointer;
+}
+.dev_group_list .tree_ico.leaf-node:before {
+    content: '';
+}
+.dev_group_list .tree_folder:before {
+    content: '\f139';
+}
+.dev_group_list .expand_folder:before {
+    content: '\f139';
+}
+.dev_group_list .tree_file:before {
+    content: '\f12e';
+}
+
+.dev_group_list ul li .operation {
+    float: right;
+    font-size: 22px;
+    color:#06c;
+    margin-right: 15px;
+}
+.dev_group_list ul li .operation:hover {
+    color: #09c;
+}
+.dev_group_list ul li ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px dotted #dedede;
+}
+.dev_group_list ul li ul li {
+    padding-left: 18px;
+}
+.dev_group_list ul li ul li:last-child {
+    border-bottom: none;
+}
+.operation {
+    font-size:24px;
+    color:#24B1FF;
+    cursor: pointer;
+    margin-right: 10px;
+    vertical-align:middle;
+}
+.operation:hover {
+    color: #0054a4;
+}
+
+/** mask **/
+.flyover .mask {
+    top: 0;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    background: black;
+    z-index: 1049;
+}
+.flyover .alert{
+    left: 50%;
+    top: 50%;
+    position: fixed;
+    z-index: 1050;
+}

@@ -31,6 +31,18 @@ public class StringUtil {
 		}
     }
     
+    public static Integer getIntegerByMap(Map map,String key) {
+    	if(map.size() == 0) {
+    		return null;
+    	}
+    	try {
+    		return Integer.valueOf(map.get(key).toString());
+    	} catch (Exception e) {
+//			e.printStackTrace();
+    		return null;
+    	}
+    }
+    
     public static String getStringByMap(Map map,String key) {
     	if(map.size() == 0) {
     		return null;

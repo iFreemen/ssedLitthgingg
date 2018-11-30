@@ -35,36 +35,30 @@ public class BaseEntity implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+	public Date getAddDate() {
+		return addDate;
+	}
+	public void setAddDate(Date addDate) {
+		this.addDate = addDate;
+	}
+	public Date getUdpDate() {
+		return udpDate;
+	}
+	public void setUdpDate(Date udpDate) {
+		this.udpDate = udpDate;
+	}
+	public Integer getAddUid() {
+		return addUid;
+	}
+	public void setAddUid(Integer addUid) {
+		this.addUid = addUid;
+	}
+	public Integer getUdpUid() {
+		return udpUid;
+	}
+	public void setUdpUid(Integer udpUid) {
+		this.udpUid = udpUid;
+	}
 
-    public Date getAddDate() {
-        return addDate;
-    }
-
-    public void setAddDate(Date addDate) {
-        this.addDate = addDate;
-    }
-
-    public Date getUdpDate() {
-        return udpDate;
-    }
-
-    public void setUdpDate(Date udpDate) {
-        this.udpDate = udpDate;
-    }
-
-    public Integer getAddUid() {
-        return addUid;
-    }
-
-    public void setAddUid(Integer addUid) {
-        this.addUid = addUid;
-    }
-
-    public Integer getUdpUid() {
-        return udpUid;
-    }
-
-    public void setUdpUid(Integer udpUid) {
-        this.udpUid = udpUid;
-    }
+    
 }

@@ -20,6 +20,11 @@ public class Model extends BaseEntity{
     public void setModelName(String modelName) {
         this.modelName = modelName;
     }
+    
+    public Model() {
+    	
+    }
+
 
     public Model(String modelName, Integer userId, Date date) {
         this.modelName = modelName;
@@ -29,7 +34,4 @@ public class Model extends BaseEntity{
         this.udpDate=date;
     }
 
-    public Model(){
-
-    }
 }
