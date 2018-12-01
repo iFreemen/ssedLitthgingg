@@ -53,17 +53,19 @@ public class EquipmentServiceImpl implements EquipmentService {
     public List<Map<String,String>> getUserEquipmentIdList(Integer uid) {
     	return eMapper.getUserEquipmentIdList(uid);
     }
-    
+    /**
+     * 根据uid查找父客户
+     */
     @Override
     public Integer getUserParent(Integer uid) {
     	return eMapper.getUserParent(uid);
     }
     /**
-     * 查找所有设备dev_id
+     * 根据dev_id查找设备信息
      */
     @Override
-    public List<String> getEquipmentIdListAll() {
-    	return eMapper.getEquipmentIdListAll();
+    public Equipment getEquipmentInfo(String  devId) {
+    	return eMapper.getEquipmentInfo(devId);
     }
     
     // 根据杆塔ID设置状态

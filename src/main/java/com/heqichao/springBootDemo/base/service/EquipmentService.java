@@ -1,6 +1,7 @@
 package com.heqichao.springBootDemo.base.service;
 
 import com.github.pagehelper.PageInfo;
+import com.heqichao.springBootDemo.base.entity.Equipment;
 import com.heqichao.springBootDemo.base.param.ResponeResult;
 
 import java.util.List;
@@ -20,8 +21,6 @@ public interface EquipmentService {
 	PageInfo queryEquipmentList();
 
 	List<Map<String, String>> getUserEquipmentIdList(Integer uid);
-
-	List<String> getEquipmentIdListAll();
 
 	ResponeResult insertEqu(Map map);
 
@@ -48,6 +47,8 @@ public interface EquipmentService {
 	Integer queryRange(String eid);
 
 	Integer getUserParent(Integer uid);
+
+	Equipment getEquipmentInfo(String devId);
 
 
 }

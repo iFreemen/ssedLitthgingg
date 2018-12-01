@@ -37,8 +37,8 @@ public interface EquipmentMapper {
 	@Select("SELECT dev_id FROM equipments where online = #{status}  and valid = 'N' ")
 	public List<String> getEquipmentByStatus(@Param("status") String  status);
 	
-	@Select("SELECT dev_id FROM equipments where valid = 'N' ")
-	public List<String> getEquipmentIdListAll();
+	@Select("SELECT * FROM equipments where valid = 'N' and dev_id = #{devId} ")
+	public Equipment getEquipmentInfo(@Param("devId") String  devId);
 	
 	@Select("<script>SELECT id,name,dev_id,type_cd,model_id,group_id,group_adm_id,app_id,"
 			+ "verification,support_code,supporter,site,remark,online,uid,udp_date"
