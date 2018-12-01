@@ -50,5 +50,7 @@ public interface EquipmentService {
 
 	Equipment getEquipmentInfo(String devId);
 
+	List<String> getEquipmentIdListAll();
+
 
 }

@@ -47,7 +47,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     	return pageInfo;
     }
     /**
-     * 
+     * 根据uid查找所有设备
      */
     @Override
     public List<Map<String,String>> getUserEquipmentIdList(Integer uid) {
@@ -68,6 +68,13 @@ public class EquipmentServiceImpl implements EquipmentService {
     	return eMapper.getEquipmentInfo(devId);
     }
     
+    /**
+     * 查找所有设备dev_id
+     */
+    @Override
+    public List<String> getEquipmentIdListAll() {
+    	return eMapper.getEquipmentIdListAll();
+    }
     // 根据杆塔ID设置状态
     @Override
     public void setEquStatus(String eid,String status) {
