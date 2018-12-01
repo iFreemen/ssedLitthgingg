@@ -19,7 +19,7 @@ public interface EquipmentService {
 
 	PageInfo queryEquipmentList();
 
-	List<String> getUserEquipmentIdList(Integer uid);
+	List<Map<String, String>> getUserEquipmentIdList(Integer uid);
 
 	List<String> getEquipmentIdListAll();
 
@@ -47,7 +47,7 @@ public interface EquipmentService {
 	 */
 	Integer queryRange(String eid);
 
-	List<String> getUserEquipmentIdListByParent(Integer uid);
+	Integer getUserParent(Integer uid);
 
 
 }

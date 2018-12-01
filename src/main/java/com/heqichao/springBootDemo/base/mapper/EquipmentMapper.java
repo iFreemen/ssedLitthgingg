@@ -1,6 +1,7 @@
 package com.heqichao.springBootDemo.base.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
@@ -20,11 +21,18 @@ public interface EquipmentMapper {
 			+ " FROM equipments where id = #{id}  and valid = 'N' ")
 	public Equipment getEquipmentById(@Param("id") Integer id);
 	
-	@Select("SELECT dev_id FROM equipments where uid = #{uid}  and valid = 'N' ")
-	public List<String> getUserEquipmentIdList(@Param("uid") Integer uid);
+	@Select("<script>select equipments.dev_id,equipments.name from equipments where valid = 'N'  " + 
+			"and uid like (" + 
+			"select case u.competence " + 
+			"when 2 then '%'" + 
+			" when 3 then u.id " + 
+			" when 4 then u.parent_uid end as u_id " + 
+			" from users u where u.id = #{uid} limit 1 ) "
+			+ "</script>")
+	public List<Map<String,String>> getUserEquipmentIdList(@Param("uid") Integer uid);
 	
-	@Select("SELECT e.dev_id FROM equipments e,users u where e.uid = u.uid  and u.id=#{uid} and e.valid = 'N' ")
-	public List<String> getUserEquipmentIdListByParent(@Param("uid") Integer uid);
+	@Select("SELECT u.parent_uid FROM users u where u.id=#{uid} and u.valid = 'N' ")
+	public Integer getUserParent(@Param("uid") Integer uid);
 	
 	@Select("SELECT dev_id FROM equipments where online = #{status}  and valid = 'N' ")
 	public List<String> getEquipmentByStatus(@Param("status") String  status);
