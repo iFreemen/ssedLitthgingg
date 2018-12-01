@@ -47,16 +47,16 @@ public class EquipmentServiceImpl implements EquipmentService {
     	return pageInfo;
     }
     /**
-     * 根据用户id查找拥有设备，权限3用户传入id查找设备dev_id，权限4用户传入pid查找设备dev_id
+     * 
      */
     @Override
-    public List<String> getUserEquipmentIdList(Integer uid) {
+    public List<Map<String,String>> getUserEquipmentIdList(Integer uid) {
     	return eMapper.getUserEquipmentIdList(uid);
     }
     
     @Override
-    public List<String> getUserEquipmentIdListByParent(Integer uid) {
-    	return eMapper.getUserEquipmentIdListByParent(uid);
+    public Integer getUserParent(Integer uid) {
+    	return eMapper.getUserParent(uid);
     }
     /**
      * 查找所有设备dev_id
