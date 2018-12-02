@@ -1,11 +1,10 @@
 package com.heqichao.springBootDemo.module.service;
 
 import com.github.pagehelper.PageInfo;
+import com.heqichao.springBootDemo.base.exception.ResponeException;
+import com.heqichao.springBootDemo.base.service.EquipmentService;
 import com.heqichao.springBootDemo.base.service.UserService;
-import com.heqichao.springBootDemo.base.util.BeanUtil;
-import com.heqichao.springBootDemo.base.util.PageUtil;
-import com.heqichao.springBootDemo.base.util.ServletUtil;
-import com.heqichao.springBootDemo.base.util.StringUtil;
+import com.heqichao.springBootDemo.base.util.*;
 import com.heqichao.springBootDemo.module.entity.Model;
 import com.heqichao.springBootDemo.module.entity.ModelAttr;
 import com.heqichao.springBootDemo.module.mapper.ModelMapper;
@@ -29,9 +28,16 @@ public class ModelServiceImpl implements ModelService {
     @Autowired
     private ModelAttrService modelAttrService;
 
+    @Autowired
+    private EquipmentService equipmentService;
+
     @Override
     public Integer saveOrUpdateModel(Integer modelId,String modelName,List<Map> attrs) {
         Date date = new Date();
+        if(!UserUtil.hasCRDPermission() ){
+            throw new ResponeException("没有该权限操作！");
+        }
+
         Integer userId =ServletUtil.getSessionUser().getId();
         //保存
         Model model =new Model(modelName,userId,date);
@@ -69,7 +75,7 @@ public class ModelServiceImpl implements ModelService {
         Map map =new HashMap();
         if(modelId!=null){
             List<Model> models =modelMapper.queryByModelId(modelId);
-            Set<ModelAttr> attrs =modelAttrService.queryByModelId(modelId);
+            List<ModelAttr> attrs =modelAttrService.queryByModelId(modelId);
             if(models !=null && models.size()>0){
                 map.put("model",models.get(0));
             }else{
@@ -86,6 +92,9 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     public void deleteByModelId(Integer modelId) {
+        if(!UserUtil.hasCRDPermission()){
+            throw new ResponeException("没有该权限操作！");
+        }
         if(modelId!=null){
             modelMapper.deleteByModelId(modelId);
             //删除所有的属性
@@ -109,10 +118,16 @@ public class ModelServiceImpl implements ModelService {
         if(cmp !=null ) {
             //管理员查询所有
             if (UserService.ROOT.equals(cmp)) {
-                userId=null;
+                PageUtil.setPage();
+                list=modelMapper.queryAll(modelName);
+            }else {
+                Integer parentId =equipmentService.getUserParent(userId);
+                List<Integer> userList =new ArrayList<>();
+                userList.add(userId);
+                userList.add(parentId);
+                PageUtil.setPage();
+                list= modelMapper.queryByUserIds(userList,modelName);
             }
-            PageUtil.setPage();
-            list= modelMapper.queryByUserId(userId,modelName);
         }
         PageInfo pageInfo = new PageInfo(list);
         return pageInfo;
@@ -126,9 +141,16 @@ public class ModelServiceImpl implements ModelService {
         if(cmp !=null ) {
             //管理员查询所有
             if (UserService.ROOT.equals(cmp)) {
-                userId=null;
+                PageUtil.setPage();
+                list=modelMapper.queryAll("");
+            }else {
+                Integer parentId =equipmentService.getUserParent(userId);
+                List<Integer> userList =new ArrayList<>();
+                userList.add(userId);
+                userList.add(parentId);
+                PageUtil.setPage();
+                list= modelMapper.queryByUserIds(userList,"");
             }
-            list= modelMapper.queryByUserId(userId,"");
         }
         List<Map> returnList =new ArrayList<>();
         if(list!=null && list.size()>0){

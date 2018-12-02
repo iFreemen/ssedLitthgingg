@@ -11,9 +11,11 @@ import java.util.Map;
 public interface DataLogService {
 
     //有效
-    public static final String ENABLE_STATUS="1";
+    public static final String ENABLE_STATUS="N";
     //无效
-    public static final String UN_ENABLE_STATUS="0";
+    public static final String UN_ENABLE_STATUS="D";
+    //无效
+    public static final String ERROR_STATUS="ERR";
     /**
      * 保存数据
      * @param devId 设备ID
@@ -24,4 +26,6 @@ public interface DataLogService {
     List<DataDetail> queryDataDetail(String devId, String key, String startTime, String endTime);
 
     void deleteDataLog(String... devId);
+
+    Map querqueryEquAttrLog(String devId, String attrKey, String startTime, String endTime);
 }

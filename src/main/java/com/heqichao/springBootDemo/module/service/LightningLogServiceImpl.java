@@ -143,7 +143,7 @@ public class LightningLogServiceImpl implements LightningLogService {
         Integer cmp =ServletUtil.getSessionUser().getCompetence();
         if(cmp !=null ){
             //管理员查询所有
-            if(UserService.ROOT.equals(cmp)){
+          /*  if(UserService.ROOT.equals(cmp)){
                 list=equipmentService.getEquipmentIdListAll();
 
             } else  if(UserService.CUSTOMER.equals(cmp)){  //用户查自己设备
@@ -151,7 +151,7 @@ public class LightningLogServiceImpl implements LightningLogService {
             } else {
             	list=equipmentService.getUserEquipmentIdListByParent(ServletUtil.getSessionUser().getId());
             	
-            }
+            }*/
             //访客查询父设备
         }
         return list;

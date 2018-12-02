@@ -13,11 +13,17 @@ public class DataDetail extends BaseEntity{
 
     private String devId;
 
-    private String dataKey;
+    private String dataName;
 
     private String dataType;
 
     private String dataValue;
+    //排序
+    private int orderNo;
+    /**
+     * 字节数据
+     */
+    private String dataSrc;
 
     private String unit;
 
@@ -39,13 +45,6 @@ public class DataDetail extends BaseEntity{
         this.dataType = dataType;
     }
 
-    public String getDataKey() {
-        return dataKey;
-    }
-
-    public void setDataKey(String dataKey) {
-        this.dataKey = dataKey;
-    }
 
     public String getDevId() {
         return devId;
@@ -78,5 +77,29 @@ public class DataDetail extends BaseEntity{
 
     public void setUnit(String unit) {
         this.unit = unit;
+    }
+
+    public String getDataName() {
+        return dataName;
+    }
+
+    public void setDataName(String dataName) {
+        this.dataName = dataName;
+    }
+
+    public String getDataSrc() {
+        return dataSrc;
+    }
+
+    public void setDataSrc(String dataSrc) {
+        this.dataSrc = dataSrc;
+    }
+
+    public int getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(int orderNo) {
+        this.orderNo = orderNo;
     }
 }
