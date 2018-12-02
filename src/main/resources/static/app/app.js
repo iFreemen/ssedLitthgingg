@@ -50,7 +50,10 @@ var demoApp =angular.module("demoApp", ["ngRoute"]);
 	}).when("/module/modelList", {
 			templateUrl: "app/module/modelList.html",
 			controller: modelListCtrl
-	}).otherwise({
+	}).when("/module/logShow", {
+			templateUrl: "app/module/logShow.html",
+			controller: logShowCtrl
+		}).otherwise({
 //		templateUrl: "app/module/home.html",
 //			controller: homeCtrl
 		templateUrl: "app/module/devPage.html",

@@ -33,8 +33,17 @@ public interface ModelMapper {
 
     @Select("<script>"
             +"select * from model  where 1=1  "
-            + "<if test =\"addUid !=null  and addUid !='' \"> and add_uid = #{addUid}  </if>"  // 用户只查自己 管理员查全部
             + "<if test =\"modelName !=null  and modelName!='' \"> and model_name like CONCAT(CONCAT('%',#{modelName}),'%')  </if>"
             +"</script>")
-    List<Model> queryByUserId(@Param("addUid") Integer addUid,@Param("modelName")String modelName);
+    List<Model> queryAll(@Param("modelName")String modelName);
+
+
+    @Select("<script>"
+            +"select * from model  where 1=1  and addUid in "
+            + "<foreach  collection=\"list\" open=\"(\" close=\")\" separator=\",\" item=\"uid\" >"
+            + "#{uid}"
+            + "</foreach>"
+            + "<if test =\"modelName !=null  and modelName!='' \"> and model_name like CONCAT(CONCAT('%',#{modelName}),'%')  </if>"
+            +"</script>")
+    List<Model> queryByUserIds(@Param("list") List<Integer> list,@Param("modelName")String modelName);
 }

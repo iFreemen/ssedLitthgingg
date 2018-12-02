@@ -50,7 +50,10 @@ public class MathUtil {
         }
         NumberFormat nbf= NumberFormat.getInstance();
         nbf.setMinimumFractionDigits(format);
-        result=nbf.format(data);
+        double d =Double.parseDouble(data);
+        result=nbf.format(d);
+        //去除逗号
+        result=result.replaceAll(",","");
         return result;
     }
 

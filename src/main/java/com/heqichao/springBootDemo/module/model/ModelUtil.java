@@ -16,7 +16,7 @@ public class ModelUtil {
      * @param list
      * @return
      */
-    public static boolean hasWaveType(Set<ModelAttr> list){
+    public static boolean hasWaveType(List<ModelAttr> list){
         if(list!=null && list.size()>0){
             for(ModelAttr attr :list){
                 if(AttrEnum.WAVE_TYPE.getType().equals(attr.getDataType())){
@@ -43,10 +43,10 @@ public class ModelUtil {
             return result;
         }
         result= attrEnum.execute(attr, data);
-        if(StringUtil.isNotEmpty(attr.getUnit())){
-            //加单位
+        //加单位
+       /* if(StringUtil.isNotEmpty(attr.getUnit())){
             result=result+attr.getUnit();
-        }
+        }*/
         return result;
     }
 

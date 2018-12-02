@@ -15,9 +15,9 @@ public interface DataDetailMapper {
 
     @Insert(
             "<script>"
-            +" insert into data_detail (add_date,udp_date,add_uid,udp_uid,log_id,devId,data_key,data_type,data_value,unit,data_status) values "
+            +" insert into data_detail (add_date,udp_date,add_uid,udp_uid,log_id,dev_id,data_name,data_type,data_value,data_src,unit,data_status,order_no) values "
             + "<foreach  collection=\"list\"  separator=\",\" item=\"o\" >"
-            +"(#{o.addDate},#{o.udpDate},#{o.addUid},#{o.udpUid},#{o.logId},#{o.devId},#{o.dataKey},#{o.dataType},#{o.dataValue},#{unit},#{o.dataStatus}) "
+            +"(#{o.addDate},#{o.udpDate},#{o.addUid},#{o.udpUid},#{o.logId},#{o.devId},#{o.dataName},#{o.dataType},#{o.dataValue},#{o.dataSrc},#{o.unit},#{o.dataStatus},#{o.orderNo}) "
             + "</foreach>"
             +"</script>"
     )
@@ -34,12 +34,12 @@ public interface DataDetailMapper {
     void updateStatus(@Param("status")String status , @Param("list") List<String> list);
 
     @Select("<script>"
-            +"select * from data_detail  where dev_id = #{devId} and date_key = #{dataKey} and data_status = #{status}"
-            + "<if test =\"start !=null  and start!=''\"> and ligntningTime &gt;= #{start} </if>" //大于等于
-            + "<if test =\"end !=null  and end!='' \"> and ligntningTime &lt;= #{end} </if>"  // 小于等于
+            +"select data_name,add_date,unit,data_value,data_type from data_detail  where dev_id = #{devId} and data_name = #{dataName} and data_status = #{status}"
+            + "<if test =\"start !=null  and start!=''\"> and add_date &gt;= #{start} </if>" //大于等于
+            + "<if test =\"end !=null  and end!='' \"> and add_date &lt;= #{end} </if>"  // 小于等于
             +" order by add_date desc "
             +"</script>")
-    List<DataDetail> queryDetail( @Param("devId") String devId, @Param("dataKey") String dataKey,@Param("status") String status, @Param("start") String start, @Param("end") String end);
+    List<DataDetail> queryDetail( @Param("devId") String devId, @Param("dataName") String dataName,@Param("status") String status, @Param("start") String start, @Param("end") String end);
 
 
 

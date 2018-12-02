@@ -40,7 +40,11 @@ public class ResponeExceptionHandler {
     @ExceptionHandler(value = ResponeException.class)
     public ResponeResult myErrorHandler(ResponeException ex) {
         logger.error("System_ResponeException:",ex);
-        ResponeResult responeResult= new ResponeResult(false,DEFAULT_ERROR_MSG);
+        String err=DEFAULT_ERROR_MSG;
+        if(StringUtil.isNotEmpty(ex.getMsg())){
+            err=ex.getMessage();
+        }
+        ResponeResult responeResult= new ResponeResult(false,err);
 
         if(StringUtil.isNotEmpty((String) exceptionMap.getExceptionMap().get(ex.getMsg()))){
             responeResult.setMessage((String) exceptionMap.getExceptionMap().get(ex.getMsg()));

@@ -103,8 +103,14 @@ public class UserServiceImpl implements UserService {
     	}
     	return  new ResponeResult(true,"Updated UserInfo fail","errorMsg");
     }
-    
-    @Override
+
+
+	@Override
+	public User querById(Integer uid) {
+		return userMapper.getUserInfoById(uid);
+	}
+
+	@Override
     public ResponeResult getCompanySelectList() {
     	Integer cmp = ServletUtil.getSessionUser().getCompetence();
     	if(cmp == UserService.ROOT) {

@@ -6,6 +6,7 @@ import com.heqichao.springBootDemo.module.entity.ModelAttr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.NumberFormat;
 import java.util.*;
 
 /**
@@ -18,13 +19,20 @@ public enum AttrEnum implements AttrAnalyze{
         @Override
         public String execute(ModelAttr modelAttr, String context) {
             String result="";
-            if(!check(context)){
+            try{
+                if(!check(context)){
+                    result=DATA_ERROR;
+                }else{
+                    char[] srcContext = context.toCharArray();
+                    String d1=""+srcContext[0]+srcContext[1];
+                    String d2=""+srcContext[2]+srcContext[3];
+                    String data = MathUtil.convertTwoBytesToUnSignedInt(d1,d2);
+                    result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
+                }
+            }catch (Exception e){
                 result=DATA_ERROR;
-            }else{
-                char[] srcContext = context.toCharArray();
-                String data = MathUtil.convertTwoBytesToUnSignedInt(srcContext[0]+srcContext[1]+"",srcContext[2]+srcContext[3]+"");
-                result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
             }
+
             return result;
         }
     },
@@ -33,13 +41,20 @@ public enum AttrEnum implements AttrAnalyze{
         @Override
         public String execute(ModelAttr modelAttr, String context) {
             String result="";
-            if(!check(context)){
+            try{
+                if(!check(context)){
+                    result=DATA_ERROR;
+                }else{
+                    char[] srcContext = context.toCharArray();
+                    String d1=""+srcContext[0]+srcContext[1];
+                    String d2=""+srcContext[2]+srcContext[3];
+                    String data=MathUtil.convertTwoBytesToSignedInt(d1,d2);
+                    result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
+                }
+            }catch (Exception e){
                 result=DATA_ERROR;
-            }else{
-                char[] srcContext = context.toCharArray();
-                String data=MathUtil.convertTwoBytesToSignedInt(srcContext[0]+srcContext[1]+"",srcContext[2]+srcContext[3]+"");
-                result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
             }
+
             return result;
         }
     },
@@ -48,13 +63,22 @@ public enum AttrEnum implements AttrAnalyze{
         @Override
         public String execute(ModelAttr modelAttr, String context) {
             String result="";
-            if(!check(context)){
+            try{
+                if(!check(context)){
+                    result=DATA_ERROR;
+                }else{
+                    char[] srcContext = context.toCharArray();
+                    String d1=""+srcContext[0]+srcContext[1];
+                    String d2=""+srcContext[2]+srcContext[3];
+                    String d3=""+srcContext[4]+srcContext[5];
+                    String d4=""+srcContext[6]+srcContext[7];
+                    String data=MathUtil.convertFourBytesToUnSignedInt(d1,d2,d3,d4);
+                    result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
+                }
+            }catch (Exception e){
                 result=DATA_ERROR;
-            }else{
-                char[] srcContext = context.toCharArray();
-                String data=MathUtil.convertFourBytesToUnSignedInt(srcContext[0]+srcContext[1]+"",srcContext[2]+srcContext[3]+"",srcContext[4]+srcContext[5]+"",srcContext[6]+srcContext[7]+"");
-                result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
             }
+
             return result;
         }
     },
@@ -62,13 +86,22 @@ public enum AttrEnum implements AttrAnalyze{
         @Override
         public String execute(ModelAttr modelAttr, String context) {
             String result="";
-            if(!check(context)){
+            try{
+                if(!check(context)){
+                    result=DATA_ERROR;
+                }else{
+                    char[] srcContext = context.toCharArray();
+                    String d1=""+srcContext[0]+srcContext[1];
+                    String d2=""+srcContext[2]+srcContext[3];
+                    String d3=""+srcContext[4]+srcContext[5];
+                    String d4=""+srcContext[6]+srcContext[7];
+                    String data=MathUtil.convertFourBytesToUnSignedInt(d3,d4,d1,d2);
+                    result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
+                }
+            }catch (Exception e){
                 result=DATA_ERROR;
-            }else{
-                char[] srcContext = context.toCharArray();
-                String data=MathUtil.convertFourBytesToUnSignedInt(srcContext[4]+srcContext[5]+"",srcContext[6]+srcContext[7]+"",srcContext[0]+srcContext[1]+"",srcContext[2]+srcContext[3]+"");
-                result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
             }
+
             return result;
         }
     },
@@ -77,13 +110,22 @@ public enum AttrEnum implements AttrAnalyze{
         @Override
         public String execute(ModelAttr modelAttr, String context) {
             String result="";
-            if(!check(context)){
+            try{
+                if(!check(context)){
+                    result=DATA_ERROR;
+                }else{
+                    char[] srcContext = context.toCharArray();
+                    String d1=""+srcContext[0]+srcContext[1];
+                    String d2=""+srcContext[2]+srcContext[3];
+                    String d3=""+srcContext[4]+srcContext[5];
+                    String d4=""+srcContext[6]+srcContext[7];
+                    String data=MathUtil.convertFourBytesToSignedInt(d1,d2,d3,d4);
+                    result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
+                }
+            }catch (Exception e){
                 result=DATA_ERROR;
-            }else{
-                char[] srcContext = context.toCharArray();
-                String data=MathUtil.convertFourBytesToSignedInt(srcContext[0]+srcContext[1]+"",srcContext[2]+srcContext[3]+"",srcContext[4]+srcContext[5]+"",srcContext[6]+srcContext[7]+"");
-                result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
             }
+
             return result;
         }
     },
@@ -92,13 +134,22 @@ public enum AttrEnum implements AttrAnalyze{
         @Override
         public String execute(ModelAttr modelAttr, String context) {
             String result="";
-            if(!check(context)){
+            try{
+                if(!check(context)){
+                    result=DATA_ERROR;
+                }else{
+                    char[] srcContext = context.toCharArray();
+                    String d1=""+srcContext[0]+srcContext[1];
+                    String d2=""+srcContext[2]+srcContext[3];
+                    String d3=""+srcContext[4]+srcContext[5];
+                    String d4=""+srcContext[6]+srcContext[7];
+                    String data=MathUtil.convertFourBytesToSignedInt(d3,d4,d1,d2);
+                    result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
+                }
+            }catch (Exception e){
                 result=DATA_ERROR;
-            }else{
-                char[] srcContext = context.toCharArray();
-                String data=MathUtil.convertFourBytesToSignedInt(srcContext[4]+srcContext[5]+"",srcContext[6]+srcContext[7]+"",srcContext[0]+srcContext[1]+"",srcContext[2]+srcContext[3]+"");
-                result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
             }
+
             return result;
         }
     },
@@ -106,13 +157,22 @@ public enum AttrEnum implements AttrAnalyze{
         @Override
         public String execute(ModelAttr modelAttr, String context) {
             String result="";
-            if(!check(context)){
+            try{
+                if(!check(context)){
+                    result=DATA_ERROR;
+                }else{
+                    char[] srcContext = context.toCharArray();
+                    String d1=""+srcContext[0]+srcContext[1];
+                    String d2=""+srcContext[2]+srcContext[3];
+                    String d3=""+srcContext[4]+srcContext[5];
+                    String d4=""+srcContext[6]+srcContext[7];
+                    String data= MathUtil.getFloat(d1+d2+d3+d4);
+                    result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
+                }
+            }catch (Exception e){
                 result=DATA_ERROR;
-            }else{
-                char[] srcContext = context.toCharArray();
-                String data= MathUtil.getFloat(""+srcContext[0]+srcContext[1]+srcContext[2]+srcContext[3]+srcContext[4]+srcContext[5]+srcContext[6]+srcContext[7]);
-                result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
             }
+
             return result;
         }
     },
@@ -120,13 +180,22 @@ public enum AttrEnum implements AttrAnalyze{
         @Override
         public String execute(ModelAttr modelAttr, String context) {
             String result="";
-            if(!check(context)){
+            try{
+                if(!check(context)){
+                    result=DATA_ERROR;
+                }else{
+                    char[] srcContext = context.toCharArray();
+                    String d1=""+srcContext[0]+srcContext[1];
+                    String d2=""+srcContext[2]+srcContext[3];
+                    String d3=""+srcContext[4]+srcContext[5];
+                    String d4=""+srcContext[6]+srcContext[7];
+                    String data= MathUtil.getFloat(d3+d4+d1+d2);
+                    result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
+                }
+            }catch (Exception e){
                 result=DATA_ERROR;
-            }else{
-                char[] srcContext = context.toCharArray();
-                String data= MathUtil.getFloat(""+srcContext[4]+srcContext[5]+srcContext[6]+srcContext[7]+srcContext[0]+srcContext[1]+srcContext[2]+srcContext[3]);
-                result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
             }
+
             return result;
         }
     },
@@ -135,17 +204,22 @@ public enum AttrEnum implements AttrAnalyze{
         @Override
         public String execute(ModelAttr modelAttr, String context) {
             String result="";
-            if(!check(context)){
-                result=DATA_ERROR;
-            }else{
-                if("0000".equals(context)){
-                    result="正常";
-                }else if("0001".equals(context)){
-                    result="报警";
-                }else{
+            try{
+                if(!check(context)){
                     result=DATA_ERROR;
+                }else{
+                    if("0000".equals(context)){
+                        result="正常";
+                    }else if("0001".equals(context)){
+                        result="报警";
+                    }else{
+                        result=DATA_ERROR;
+                    }
                 }
+            }catch (Exception e){
+                result=DATA_ERROR;
             }
+
             return result;
         }
     },
@@ -154,12 +228,17 @@ public enum AttrEnum implements AttrAnalyze{
         @Override
         public String execute(ModelAttr modelAttr, String context) {
             String result="";
-            if(!check(context)){
+            try{
+                if(!check(context)){
+                    result=DATA_ERROR;
+                }else{
+                    char[] srcContext = context.toCharArray();
+                    result= "20"+srcContext[0]+srcContext[1]+"-"+srcContext[2]+srcContext[3]+"-"+srcContext[4]+srcContext[5]+" "+srcContext[6]+srcContext[7]+":"+srcContext[8]+srcContext[9]+":"+srcContext[10]+srcContext[11];
+                }
+            }catch (Exception e){
                 result=DATA_ERROR;
-            }else{
-                char[] srcContext = context.toCharArray();
-                result= "20"+srcContext[0]+srcContext[1]+"-"+srcContext[2]+srcContext[3]+"-"+srcContext[4]+srcContext[5]+" "+srcContext[6]+srcContext[7]+":"+srcContext[8]+srcContext[9]+":"+srcContext[10]+srcContext[11];
             }
+
             return result;
         }
     },
@@ -168,17 +247,22 @@ public enum AttrEnum implements AttrAnalyze{
         @Override
         public String execute(ModelAttr modelAttr, String context) {
             String result="";
-            if(!check(context)){
-                result=DATA_ERROR;
-            }else{
-                if("0000".equals(context)){
-                    result="开";
-                }else if("0001".equals(context)){
-                    result="关";
-                }else{
+            try{
+                if(!check(context)){
                     result=DATA_ERROR;
+                }else{
+                    if("0000".equals(context)){
+                        result="开";
+                    }else if("0001".equals(context)){
+                        result="关";
+                    }else{
+                        result=DATA_ERROR;
+                    }
                 }
+            }catch (Exception e){
+                result=DATA_ERROR;
             }
+
             return result;
         }
     },
@@ -186,17 +270,43 @@ public enum AttrEnum implements AttrAnalyze{
     WAVE_TYPE("WAVE_TYPE","雷击波形",null){
         @Override
         public String execute(ModelAttr modelAttr, String context) {
-            //按照2字节有符号整形解析
+
             String result="";
-            if(!check(context)){
-                result=DATA_ERROR;
-            }else{
-                char[] srcContext = context.toCharArray();
-                for(int i=0;i<srcContext.length;i=i+4){
-                    String data=MathUtil.convertTwoBytesToSignedInt(srcContext[i]+srcContext[i+1]+"",srcContext[i+2]+srcContext[i+3]+"");
-                    result=result+data+",";
+            try{
+                if(!check(context)){
+                    result=DATA_ERROR;
+                }else{
+                    char[] srcContext = context.toCharArray();
+                    //统一保留一位小数
+                    NumberFormat nbf= NumberFormat.getInstance();
+                    nbf.setMinimumFractionDigits(1);
+
+                    for(int i=0;i<srcContext.length;i=i+4){
+                        String data="";
+                        //按照2字节有符号整形解析
+                        //小端计算
+                        String d1=""+srcContext[i+0]+srcContext[i+1];
+                        String d2=""+srcContext[i+2]+srcContext[i+3];
+                        data=MathUtil.convertTwoBytesToSignedInt(d1,d2);
+                        //按照原逻辑解析
+                  /*
+                  double range =100;
+                  double peakDouble =(double)Long.parseLong(srcContext[i]+srcContext[i+1]+srcContext[i+2]+srcContext[i+3]+"",16);
+                    if(peakDouble >32768){
+                        data= nbf.format((peakDouble-65536)/1000*range);
+                    }else{
+                        data= nbf.format(peakDouble/1000*range);
+                    }*/
+                        result=result+data+",";
+                    }
+                    if(StringUtil.isNotEmpty(result) && result.lastIndexOf(",") == result.length()-1){
+                        result=result.substring(0,result.length()-1);
+                    }
                 }
+            }catch (Exception e){
+                result=DATA_ERROR;
             }
+
             return result;
         }
     }
@@ -264,7 +374,7 @@ public enum AttrEnum implements AttrAnalyze{
             flag = false;
         }else{
             if(this.getLength() != null){
-                if(context.length()*2 != this.getLength()){
+                if(context.length() != this.getLength() * 2){
                     flag=false;
                 }
             }
