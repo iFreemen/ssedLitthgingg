@@ -31,6 +31,11 @@ public class EquipmentController extends BaseController{
     	return new ResponeResult(eService.queryEquipmentList());
     }
     
+    @RequestMapping(value = "/getUserEqu")
+    public List<String> getUserEquipmentIdList(@RequestParam("id") Integer uid) {
+    	return eService.getUserEquipmentIdList(uid);
+    }
+    
     @RequestMapping(value = "/getEquAll")
     public List<String> getEquipmentIdListAll() {
     	return eService.getEquipmentIdListAll();

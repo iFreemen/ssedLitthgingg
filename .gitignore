@@ -22,5 +22,4 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
-db/groupsProcedure/
 springbootdemo-0.0.1-SNAPSHOT_0920.jar
