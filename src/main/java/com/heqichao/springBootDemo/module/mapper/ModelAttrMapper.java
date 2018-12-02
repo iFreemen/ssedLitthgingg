@@ -26,7 +26,7 @@ public interface ModelAttrMapper {
     @Select("<script>"
             +"select * from model_attr  where model_id = #{modelID}  order by order_no"
             +"</script>")
-    Set<ModelAttr> queryByModelId(@Param("modelID") Integer modelID);
+    List<ModelAttr> queryByModelId(@Param("modelID") Integer modelID);
 
     @Insert("<script>"
             +"insert into model_attr (add_date,udp_date,add_uid,udp_uid,model_id,attr_name,data_type,value_type,number_format,unit,expression,order_no) values "

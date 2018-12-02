@@ -22,6 +22,12 @@ public interface UserMapper {
 			+ "and PASSWORD = #{password} "
 			+ "and valid = 'N' ")
 	public User getUserInfo(@Param("account") String account,@Param("password") String password);
+
+	@Select("SELECT id,parent_uid,account,company,contact,phone,fax,email,site,remark,competence"
+			+ " FROM users "
+			+ "where id = #{uid}  "
+			+ "and valid = 'N' ")
+	public User getUserInfoById(@Param("uid")Integer uid);
 	
 	@Select("<script>SELECT id,parent_uid,account,company,contact,phone,fax,email,site,remark,competence"
 			+ " FROM users "

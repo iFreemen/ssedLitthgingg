@@ -14,7 +14,12 @@ function HttpInterceptor($q) {
                     if(res.data.message== "isNotLogin"){
                         window.location.href="/login.html";
                     }else{
-                        window.location.href="/500.html";
+                        //window.location.href="/500.html";
+                        if(res.data.message){
+                            sweetAlert(res.data.message);
+                        }else{
+                            sweetAlert("系统错误，请稍后 重试！");
+                        }
                     }
 
                 }

@@ -34,7 +34,8 @@ public class WarningLogServiceImpl implements WarningLogService {
 
     @Override
     public PageInfo queryAll() {
-        List<String> list =new ArrayList<String>();
+        List<WarningLog> res=new ArrayList<WarningLog>();
+       /* List<String> list =new ArrayList<String>();
         Integer cmp = ServletUtil.getSessionUser().getCompetence();
         if(cmp !=null ){
             //管理员查询所有
@@ -45,13 +46,13 @@ public class WarningLogServiceImpl implements WarningLogService {
             }
             //访客不允许
         }
-        List<WarningLog> res=new ArrayList<WarningLog>();
+
         if(list!=null && list.size()>0){
             PageUtil.setPage();
             Map map = RequestContext.getContext().getParamMap();
             String status= (String) map.get("status");
             res= warningLogMapper.queryWarningLogByDevIds(list,status);
-        }
+        }*/
         PageInfo pageInfo = new PageInfo(res);
         return pageInfo;
     }
@@ -69,7 +70,7 @@ public class WarningLogServiceImpl implements WarningLogService {
     @Override
     public int queryFaultCount() {
         int count =0;
-        List<String> list =new ArrayList<String>();
+       /* List<String> list =new ArrayList<String>();
         Integer cmp = ServletUtil.getSessionUser().getCompetence();
         if(cmp !=null ){
             //管理员查询所有
@@ -83,7 +84,7 @@ public class WarningLogServiceImpl implements WarningLogService {
         if(list!=null && list.size()>0){
             //查询故障的数目
             count= warningLogMapper.queryFaultCount(list,FAULT);
-        }
+        }*/
         return count;
     }
 

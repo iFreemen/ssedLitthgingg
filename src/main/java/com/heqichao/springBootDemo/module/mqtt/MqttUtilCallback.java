@@ -4,6 +4,7 @@ import com.heqichao.springBootDemo.base.param.ApplicationContextUtil;
 import com.heqichao.springBootDemo.base.service.EquipmentService;
 import com.heqichao.springBootDemo.module.entity.LightningLog;
 import com.heqichao.springBootDemo.module.entity.WarningLog;
+import com.heqichao.springBootDemo.module.service.DataLogService;
 import com.heqichao.springBootDemo.module.service.LightningLogService;
 import com.heqichao.springBootDemo.module.service.WarningLogService;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -52,6 +53,7 @@ public class MqttUtilCallback implements MqttCallback {
         mqttUtilCallback = this;
         mqttUtilCallback.lightningLogService = this.lightningLogService;
         mqttUtilCallback.equipmentService = this.equipmentService;
+        mqttUtilCallback.dataLogService=this.dataLogService;
     }
 
     @Autowired
@@ -59,6 +61,9 @@ public class MqttUtilCallback implements MqttCallback {
 
     @Autowired
     private EquipmentService equipmentService;
+
+    @Autowired
+    private DataLogService dataLogService;
 
 
     Logger logger = LoggerFactory.getLogger(getClass());
@@ -90,9 +95,11 @@ public class MqttUtilCallback implements MqttCallback {
             //todo
             mqttUtilCallback.equipmentService.setEquStatus(devId,EquipmentService.BREAKDOWN);
         }else{
-            LightningLog log =MqttUtil.saveTransData(mes);
+
+            mqttUtilCallback.dataLogService.saveDataLog(devId,mes);
+
+          /*  LightningLog log =MqttUtil.saveTransData(mes);
             if(log!=null){
-               // mqttUtilCallback.lightningLogService.save(log);
                 WarningLogService warningLogService=ApplicationContextUtil.getBean(WarningLogService.class);
                 logger.error( devId+":"+log.getStatus()+"  ！！！");
                 if(LightningLogService.HEART_BEAT_ERROR.equals(log.getStatus())){
@@ -120,7 +127,7 @@ public class MqttUtilCallback implements MqttCallback {
                     //更新故障信息 有心跳则为已修复
                     warningLogService.updateFix(devId);
                 }
-            }
+            }*/
         }
 
     }
