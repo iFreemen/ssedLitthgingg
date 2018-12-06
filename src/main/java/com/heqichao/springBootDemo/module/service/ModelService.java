@@ -31,5 +31,6 @@ public interface ModelService {
      * 查找当前用户所拥有的模板
      * @return
      */
-    List<Map> queryUserModel();
+//    List<Map> queryUserModel();
+    Map<String, Integer> queryUserModel();
 }

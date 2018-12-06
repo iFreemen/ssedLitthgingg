@@ -19,6 +19,7 @@ public class Equipment extends BaseEntity  {
 	private String name;//设备名称
 	private String devId;//设备编号
 	private String typeCd;//设备类型
+	private String typeName;//设备类型
 	private Integer modelId;
 	private Integer groupId;
     private Integer groupAdmId;
@@ -30,7 +31,9 @@ public class Equipment extends BaseEntity  {
     private String supportCode;//厂商ID
     private String supporter;//厂商名称
     private Integer uid;//所属用户
-    private String site;//位置
+    private String uName;//所属用户名称
+    private String site;//经纬度
+    private String address;//位置
     private String remark;
     private String online;//在离线
     private String valid;//有效标志
@@ -39,17 +42,19 @@ public class Equipment extends BaseEntity  {
     	
     }
     public Equipment(Map map) {
+    	this.name = StringUtil.getStringByMap(map,"name");
     	this.devId = StringUtil.getStringByMap(map,"devId");
+    	this.groupId =StringUtil.getIntegerByMap(map,"groupId");
+    	this.modelId = StringUtil.getIntegerByMap(map,"modelId");
     	this.typeCd = StringUtil.getStringByMap(map,"typeCd");
-    	this.modelId = StringUtil.objectToInteger(StringUtil.getStringByMap(map,"modelId"));
-    	this.groupId = StringUtil.objectToInteger(StringUtil.getStringByMap(map,"groupId"));
-    	this.groupAdmId = StringUtil.objectToInteger(StringUtil.getStringByMap(map,"groupAdmId"));
-    	this.appId = StringUtil.objectToInteger(StringUtil.getStringByMap(map,"appId"));
+    	this.appId = StringUtil.getIntegerByMap(map,"appId");
     	this.verification = StringUtil.getStringByMap(map,"verification");
     	this.supportCode = StringUtil.getStringByMap(map,"supportCode");
     	this.supporter = StringUtil.getStringByMap(map,"supporter");
     	this.site = StringUtil.getStringByMap(map,"site");
-    	this.uid = StringUtil.objectToInteger(StringUtil.getStringByMap(map,"uid"));
+    	this.address = StringUtil.getStringByMap(map,"address");
+    	this.remark = StringUtil.getStringByMap(map,"remark");
+    	this.uid = StringUtil.getIntegerByMap(map,"uid");
     }
     
 	public String getName() {
@@ -160,6 +165,24 @@ public class Equipment extends BaseEntity  {
 	}
 	public void setValid(String valid) {
 		this.valid = valid;
+	}
+	public String getuName() {
+		return uName;
+	}
+	public void setuName(String uName) {
+		this.uName = uName;
+	}
+	public String getTypeName() {
+		return typeName;
+	}
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
 	}
     
     

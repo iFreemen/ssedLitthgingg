@@ -1,6 +1,7 @@
 package com.heqichao.springBootDemo.module.service;
 
 import com.github.pagehelper.PageInfo;
+import com.heqichao.springBootDemo.base.entity.User;
 import com.heqichao.springBootDemo.base.exception.ResponeException;
 import com.heqichao.springBootDemo.base.service.EquipmentService;
 import com.heqichao.springBootDemo.base.service.UserService;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by heqichao on 2018-11-19.
@@ -134,7 +136,7 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
-    public List<Map> queryUserModel() {
+    public Map<String, Integer> queryUserModel() {
         List<Model> list =new ArrayList<>();
         Integer cmp =ServletUtil.getSessionUser().getCompetence();
         Integer userId =ServletUtil.getSessionUser().getId();
@@ -152,14 +154,23 @@ public class ModelServiceImpl implements ModelService {
                 list= modelMapper.queryByUserIds(userList,"");
             }
         }
-        List<Map> returnList =new ArrayList<>();
+        // Edit By Muzzy
+//        List<Map> returnList =new ArrayList<>();
+//        if(list!=null && list.size()>0){
+//            for(Model model : list){
+//                Map map =new HashMap();
+//                map.put(model.getId(),model.getModelName());
+//                returnList.add(map);
+//            }
+//        }
+//        return returnList;
+        Map<String, Integer> res = new HashMap<>();
         if(list!=null && list.size()>0){
-            for(Model model : list){
-                Map map =new HashMap();
-                map.put(model.getId(),model.getModelName());
-                returnList.add(map);
-            }
+        	res =  list.stream().collect(
+				Collectors.toMap(Model::getModelName,Model::getId, (k1,k2)->k1)
+			);
         }
-        return returnList;
+        return res;
+        // End Muzzy
     }
 }

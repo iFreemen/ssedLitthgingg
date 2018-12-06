@@ -89,5 +89,29 @@ public class GroupsServiceImpl implements GroupsService {
     		return new ResponeResult(true,e.getMessage(),"errorMsg");
     	}
     }
+    @Override
+    public ResponeResult deleteGroup() {
+    	Map map = RequestContext.getContext().getParamMap();
+    	User user = ServletUtil.getSessionUser();
+    	Integer cmp = user.getCompetence();
+    	Integer uid = user.getId();
+    	Integer gid = StringUtil.getIntegerByMap(map,"id");
+    	if(uid == null || cmp == 4 ||gid == null) {
+    		return new ResponeResult(true,"Delete Group Input Error!","errorMsg");
+    	}
+    	if(gMapper.checkIfEquOnNode(uid,gid)) {
+    		return new ResponeResult(true,"该分组或其子分组存在设备，无法删除","errorMsg");
+    	}
+    	try {
+    		if(gMapper.deleteGroups(uid,gid)>0) {
+    			return new ResponeResult();
+    		}else {
+    			return new ResponeResult(true,"删除失败","errorMsg");
+    		}
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		return new ResponeResult(true,e.getMessage(),"errorMsg");
+    	}
+    }
 
 }

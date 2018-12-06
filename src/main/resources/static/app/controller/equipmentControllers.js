@@ -10,16 +10,19 @@ function equCtrl($scope, $http, $rootScope) {
         size:defaultSize, //每页数据量 defaultSize全局变量
     };
 	$scope.pages=0;
+	$scope.total=0;
 	$scope.loadCtl={
     		search:false,	
     		addEnq:false
     };
-	$scope.chkCmp = $rootScope.user.competence;
+	$scope.edit_cmp=$rootScope.edit_cmp;
     $scope.init=function(){
     	$scope.loadCtl.search = true;
     	$http.post("service/getEquipments",$scope.quereyData).success(function(data) {
+    		console.log(data.resultObj.list);
     		$scope.equipments = data.resultObj.list;
     		$scope.pages=data.resultObj.pages;
+    		$scope.total=data.resultObj.total;
     		$scope.pageArr=data.resultObj.navigatepageNums;
     		$scope.quereyData.page=data.resultObj.pageNum;
     		$scope.loadCtl.search = false;
@@ -42,50 +45,6 @@ function equCtrl($scope, $http, $rootScope) {
         $scope.init();
     }
     
-    $scope.addEqu = function() {
-    	$scope.loadCtl.addEnq = true;
-        $http.post("service/addEqu",
-        		{eid:$scope.eid,
-    			eType:$scope.eType,
-    			amount:$scope.amount,
-    			eRange:$scope.eRange,
-    			eTotal:$scope.eTotal,
-    			alarms:$scope.alarms,
-    			eRemark:$scope.eRemark,
-    			seleCompany:$scope.seleCompany
-    			}).success(function(data) {
-			    	if(data.resultObj == "errorMsg"){
-			    		$("#close-add-equ-modal").click();
-			    		swal(data.message, null, "error");
-			        }else{
-			        	//修改成功后
-			        	$scope.closeAddEquModal();
-			        	swal("新增成功", null, "success");
-			        	$scope.init();
-			        }
-			    	$scope.loadCtl.addEnq = false;
-        });
-		
-    };
-    
-    $scope.seleCompetenceChg = function(){
-    	$http.get("service/getCompanySeleList").success(function(data) {
-    		$scope.selCompanys = data.resultObj;
-
-    	});
-	};
-    
-    $scope.closeAddEquModal = function(){
-		$scope.eid = null;
-		$scope.eType = null;
-		$scope.amount = null;
-		$scope.eRange = null;
-		$scope.eTotal = null;
-		$scope.alarms = null;
-		$scope.eRemark = null;
-		$scope.seleCompany = null;
-		$("#close-add-equ-modal").click();
-	};
     
 	$scope.delEqu = function(eid){
 		swal({   

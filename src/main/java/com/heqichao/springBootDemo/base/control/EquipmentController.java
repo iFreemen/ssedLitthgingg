@@ -8,7 +8,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,6 +28,10 @@ public class EquipmentController extends BaseController{
     @RequestMapping(value = "/getEquipments")
     public ResponeResult getUsers() {
     	return new ResponeResult(eService.queryEquipmentList());
+    }
+    @RequestMapping(value = "/getEquPage")
+    public ResponeResult queryEquipmentPage() {
+    	return eService.queryEquipmentPage();
     }
     
     @RequestMapping(value = "/getEquAll")

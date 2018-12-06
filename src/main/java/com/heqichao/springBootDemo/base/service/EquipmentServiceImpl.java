@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     public PageInfo queryEquipmentList() {
     	Map map = RequestContext.getContext().getParamMap();
     	String eid = StringUtil.getStringByMap(map,"eid");
+    	Integer gid = StringUtil.getIntegerByMap(map,"gid");
     	String type = StringUtil.getStringByMap(map,"type");
     	String seleStatus = StringUtil.getStringByMap(map,"seleStatus");
     	PageUtil.setPage();
@@ -42,9 +44,24 @@ public class EquipmentServiceImpl implements EquipmentService {
         		ServletUtil.getSessionUser().getCompetence(),
         		ServletUtil.getSessionUser().getId(),
         		ServletUtil.getSessionUser().getParentId(),
-        		eid,type,seleStatus
+        		gid,eid,type,seleStatus
         		));
     	return pageInfo;
+    }
+    @Override
+    public ResponeResult queryEquipmentPage() {
+    	Map map = RequestContext.getContext().getParamMap();
+    	Integer crrNum = StringUtil.getIntegerByMap(map,"crrNum");
+    	Integer pagSize = StringUtil.getIntegerByMap(map,"pagSize");
+    	Integer gid = StringUtil.getIntegerByMap(map,"gid");
+    	String devName = StringUtil.getStringByMap(map,"devName");
+    	ResultSet equipments = null;
+    	Integer res= null;
+    	eMapper.getEquPage(crrNum,
+    			pagSize, ServletUtil.getSessionUser().getId(), gid, devName);
+    	System.out.println(res);
+    	return new ResponeResult(eMapper.getEquPage(crrNum,
+    			pagSize, ServletUtil.getSessionUser().getId(), gid, devName));
     }
     /**
      * 根据uid查找所有设备
@@ -98,39 +115,29 @@ public class EquipmentServiceImpl implements EquipmentService {
 
 	@Override
     public ResponeResult insertEqu(Map map) {
-//    	Equipment equ = new Equipment(map);
-//    	Integer uid = ServletUtil.getSessionUser().getId();
-//    	Integer cmp = ServletUtil.getSessionUser().getCompetence();
-//    	Integer oid = StringUtil.objectToInteger(StringUtil.getStringByMap(map,"seleCompany"));
-//    	if(equ.getEid() == null || uid == null || cmp == 4) {
-//    		return new ResponeResult(true,"Add Equipment Input Error!","errorMsg");
-//    	}
-//    	if(eMapper.duplicatedEid(equ.getEid())) {
-//    		return new ResponeResult(true,"杆塔Id重复","errorMsg");
-//    	}
-//    	if(cmp == 2 && oid == null) {
-//    		return new ResponeResult(true,"Add Equipment Input Error!","errorMsg");
-//		}else {
-//    		if(cmp == 2) {
-//    			equ.setOwnId(oid);
-//    		}else {
-//    			equ.setOwnId(uid);
-//    		}
-//    		equ.setUpdateUid(uid);
-//    		equ.seteStatus("N");
-//    		if(eMapper.insertEquipment(equ)>0) {
-//    			List<String> mqId = new ArrayList<String>();
-//    			mqId.add(equ.getEid());
-//    			try {
-//					MqttUtil.subscribeTopicMes(mqId);
-//					return new ResponeResult();
-//				} catch (Exception e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//					 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-//				}
-//    		}
-//    	}
+    	Equipment equ = new Equipment(map);
+    	Integer uid = ServletUtil.getSessionUser().getId();
+    	Integer cmp = ServletUtil.getSessionUser().getCompetence();
+    	if(equ.getName() == null ||equ.getDevId() == null || uid == null || cmp == 4) {
+    		return new ResponeResult(true,"Add Equipment Input Error!","errorMsg");
+    	}
+    	if(eMapper.duplicatedEid(equ.getDevId(),uid)) {
+    		return new ResponeResult(true,"杆塔Id重复","errorMsg");
+    	}
+		equ.setAddUid(uid);
+		equ.setValid("N");
+		if(eMapper.insertEquipment(equ)>0) {
+			List<String> mqId = new ArrayList<String>();
+			mqId.add(equ.getDevId());
+			try {
+				MqttUtil.subscribeTopicMes(mqId);
+				return new ResponeResult();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			}
+		}
     	return  new ResponeResult(true,"Add Equipment fail","errorMsg");
     }
     

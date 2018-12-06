@@ -541,3 +541,405 @@ body.fixed-left .side-menu.left {
     position: fixed;
     z-index: 1050;
 }
+.map_position {
+    width:100%;
+    padding-left:15px;
+    padding-right:15px;
+    margin:15px auto 0;
+    font-size:14px;
+    color:#888;
+}
+.clearfix:after {
+    content:".";
+    display:block;
+    height:0;
+    clear:both;
+    visibility:hidden;
+}
+.clearfix {
+    display:block;
+}
+.clear {
+    clear:both;
+}
+@media (min-width: 992px) {
+    .left_monitor {
+        width:30%;
+    }
+    .right_monitor {
+        width:70%;
+    }
+}
+.left_monitor {
+    position: relative;
+}
+.monitor_left {
+    width:90%;
+    overflow: auto;
+    position: absolute;
+    left: 0;
+    top:15px;
+    background: #eee;
+}
+.monitor_ul {
+    width:100%;
+    padding: 0;
+    margin: 0 auto;
+}
+.monitor_ul li span {
+    float:right;
+}
+.input-group > span {
+    border-radius: 0; }
+.monitor_ul li .monitor_devGroup {
+    width: 100%;
+    position:absolute;
+    left: 0;
+    z-index: 200;
+    padding: 10px;
+    background: #fff;
+    text-align: center;
+    display: none;
+    box-shadow: 0 2px 1px rgba(0,0,0,.15);
+}    
+.monitor_ul {
+    width:100%;
+    padding: 0;
+    margin: 0 auto;
+}
+.monitor_ul li {
+    padding:10px 20px;
+    list-style: none;
+    clear: both;
+    position: relative;
+    border-bottom: 1px dotted #ccc;
+}
+.monitor_ul li .monitor_line {
+    width:20px;
+    height: 20px;
+    position: absolute;
+    top:50%;
+    margin-top: -10px;
+}
+.monitor_ul li .monitor_didData {
+    padding-left: 35px;
+}
+.monitor_ul li a {
+    font-size:14px;
+    line-height: 24px;
+    color:#333;
+    display: inline-block;
+}
+.monitor_ul li a:hover {
+    color:#209e91;
+}
+.monitor_ul li span {
+    float:right;
+}
+.monitor_ul li .monitor_devGroup {
+    width: 100%;
+    position:absolute;
+    left: 0;
+    z-index: 200;
+    padding: 10px;
+    background: #fff;
+    text-align: center;
+    display: none;
+    box-shadow: 0 2px 1px rgba(0,0,0,.15);
+}
+.monitor_ul li .monitor_devGroup span {
+    float: none;
+}
+.monitor_ul li .monitor_devGroup span.textbox {
+    padding-left: 10px;
+}
+.monitor_ul li span a {
+    padding-top: 35px;
+}
+.monitor_ul li .monitor_devGroup span a {
+    padding:5px 0;
+}
+.monitor_ul li span a.ion-ios-information-outline {
+    font-size:22px;
+    color:#333;
+    cursor: pointer;
+}
+.monitor_ul li span a.ion-ios-information-outline:hover {
+    color:#209e91;
+}
+.monitor_ul li em {
+    display: block;
+    font-size: 12px;
+    color:#888;
+    line-height: 24px;
+    font-style: normal;
+}
+
+@media screen and (max-width: 1366px ) and (min-width: 992px){
+      .panel > .login_body {
+        padding: 0px;
+    }
+     .use_way {
+        clear: both;
+        padding: 0px;
+        position: relative;
+        border: 1px solid #eee;
+        text-align: center;
+    }   
+    .panel > .panel-body.weixin {
+         padding: 0px; 
+         padding-bottom: 10px;
+        position: relative;
+        height: 100%;
+    } 
+    .panel > .panel-body.miniapp {
+         padding: 0px; 
+         padding-bottom: 10px;
+        position: relative;
+        height: 100%;
+    }
+    .wechat_img img {
+        width: 60%;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .wechat_img1 img {
+        width: 60%;
+        margin: 0px;
+        text-align: center;
+    }
+
+    .wechat_text {
+        font-size: 12px;
+        line-height: 20px;
+        color: #333;
+    }
+    .use_way .description a{
+        margin-right: 20px;
+    }
+    .develop_list {
+        clear: both;
+        padding: 0px 20px 10px 75px;
+        position: relative;
+        border: 1px solid #eee;
+    }
+    .panel > .panel-heading h3 span a {
+        font-size: 12px;
+        color: #888;
+        margin-left: 10px;
+    }
+    .panel > .panel-body.develop_body {
+        padding:  10px;
+        position: relative;
+        height: 100%;
+    }
+    .login_last .description {
+        margin-left: 6px;
+    }
+
+    .login_last {
+        padding: 15px 0;
+        padding-left: 8px;
+    }
+    .monitor_ul li {
+        padding:10px 14px;
+        list-style: none;
+        clear: both;
+        position: relative;
+        border-bottom: 1px dotted #ccc;
+    }
+    .monitor_ul li p {
+        font-size: 16px;
+        line-height: 26px;
+        color: #333;
+        display: inline-block;
+    }
+
+    .data_h4 {
+        padding: 0 20px;
+        margin: 0 auto;
+        line-height: 60px;
+        font-size: 18px;
+        color: #333;
+        background: #efefef;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .data_h4 span {
+        float: right;
+        font-size: 14px;
+        color: #888;
+        display: inline-block;
+    }
+    .monitor_data_list {
+        padding: 14px 0;
+    }
+   .monitor_data_list .data_value {
+    padding-top: 10px;
+        line-height: 21px;
+    }
+    .panel > .panel-body.datalist {
+         padding: 0px; 
+    }
+    .device_item {
+        padding: 0px;
+    }
+    .div-list-padding1 {
+        padding: 0px;
+        padding-top: 50px;
+    }
+    .notice_content p {
+        margin-bottom: 12px;
+        font-family: "Roboto", sans-serif;
+    }
+    .notice_content {
+        line-height: 18px;
+    }
+    .panel > .panel-body.addDevice {
+        padding: 15px 8px;
+    }
+    .panel > .panel-body.addData {
+        padding: 15px 8px;
+    }
+
+  .panel > .panel-body.weixin_ring {
+         padding: 0px; 
+         padding-bottom: 10px;
+    }
+    .paramDiv2 {
+        padding: 6px 4px;
+    }
+    .txt_height {
+        padding: 6px 2px;
+    }
+    .panel-heading, .panel-footer.alerm_ring {
+        padding: 12px 22px;
+    }
+    .monitor_data_list .history_padding {
+        line-height: 35px;
+        text-align: center;
+        padding:0px;
+    }
+    .monitor_box .link_null {
+        width: 100%;
+        height: 40px;
+        margin: 0 auto;
+    }
+    .data_h4 span {
+        float: right;
+    }
+
+}
+.loaderData:before,
+.loaderData:after,
+.loaderData {
+    border-radius: 50%;
+    width: 2em;
+    height: 2em;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation: load 1.8s infinite ease-in-out;
+    animation: load 1.8s infinite ease-in-out;
+}
+.loaderData {
+    margin: 4em auto;
+    font-size: 10px;
+    position: relative;
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
+}
+.loaderData:before {
+    left: -3.5em;
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
+}
+.loaderData:after {
+    left: 3.5em;
+}
+.loaderData:before,
+.loaderData:after {
+    content: '';
+    position: absolute;
+    top: 0;
+}
+.table-bordered,
+.table-bordered > thead > tr > th,
+.table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > th,
+.table-bordered > thead > tr > td,
+.table-bordered > tbody > tr > td,
+.table-bordered > tfoot > tr > td {
+    border: 1px solid gainsboro; }
+    
+@media screen and (max-width: 768px) {
+	
+.map_table > thead > tr > th, .map_table > tbody > tr > th, .map_table > tfoot > tr > th, .map_table > thead > tr > td, .map_table > tbody > tr > td, .map_table > tfoot > tr > td {
+        padding: 15px 3px;
+    }
+    
+}
+.page-total {
+    display: inline-block;
+    padding:6px 0;
+    margin-left: 15px;
+}
+.page-total {
+    margin-left: 6px !important;
+}
+.page-list{
+    text-align: center;
+}
+.page-list span{
+    margin-top:10px;
+}
+.pagination {
+    display: inline;
+}
+.pagination > li > a, .pagination > li > span {
+    float: none;
+    cursor: pointer;
+    display: inline-block;
+}
+.pagination > li > a, .pagination > li > span {
+    background: transparent; }
+
+.pagination > li:first-child > a, .pagination > li:first-child > span {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px; }
+
+.pagination > li:last-child > a, .pagination > li:last-child > span {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px; }
+.pagination > li > a,
+.pagination > li > span {
+    color: #666666;
+    border-color: #d6d6d6; }
+
+.pagination > li:first-of-type > a,
+.pagination > li:first-of-type > span {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px; }
+
+.pagination > li:last-of-type > a,
+.pagination > li:last-of-type > span {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px; }
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+    background-color: #09c;
+    border-color: #09c; }
+
+.pagination > li > a:hover,
+.pagination > li > span:hover,
+.pagination > li > a:focus,
+.pagination > li > span:focus {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #666666; }
+ .pagination > li > a, .pagination > li > span {
+    padding: 0px 6px !important;
+}

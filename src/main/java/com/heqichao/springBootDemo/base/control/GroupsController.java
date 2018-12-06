@@ -34,5 +34,10 @@ public class GroupsController extends BaseController{
     public ResponeResult editGroups() {
     	return gService.updateGroup();
     }
+    
+    @RequestMapping(value = "/delGroup")
+    public ResponeResult delGroups() {
+    	return gService.deleteGroup();
+    }
 
 }
