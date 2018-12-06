@@ -86,4 +86,19 @@ public class DataLogController extends BaseController{
     }
 
 
+
+    @RequestMapping(value = "/deleteAllDataLog")
+    ResponeResult deleteAllDataLog() {
+        List<Map<String, String>> devList = equipmentService.getUserEquipmentIdList(ServletUtil.getSessionUser().getId());
+        if(devList!=null && devList.size()>0){
+            String[] devids =new String[devList.size()];
+            for(int i=0;i<devList.size();i++){
+                Map<String, String> devMap=devList.get(i);
+                devids[i]=devMap.get("dev_id");
+            }
+            dataLogService.deleteDataLog(devids);
+        }
+
+        return new ResponeResult();
+    }
 }

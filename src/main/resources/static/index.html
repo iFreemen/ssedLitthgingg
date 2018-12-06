@@ -129,7 +129,7 @@
                     <div id="sidebar-menu">
                         <ul>
                             <li>
-                                <a href="#/module/devPage" class="waves-effect waves-light "><i class="md md-home"></i><span> 首页 </span></a>
+                                <a href="#/module/home" class="waves-effect waves-light "><i class="md md-home"></i><span> 首页 </span></a>
                             </li>
                             
 
@@ -158,7 +158,7 @@
                                         <a href="#/module/logShow"><span>历史数据</span></a>
                                     </li>
 									<li>
-                                        <a href="#/module/devPage"><span>清空数据</span></a>
+                                        <a ng-click="clearData()"><span>清空数据</span></a>
                                     </li>
 									
                                 </ul>
@@ -364,6 +364,7 @@
 				});
 				//查询报警数
 				$scope.queryFaultCount=function(isFirst ){
+					/*
 					$http.post("service/queryFaultCount").success(function(data) {
 						if(data.success){
 							var cou =data.resultObj;
@@ -376,7 +377,7 @@
 								$rootScope.faultCount =cou;
 							}
 						}
-					});
+					});*/
 				}
 
 				$scope.queryFaultCount(true);
@@ -483,10 +484,10 @@
 			        });
 
 			    }
-				$scope.clearLiteData = function(){
+				$scope.clearData = function(){
 					swal({   
-			            title: "是否清空NBIOT设备所有数据？",
-			            text: "该操作将清空NBIOT设备的所有上报数据记录，且无法恢复！\r\n请谨慎操作！",
+			            title: "是否清空所有设备的历史数据？",
+			           /* text: "该操作将清空NBIOT设备的所有上报数据记录，且无法恢复！\r\n请谨慎操作！",*/
 			            type: "warning",   
 			            showCancelButton: true,   
 			            confirmButtonColor: "#DD6B55",   
@@ -505,10 +506,8 @@
 				}
 				
 				$scope.delLiteAll = function(){
-					$http.post("service/deleteLiteDataAll").success(function(data) {
-							if(data.resultObj == "errorMsg"){
-								swal(data.message, null, "error");
-							}else{
+					$http.post("service/deleteAllDataLog").success(function(data) {
+							if(data.success){
 								swal("删除成功", null, "success");
 							}
 						});

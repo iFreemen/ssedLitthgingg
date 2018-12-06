@@ -1,6 +1,6 @@
 <div class="container" >
     <div class="row">
-        <div class="col-md-12">
+        <!--<div class="col-md-12">-->
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">模板列表</h3>
@@ -48,13 +48,13 @@
                                     </thead>
                                     <tbody>
                                     <tr ng-repeat="entity in data"  >
-                                        <td ng-bind="entity.modelName" ng-click="gotoModel(entity)" ></td>
-                                        <td ng-bind="entity.addDate" ng-click="gotoModel(entity)" ></td>
-                                        <td ng-bind="entity.addUid"  ng-click="gotoModel(entity)"></td>
-                                        <td ng-bind="entity.udpDate" ng-click="gotoModel(entity)" ></td>
-                                        <td ng-bind="entity.udpUid"  ng-click="gotoModel(entity)"></td>
+                                        <td ng-bind="entity.modelName" ></td>
+                                        <td ng-bind="entity.addDate"  ></td>
+                                        <td ng-bind="entity.addName"  ></td>
+                                        <td ng-bind="entity.udpDate"  ></td>
+                                        <td ng-bind="entity.udpName"  ></td>
                                         <td >
-                                          <!--  <a ng-click="gotoModel(entity)" class="on-default edit-row" style="cursor:pointer">详情</a>-->
+                                           <a ng-click="gotoModel(entity)" class="on-default edit-row" style="cursor:pointer"><i class="fa fa-pencil"></i></a>
                                             <!--<a ng-click="deleteModel(entity)" class="on-default edit-row" style="cursor:pointer">删除</a>-->
                                            <!-- <a class="on-default edit-row"  ng-if="entity.isEdit != true " ng-click="gotoModel(entity)" ><i class="fa fa-pencil"></i></a>-->
                                             <a class="on-default remove-row"  ng-click="deleteModel(entity)"><i class="fa fa-trash-o" style="color: #ef5350"></i></a>
@@ -82,7 +82,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+<!--        </div>-->
 
     </div>
 
