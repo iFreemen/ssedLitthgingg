@@ -27,6 +27,9 @@ public enum AttrEnum implements AttrAnalyze{
                     String d1=""+srcContext[0]+srcContext[1];
                     String d2=""+srcContext[2]+srcContext[3];
                     String data = MathUtil.convertTwoBytesToUnSignedInt(d1,d2);
+                    if(modelAttr ==null){
+                       return data;
+                    }
                     result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
                 }
             }catch (Exception e){
@@ -49,6 +52,9 @@ public enum AttrEnum implements AttrAnalyze{
                     String d1=""+srcContext[0]+srcContext[1];
                     String d2=""+srcContext[2]+srcContext[3];
                     String data=MathUtil.convertTwoBytesToSignedInt(d1,d2);
+                    if(modelAttr ==null){
+                        return data;
+                    }
                     result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
                 }
             }catch (Exception e){
@@ -73,6 +79,9 @@ public enum AttrEnum implements AttrAnalyze{
                     String d3=""+srcContext[4]+srcContext[5];
                     String d4=""+srcContext[6]+srcContext[7];
                     String data=MathUtil.convertFourBytesToUnSignedInt(d1,d2,d3,d4);
+                    if(modelAttr ==null){
+                        return data;
+                    }
                     result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
                 }
             }catch (Exception e){
@@ -96,6 +105,9 @@ public enum AttrEnum implements AttrAnalyze{
                     String d3=""+srcContext[4]+srcContext[5];
                     String d4=""+srcContext[6]+srcContext[7];
                     String data=MathUtil.convertFourBytesToUnSignedInt(d3,d4,d1,d2);
+                    if(modelAttr ==null){
+                        return data;
+                    }
                     result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
                 }
             }catch (Exception e){
@@ -120,6 +132,9 @@ public enum AttrEnum implements AttrAnalyze{
                     String d3=""+srcContext[4]+srcContext[5];
                     String d4=""+srcContext[6]+srcContext[7];
                     String data=MathUtil.convertFourBytesToSignedInt(d1,d2,d3,d4);
+                    if(modelAttr ==null){
+                        return data;
+                    }
                     result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
                 }
             }catch (Exception e){
@@ -144,6 +159,9 @@ public enum AttrEnum implements AttrAnalyze{
                     String d3=""+srcContext[4]+srcContext[5];
                     String d4=""+srcContext[6]+srcContext[7];
                     String data=MathUtil.convertFourBytesToSignedInt(d3,d4,d1,d2);
+                    if(modelAttr ==null){
+                        return data;
+                    }
                     result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
                 }
             }catch (Exception e){
@@ -167,6 +185,9 @@ public enum AttrEnum implements AttrAnalyze{
                     String d3=""+srcContext[4]+srcContext[5];
                     String d4=""+srcContext[6]+srcContext[7];
                     String data= MathUtil.getFloat(d1+d2+d3+d4);
+                    if(modelAttr ==null){
+                        return data;
+                    }
                     result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
                 }
             }catch (Exception e){
@@ -190,6 +211,9 @@ public enum AttrEnum implements AttrAnalyze{
                     String d3=""+srcContext[4]+srcContext[5];
                     String d4=""+srcContext[6]+srcContext[7];
                     String data= MathUtil.getFloat(d3+d4+d1+d2);
+                    if(modelAttr ==null){
+                        return data;
+                    }
                     result = MathUtil.expressAndFormat(modelAttr.getExpression(),modelAttr.getNumberFormat(),data);
                 }
             }catch (Exception e){
@@ -364,8 +388,9 @@ public enum AttrEnum implements AttrAnalyze{
     }
 
     public static void main(String[] args) {
-        System.out.println( Float.intBitsToFloat(Integer.parseInt("3F9D70A4",16)));
-        System.out.println( Float.intBitsToFloat(Integer.parseInt("A4709D3F",16)));
+       // System.out.println( Float.intBitsToFloat(Integer.parseInt("3F9D70A4",16)));
+        //System.out.println( Float.intBitsToFloat(Integer.parseInt("A4709D3F",16)));
+        System.out.println(INT_TYPE_FOUR_SIGNED_CDAB.execute(null,"00000001"));
     }
 
     boolean check(String context){
