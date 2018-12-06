@@ -52,5 +52,9 @@ public interface EquipmentService {
 
 	List<String> getEquipmentIdListAll();
 
+	PageInfo queryEquipmentPage();
+
+	Equipment getEquById();
+
 
 }

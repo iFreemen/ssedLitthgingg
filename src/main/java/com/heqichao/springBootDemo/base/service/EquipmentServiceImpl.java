@@ -8,6 +8,7 @@ import com.heqichao.springBootDemo.base.entity.Equipment;
 import com.heqichao.springBootDemo.base.util.PageUtil;
 import com.heqichao.springBootDemo.base.util.ServletUtil;
 import com.heqichao.springBootDemo.base.util.StringUtil;
+import com.heqichao.springBootDemo.module.mapper.DataDetailMapper;
 import com.heqichao.springBootDemo.module.mqtt.MqttUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,11 +33,14 @@ import java.util.Map;
 public class EquipmentServiceImpl implements EquipmentService {
     @Autowired
     private EquipmentMapper eMapper ;
+    @Autowired
+    private DataDetailMapper dMapper ;
 
     @Override
     public PageInfo queryEquipmentList() {
     	Map map = RequestContext.getContext().getParamMap();
     	String eid = StringUtil.getStringByMap(map,"eid");
+    	Integer gid = StringUtil.getIntegerByMap(map,"gid");
     	String type = StringUtil.getStringByMap(map,"type");
     	String seleStatus = StringUtil.getStringByMap(map,"seleStatus");
     	PageUtil.setPage();
@@ -42,9 +48,36 @@ public class EquipmentServiceImpl implements EquipmentService {
         		ServletUtil.getSessionUser().getCompetence(),
         		ServletUtil.getSessionUser().getId(),
         		ServletUtil.getSessionUser().getParentId(),
-        		eid,type,seleStatus
+        		gid,eid,type,seleStatus
         		));
     	return pageInfo;
+    }
+    @Override
+    public PageInfo queryEquipmentPage() {
+    	Map map = RequestContext.getContext().getParamMap();
+    	String eid = StringUtil.getStringByMap(map,"eid");
+    	Integer gid = StringUtil.getIntegerByMap(map,"gid");
+    	String type = StringUtil.getStringByMap(map,"type");
+    	String seleStatus = StringUtil.getStringByMap(map,"seleStatus");
+    	List<Map<String,Object>> newLst = new ArrayList<Map<String,Object>>();
+    	List<Equipment> eLst = eMapper.getEquipments(
+        		ServletUtil.getSessionUser().getCompetence(),
+        		ServletUtil.getSessionUser().getId(),
+        		ServletUtil.getSessionUser().getParentId(),
+        		gid,eid,type,seleStatus
+        		);
+    	for (Equipment equ : eLst) {
+    		Map<String,Object> newClu= new HashMap<String,Object>();
+    		newClu.put("name", equ.getName());
+    		newClu.put("devId", equ.getDevId());
+    		newClu.put("type", equ.getTypeName());
+    		newClu.put("online", equ.getOnline());
+    		newClu.put("dataPoints",dMapper.queryDetailByDevId(equ.getDevId()));
+    		newLst.add(newClu);
+    	}
+    	PageUtil.setPage();
+        PageInfo pageInfo = new PageInfo(newLst);
+        return pageInfo;
     }
     /**
      * 根据uid查找所有设备
@@ -66,6 +99,13 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Override
     public Equipment getEquipmentInfo(String  devId) {
     	return eMapper.getEquipmentInfo(devId);
+    }
+    
+    @Override
+    public Equipment getEquById() {
+    	Map map = RequestContext.getContext().getParamMap();
+    	String devId = StringUtil.getStringByMap(map,"devId");
+    	return eMapper.getEquById(devId);
     }
     
     /**
@@ -98,39 +138,29 @@ public class EquipmentServiceImpl implements EquipmentService {
 
 	@Override
     public ResponeResult insertEqu(Map map) {
-//    	Equipment equ = new Equipment(map);
-//    	Integer uid = ServletUtil.getSessionUser().getId();
-//    	Integer cmp = ServletUtil.getSessionUser().getCompetence();
-//    	Integer oid = StringUtil.objectToInteger(StringUtil.getStringByMap(map,"seleCompany"));
-//    	if(equ.getEid() == null || uid == null || cmp == 4) {
-//    		return new ResponeResult(true,"Add Equipment Input Error!","errorMsg");
-//    	}
-//    	if(eMapper.duplicatedEid(equ.getEid())) {
-//    		return new ResponeResult(true,"杆塔Id重复","errorMsg");
-//    	}
-//    	if(cmp == 2 && oid == null) {
-//    		return new ResponeResult(true,"Add Equipment Input Error!","errorMsg");
-//		}else {
-//    		if(cmp == 2) {
-//    			equ.setOwnId(oid);
-//    		}else {
-//    			equ.setOwnId(uid);
-//    		}
-//    		equ.setUpdateUid(uid);
-//    		equ.seteStatus("N");
-//    		if(eMapper.insertEquipment(equ)>0) {
-//    			List<String> mqId = new ArrayList<String>();
-//    			mqId.add(equ.getEid());
-//    			try {
-//					MqttUtil.subscribeTopicMes(mqId);
-//					return new ResponeResult();
-//				} catch (Exception e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//					 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-//				}
-//    		}
-//    	}
+    	Equipment equ = new Equipment(map);
+    	Integer uid = ServletUtil.getSessionUser().getId();
+    	Integer cmp = ServletUtil.getSessionUser().getCompetence();
+    	if(equ.getName() == null ||equ.getDevId() == null || uid == null || cmp == 4) {
+    		return new ResponeResult(true,"Add Equipment Input Error!","errorMsg");
+    	}
+    	if(eMapper.duplicatedEid(equ.getDevId(),uid)) {
+    		return new ResponeResult(true,"设备编号重复","errorMsg");
+    	}
+		equ.setAddUid(uid);
+		equ.setValid("N");
+		if(eMapper.insertEquipment(equ)>0) {
+			List<String> mqId = new ArrayList<String>();
+			mqId.add(equ.getDevId());
+			try {
+				MqttUtil.subscribeTopicMes(mqId);
+				return new ResponeResult();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			}
+		}
     	return  new ResponeResult(true,"Add Equipment fail","errorMsg");
     }
     

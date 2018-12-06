@@ -1,5 +1,6 @@
 package com.heqichao.springBootDemo.base.control;
 
+import com.github.pagehelper.PageInfo;
 import com.heqichao.springBootDemo.base.param.ResponeResult;
 import com.heqichao.springBootDemo.base.service.EquipmentService;
 import java.util.List;
@@ -8,7 +9,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,10 +30,13 @@ public class EquipmentController extends BaseController{
     public ResponeResult getUsers() {
     	return new ResponeResult(eService.queryEquipmentList());
     }
-    
-    @RequestMapping(value = "/getUserEqu")
-    public List<String> getUserEquipmentIdList(@RequestParam("id") Integer uid) {
-    	return eService.getUserEquipmentIdList(uid);
+    @RequestMapping(value = "/getEquById")
+    public ResponeResult getEquById() {
+    	return new ResponeResult(eService.getEquById());
+    }
+    @RequestMapping(value = "/getEquPage")
+    public ResponeResult queryEquipmentPage() {
+    	return new ResponeResult(eService.queryEquipmentPage());
     }
     
     @RequestMapping(value = "/getEquAll")

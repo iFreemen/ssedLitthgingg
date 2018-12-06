@@ -35,8 +35,6 @@
 		<link href="assets/css/select.css" rel="stylesheet" type="text/css">
 		
 
-
-
 	</head>
 	<body class="fixed-left" ng-controller="indexCtrl" >
 
@@ -141,11 +139,11 @@
                                 <ul class="list-unstyled">
                                 
                                 	<li>
-                                        <a href="#/module/devPage"><span>地图展示</span></a>
+                                        <a href="#/module/equMap"><span>地图展示</span></a>
                                     </li>
                                     
                                     <li>
-                                        <a href="#/module/devPage"><span>列表展示</span></a>
+                                        <a href="#/module/devList"><span>列表展示</span></a>
                                     </li>
                                 </ul>
                             </li> 
@@ -208,16 +206,24 @@
 			</footer>
 		</div>
 
+<!-- <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&amp;ak=TmYyujvLywBDOj91omCGrbmS0YQ6oswu"></script> -->
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&amp;ak=0UeqWhqYsjiNbWkLdaPdvSqc"></script>
+<script type="text/javascript" src="https://api.map.baidu.com/getscript?v=3.0&amp;ak=0UeqWhqYsjiNbWkLdaPdvSqc&amp;services=&amp;t=20181204121730"></script>
+<script type="text/javascript" src="https://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+<script type="text/javascript" src="https://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
 
 		<!-- angular -->
+		<script type="text/javascript" src="static/js/echarts.min.js"></script>
 		<script type="text/javascript" src="static/js/angular-1.5.8.min.js"></script>
 		<script type="text/javascript" src="static/js/angular-route.min.js"></script>
 		<script type="text/javascript" src="app/app.js"></script>
 		<script type="text/javascript" src="app/service/httpInterceptor.js"></script>
 		<script type="text/javascript" src="app/directive/pageDirectives.js"></script>
+		<script type="text/javascript" src="app/directive/tmPageDirectives.js"></script>
 		<script type="text/javascript" src="app/directive/btnLoadDirectives.js"></script>
 		<script type="text/javascript" src="app/directive/groupsDirective.js"></script>
 
+		
 		<!-- html -->
 
 		<script>
@@ -319,6 +325,8 @@
 		<script src="app/controller/modelEditController.js"></script>
 		<script src="app/controller/modelListController.js"></script>
 		<script src="app/controller/logShowController.js"></script>
+		<script src="app/controller/devMapController.js"></script>
+		<script src="app/controller/devListController.js"></script>
 		<script type="text/javascript">
 			jQuery(document).ready(function($) {
 				$('.counter').counterUp({
@@ -344,6 +352,8 @@
 					if(data.resultObj){
 						//保存全局的用户
 						$rootScope.user=data.resultObj;
+						//全局编辑权限
+						$rootScope.edit_cmp=data.resultObj.cmp;
 						$scope.ajxUserInfo($rootScope.user);
 						var homeDiv=document.getElementById("wrapper");
 						homeDiv.style.display='block';

@@ -40,7 +40,10 @@ var demoApp =angular.module("demoApp", ["ngRoute"]);
 			controller: warningLogCtrl
 	}).when("/module/equMap", {
 		templateUrl: "app/module/equMap.html",
-		controller: equMapCtrl
+		controller: devMapCtrl
+	}).when("/module/devList", {
+		templateUrl: "app/module/devList.html",
+		controller: devLstCtrl
 	}).when("/module/devChart/:devId/:logId", {
 			templateUrl: "app/module/devChart.html",
 			controller: devChartCtrl

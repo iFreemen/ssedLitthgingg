@@ -13,7 +13,7 @@ import com.heqichao.springBootDemo.base.util.StringUtil;
  * @author Muzzy Xu.
  * 
  */
-@Component("lite_application")
+@Component("applications")
 public class LiteApplication extends BaseEntity  {
 
 
@@ -57,6 +57,12 @@ public class LiteApplication extends BaseEntity  {
 		return appId;
 	}
 	public void setAppId(String appId) {
+		this.appId = appId;
+	}
+	public String getApp() {
+		return appId;
+	}
+	public void setApp(String appId) {
 		this.appId = appId;
 	}
 	public String getAppName() {
@@ -107,6 +113,12 @@ public class LiteApplication extends BaseEntity  {
 	public void setOwnId(Integer ownId) {
 		this.ownId = ownId;
 	}
+	public Integer getUid() {
+		return ownId;
+	}
+	public void setUid(Integer ownId) {
+		this.ownId = ownId;
+	}
 	public Integer getUpdateUid() {
 		return updateUid;
 	}
@@ -123,6 +135,12 @@ public class LiteApplication extends BaseEntity  {
 		return status;
 	}
 	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getVaild() {
+		return status;
+	}
+	public void setVaild(String status) {
 		this.status = status;
 	}
 	public String getSubscribeNotifycation() {

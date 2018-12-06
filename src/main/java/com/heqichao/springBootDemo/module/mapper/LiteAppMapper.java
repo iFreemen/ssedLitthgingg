@@ -12,12 +12,12 @@ public interface LiteAppMapper {
 
 
 	@Select("<script>"
-            +"SELECT *  FROM lite_application  where 1=1 "
-            + "<if test =\"cmp == 3 \"> and  own_id= #{uid}  </if>"
-            + "<if test =\"cmp == 4 \"> and  own_id= #{pId}  </if>"
-            + "<if test =\"appId !=null  and appId!='' \"> and app_id like CONCAT(CONCAT('%',#{appId}),'%')  </if>"
+            +"SELECT *  FROM applications  where 1=1 "
+            + "<if test =\"cmp == 3 \"> and  uid= #{uid}  </if>"
+            + "<if test =\"cmp == 4 \"> and  uid= #{pId}  </if>"
+            + "<if test =\"appId !=null  and appId!='' \"> and app like CONCAT(CONCAT('%',#{appId}),'%')  </if>"
             + "<if test =\"appName !=null  and appName!='' \"> and app_name like CONCAT(CONCAT('%',#{appName}),'%')  </if>"
-            +" and status = 'N' order by create_time desc "
+            +" and valid = 'N' order by add_date desc "
             +"</script>")
      List<LiteApplication> queryLiteApps(
     		 @Param("uid") Integer uid,
@@ -26,44 +26,41 @@ public interface LiteAppMapper {
     		 @Param("appId") String appId,
     		 @Param("appName") String appName);
 
-	@Insert("insert into lite_application (app_id,app_name,secret,platform_ip,app_auth,callback_url,post_asyn_cmd,subscribe_notifycation,remark,own_id,status,update_uid)"
-			+ " values(#{appId},#{appName},#{secret},#{platformIp},#{appAuth},#{callbackUrl},#{postAsynCmd},#{subscribeNotifycation},#{remark},#{ownId},'N',#{updateUid}) ")
+	@Insert("insert into applications (app,app_name,secret,platform_ip,app_auth,callback_url,subscribe_notifycation,remark,uid,valid,udp_uid)"
+			+ " values(#{appId},#{appName},#{secret},#{platformIp},#{appAuth},#{callbackUrl},#{subscribeNotifycation},#{remark},#{ownId},'N',#{updateUid}) ")
 	public int insertLiteApplication(LiteApplication app);
 	
-	@Update("update  lite_application set app_id=#{appId},app_name=#{appName},"
+	@Update("update  applications set app=#{appId},app_name=#{appName},"
 			+ "platform_ip=#{platformIp},app_auth=#{appAuth},callback_url=#{callbackUrl},post_asyn_cmd=#{postAsynCmd},subscribe_notifycation=#{subscribeNotifycation},"
-			+ "remark=#{remark},own_id=#{ownId},update_time=sysdate(),update_uid=#{updateUid}"
-			+ " where id=#{id} and status = 'N' ")
+			+ "remark=#{remark},uid=#{ownId},update_time=sysdate(),udp_uid=#{updateUid}"
+			+ " where id=#{id} and valid = 'N' ")
 	public int updateLiteEquipment(LiteApplication app);
 	
-	@Update("update  lite_application set secret=#{secret},update_time=sysdate(),update_uid=#{updateUid}"
-			+ " where id=#{id} and status = 'N' ")
+	@Update("update  applications set secret=#{secret},update_time=sysdate(),udp_uid=#{updateUid}"
+			+ " where id=#{id} and valid = 'N' ")
 	public int resetAppSecret(LiteApplication app);
 
-	@Select("select count(1)>0 from lite_application where app_id = #{appId} and status = 'N' ")
+	@Select("select count(1)>0 from applications where app = #{appId} and valid = 'N' ")
 	public boolean duplicatedAid(@Param("appId")String appId);
 	
-	@Select("select count(1)>0 from lite_application where app_id = #{appId} and status = 'N' and id not in (#{id}) ")
+	@Select("select count(1)>0 from applications where app = #{appId} and valid = 'N' and id not in (#{id}) ")
 	public boolean duplicatedEidByUpd(@Param("appId")String appId,@Param("id")Integer id);
 
 
-    @Delete("update lite_application set status = 'D',update_time=sysdate(),update_uid=#{uid} where status = 'N' and id= #{id}   ")
+    @Delete("update applications set valid = 'D',update_time=sysdate(),udp_uid=#{uid} where valid = 'N' and id= #{id}   ")
     int deleteById(@Param("id")Integer id,@Param("uid")Integer uid);
     
     @Delete("<script>"
-    		+"update lite_log l,lite_equipment e set l.l_status = 'D',"
-    		+ "l.updateTime=sysdate(),l.update_uid=#{uid} where l.l_status = 'N' and e.deviceId=l.deviceId "
-    		+ "<if test =\"cmp == 3 \"> and  e.own_id= #{uid}  </if>"
-            + "<if test =\"cmp == 4 \"> and  e.own_id= 0  </if>"
+    		+"update lite_log l,lite_equipment e set l.l_valid = 'D',"
+    		+ "l.updateTime=sysdate(),l.udp_uid=#{uid} where l.valid = 'N' and e.deviceId=l.deviceId "
+    		+ "<if test =\"cmp == 3 \"> and  e.uid= #{uid}  </if>"
+            + "<if test =\"cmp == 4 \"> and  e.uid= 0  </if>"
     		+ "   "
     		+"</script>")
     int deleteLiteAll(@Param("uid") Integer uid,
    		 @Param("pId") Integer pId,
    		 @Param("cmp") Integer cmp);
     
-//    @Delete("update lite_application a,lite_equipment e set a.status = 'D',e.status = 'D',"
-//    		+ "a.update_time=sysdate(),e.update_time=sysdate(),a.update_uid=#{uid},e.update_uid=#{uid} where a.status = 'N' or e.status = 'N'   ")
-//    int deleteLiteAll(@Param("uid")Integer uid);
 
 
 }
