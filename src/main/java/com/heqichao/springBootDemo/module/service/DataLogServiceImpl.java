@@ -3,6 +3,7 @@ package com.heqichao.springBootDemo.module.service;
 import com.heqichao.springBootDemo.base.entity.Equipment;
 import com.heqichao.springBootDemo.base.entity.User;
 import com.heqichao.springBootDemo.base.exception.ResponeException;
+import com.heqichao.springBootDemo.base.param.ApplicationContextUtil;
 import com.heqichao.springBootDemo.base.service.EquipmentService;
 import com.heqichao.springBootDemo.base.service.UserService;
 import com.heqichao.springBootDemo.base.util.Base64Encrypt;
@@ -44,17 +45,12 @@ public class DataLogServiceImpl implements DataLogService {
     private UserService userService;
 
     @Override
-    public void saveDataLog(String devId, String srcData) {
+    public void saveDataLog(String devId,String data, String srcData){
+
         Date date =new Date();
         //去除前后的主数据
         String mainData="";
-        if(StringUtil.isNotEmpty(devId) && StringUtil.isNotEmpty(srcData)){
-            //转译数据
-            String[] transDatas = Base64Encrypt.decodeToHexStr(srcData);
-            if(transDatas==null || transDatas.length<1){
-                return;
-            }
-            String data=StringUtil.getString(transDatas,"");
+        if(StringUtil.isNotEmpty(devId) && StringUtil.isNotEmpty(data)){
             DataLog dataLog =new DataLog();
             dataLog.setSrcData(srcData);
             dataLog.setData(data);
@@ -125,6 +121,23 @@ public class DataLogServiceImpl implements DataLogService {
             dataDetailMapper.save(dataDetails);
 
         }
+    }
+
+
+    @Override
+    public void saveDataLog(String devId, String srcData) {
+        //转译数据
+        if(StringUtil.isNotEmpty(devId) && StringUtil.isNotEmpty(srcData)){
+            String[] transDatas = Base64Encrypt.decodeToHexStr(srcData);
+            if(transDatas==null || transDatas.length<1){
+                return;
+            }
+            String data=StringUtil.getString(transDatas,"");
+            DataLogService dataLogService= (DataLogService) ApplicationContextUtil.getApplicationContext().getBean("dataLogServiceImpl");
+            dataLogService.saveDataLog(devId,data,srcData);
+        }
+
+
     }
 
     @Override

@@ -76,15 +76,21 @@ public class BeanUtil {
 			}
 			if (orig.getClass().getSuperclass().equals(BaseEntity.class)) {
 				BaseEntity baseEntity = (BaseEntity) orig;
-				Object value = baseEntity.getId();
 				 if (desObj instanceof Map) {
-					((Map) desObj).put("id", value);
+					((Map) desObj).put("id", baseEntity.getId());
+					((Map) desObj).put("addDate", baseEntity.getAddDate());
+					((Map) desObj).put("addUid", baseEntity.getAddUid());
+					((Map) desObj).put("udpDate", baseEntity.getUdpDate());
+					((Map) desObj).put("udpUid", baseEntity.getUdpUid());
 				}
 			}else if (BaseEntity.class.isAssignableFrom(orig.getClass().getSuperclass())) {
 				BaseEntity baseEntity = (BaseEntity) orig;
-				Object value = baseEntity.getId();
 				 if (desObj instanceof Map) {
-					((Map) desObj).put("id", value);
+					((Map) desObj).put("id", baseEntity.getId());
+					 ((Map) desObj).put("addDate", baseEntity.getAddDate());
+					 ((Map) desObj).put("addUid", baseEntity.getAddUid());
+					 ((Map) desObj).put("udpDate", baseEntity.getUdpDate());
+					 ((Map) desObj).put("udpUid", baseEntity.getUdpUid());
 				}
 			}
 		} catch (Exception e) {

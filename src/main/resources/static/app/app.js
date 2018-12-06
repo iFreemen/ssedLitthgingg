@@ -54,9 +54,9 @@ var demoApp =angular.module("demoApp", ["ngRoute"]);
 			templateUrl: "app/module/logShow.html",
 			controller: logShowCtrl
 		}).otherwise({
-//		templateUrl: "app/module/home.html",
-//			controller: homeCtrl
-		templateUrl: "app/module/devPage.html",
-		controller: devPage
+		templateUrl: "app/module/home.html",
+			controller: homeCtrl
+		/*templateUrl: "app/module/devPage.html",
+		controller: devPage*/
 	});
 }]);

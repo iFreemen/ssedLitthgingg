@@ -113,6 +113,7 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public PageInfo queryUserPageModel(String modelName) {
         List<Model> list =new ArrayList<>();
+        List<Map> returnList =new ArrayList<>();
         Integer cmp =ServletUtil.getSessionUser().getCompetence();
         Integer userId =ServletUtil.getSessionUser().getId();
         if(cmp !=null ) {
@@ -129,7 +130,18 @@ public class ModelServiceImpl implements ModelService {
                 list= modelMapper.queryByUserIds(userList,modelName);
             }
         }
-        PageInfo pageInfo = new PageInfo(list);
+        if(list!=null && list.size()>0){
+            //补充人员名字
+            for(Model model :list){
+                Map map =new HashMap();
+                BeanUtil.copyProperties(map,model);
+                map.put("addName",UserCache.getUserName(model.getAddUid()));
+                map.put("udpName",UserCache.getUserName(model.getUdpUid()));
+                returnList.add(map);
+            }
+        }
+
+        PageInfo pageInfo = new PageInfo(returnList);
         return pageInfo;
     }
 

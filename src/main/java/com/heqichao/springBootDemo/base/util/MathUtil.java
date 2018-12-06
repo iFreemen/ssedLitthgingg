@@ -201,7 +201,7 @@ public class MathUtil {
     }
 
     public static void main(String[] args) {
-        String ex=" (x +1.1 )*2";
+       /* String ex=" (x +1.1 )*2";
         double data = (double) 2.2;
         try {
             Object o =  jse.eval(replaceExpression(ex,data+""));
@@ -210,6 +210,7 @@ public class MathUtil {
             t.printStackTrace();
         }
 
-        System.out.println((2.2+1.1)*2);
+        System.out.println((2.2+1.1)*2);*/
+
     }
 }

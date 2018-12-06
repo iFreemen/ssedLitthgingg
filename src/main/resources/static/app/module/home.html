@@ -3,63 +3,65 @@
 	
 
     <div class="row">
-                 <div class="col-md-8 col-sm-8 col-lg-4" ng-show="!cmp">
-                     <div class="mini-stat clearfix bx-shadow bg-info">
-                         <div class="mini-stat-info text-right">
-                             <span >客户数量</span>
-                         </div>
-                         <div class="tiles-progress">
-                             <div class="m-t-20">
-                                 <h5 class="text-uppercase text-white m-0">客户总数： <span class="pull-right" ng-bind="home.custAll"></span></h5>
-                                 <h5 class="text-uppercase text-white m-0">用户总数： <span class="pull-right" ng-bind="home.userAll"></span></h5>
-                             </div>
-                         </div>
-                     </div>
-                 </div>
-                 
-                 <div class="col-md-8 col-sm-8 col-lg-4" ng-show="cmp">
-                     <div class="mini-stat clearfix bx-shadow bg-info">
-                         <div class="mini-stat-info text-right">
-                             <span >雷击情况</span>
-                         </div>
-                         <div class="tiles-progress">
-                             <div class="m-t-20">
-                                 <h5 class="text-uppercase text-white m-0">电流峰值： <span class="pull-right" ng-bind="home.peak"></span></h5>
-                                 <h5 class="text-uppercase text-white m-0">最近雷击时间： <span class="pull-right" ng-bind="home.lastTime"></span></h5>
-                             </div>
-                         </div>
-                     </div>
-                 </div>
-                 
-                 <div class="col-md-8 col-sm-8 col-lg-4">
-                     <div class="mini-stat clearfix bg-success bx-shadow">
-                         <div class="mini-stat-info text-right">
-                             <span >LORA设备状态</span>
-                         </div>
-                         <div class="tiles-progress">
-                             <div class="m-t-20">
-                                 <h5 class="text-uppercase text-white m-0">LORA总数： <span class="pull-right" ng-bind="home.equNom"></span></h5>
-                                 <h5 class="text-uppercase text-white m-0">其中在线：<span class="pull-right" ng-bind="home.equBrD"></span></h5>
-                             </div>
-                         </div>
-                     </div>
-                 </div>
 
-                 <div class="col-md-8 col-sm-8 col-lg-4">
-                     <div class="mini-stat clearfix bg-purple bx-shadow">
-                         <div class="mini-stat-info text-right">
-                             <span >故障数量</span>
-                         </div>
-                         <div class="tiles-progress">
-                             <div class="m-t-20">
-                                 <h5 class="text-uppercase text-white m-0">待处理： <span class="pull-right" ng-bind="$root.faultCount"></span></h5>
-                                 <h5 class="text-uppercase text-white m-0" style="visibility:hidden;">111<span class="pull-right">111</span></h5>
-                             </div>
+             <div class="col-md-8 col-sm-8 col-lg-3">
+                 <div class="mini-stat clearfix bg-info bx-shadow">
+                     <div class="mini-stat-info text-right">
+                         <span >LORA设备状态</span>
+                     </div>
+                     <div class="tiles-progress">
+                         <div class="m-t-20">
+                             <h5 class="text-uppercase text-white m-0">LORA总数： <span class="pull-right" ng-bind="home.equNom"></span></h5>
+                             <h5 class="text-uppercase text-white m-0">其中在线：<span class="pull-right" ng-bind="home.equBrD"></span></h5>
                          </div>
                      </div>
                  </div>
+             </div>
+
+
+        <div class="col-md-8 col-sm-8 col-lg-3" >
+            <div class="mini-stat clearfix bx-shadow bg-success">
+                <div class="mini-stat-info text-right">
+                    <span >NBIOT设备</span>
+                </div>
+                <div class="tiles-progress">
+                    <div class="m-t-20">
+                        <h5 class="text-uppercase text-white m-0">NBIOT总数： <span class="pull-right" ng-bind="home.equNom"></span></h5>
+                        <h5 class="text-uppercase text-white m-0">其中在线：<span class="pull-right" ng-bind="home.equBrD"></span></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8 col-sm-8 col-lg-3">
+            <div class="mini-stat clearfix bg-purple bx-shadow">
+                <div class="mini-stat-info text-right">
+                    <span >GPRS设备状态</span>
+                </div>
+                <div class="tiles-progress">
+                    <div class="m-t-20">
+                        <h5 class="text-uppercase text-white m-0">GPRS总数： <span class="pull-right" ng-bind="home.equNom"></span></h5>
+                        <h5 class="text-uppercase text-white m-0">其中在线：<span class="pull-right" ng-bind="home.equBrD"></span></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <div class="col-md-8 col-sm-8 col-lg-3">
+                 <div class="mini-stat clearfix  bg-primary bx-shadow">
+                     <div class="mini-stat-info text-right">
+                         <span >故障数量</span>
+                     </div>
+                     <div class="tiles-progress">
+                         <div class="m-t-20">
+                             <h5 class="text-uppercase text-white m-0">待处理： <span class="pull-right" ng-bind="$root.faultCount"></span></h5>
+                             <h5 class="text-uppercase text-white m-0" style="visibility:hidden;">111<span class="pull-right">111</span></h5>
+                         </div>
+                     </div>
+                 </div>
+             </div>
                  
-             </div> 
+    </div>
              <!-- End row-->
 
 
