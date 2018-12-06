@@ -52,7 +52,9 @@ public interface EquipmentService {
 
 	List<String> getEquipmentIdListAll();
 
-	ResponeResult queryEquipmentPage();
+	PageInfo queryEquipmentPage();
+
+	Equipment getEquById();
 
 
 }

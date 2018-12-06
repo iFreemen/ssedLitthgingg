@@ -13,7 +13,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="panel panel-default">
-				<div class="panel-body">
+				<div class="panel-body monitor_box">
 				     <div class="col-xs-12 col-sm-5 col-md-3 left_monitor">
 		                <div class="monitor_left" style="margin-bottom: 20px;">
 		                    <ul class="monitor_ul">
@@ -32,11 +32,10 @@
 		                                </div>
 		                            </div>
 		                        </li>
-		                        <div ng-if="!devListLoadFinished" style="text-align:center;padding-top: 35px;"><div class="loaderData"></div></div>
-		                        <li ng-repeat="eqm in equipments" ng-if="devListLoadFinished">
+		                        <li ng-repeat="eqm in equipments" >
 		                            <div class="monitor_line"><img ng-src="{{getStatusImg(eqm.online)}}"/></div>
 		                            <div class="monitor_didData">
-		                                <a title="{{eqm.name}}" href={{"#monitor/monitorList#"+eqm.devId}}>{{eqm.name}}</a>
+		                                <a title="{{eqm.name}}" href={{"#/module/devList#"+eqm.devId}}>{{eqm.name}}</a>
 		                                <em>{{eqm.devId}}</em>
 		                            </div>
 		                        </li>
@@ -45,6 +44,47 @@
                         <page-info pages="pages" curpage="quereyData.page" change="changePage(page)" total="total"></page-info>
 		                </div>
             		</div>
+		                
+		                <div class="col-xs-12 col-sm-7 col-md-9 right_monitor">
+			                <div class="monitor_show" id="monitor_toggle" title="隐藏"><i class="ion-navicon"></i></div>
+			                <div ng-repeat="equ in equipments" style="margin-top: 20px;" class="repeat_list">
+			                    <div id="{{equ.devId}}"
+			                         class="link_null"></div>
+			                    <h4 class="data_h4 clearfix">设备名称：{{equ.name}}（{{equ.type}}）<span class="decice_num">设备编号：{{equ.devId}}</span></h4>
+			                   <!--循环数据点列表-->
+			                    <div class="monitor_data_list clearfix" ng-repeat="dataPointItem in equ.dataPoints">
+			                        <div class="col-xs-6  col-sm-6 col-md-3 history_padding" style="word-break:break-all;">
+			                            {{dataPointItem.dataName}}<span>数据点ID:{{dataPointItem.id}}</span>
+			                        </div>
+			                        
+			                        <div class="col-xs-6 col-sm-6 col-md-2 history_padding">
+			                            <span>更新时间：</span>
+			                            <span>
+			                                {{dataPointItem.udpDate}}
+			                            </span>
+			                        </div>
+			
+			                        <div class="col-xs-8  col-sm-8 col-md-4 data_value history_padding">
+			                            <div >
+			                                <div>
+												<div style="float:left;display: inline-block;color:black" class="ng-binding">
+													<em style="font-size:12px;" class="ng-binding">当前值：</em>
+													{{dataPointItem.dataValue}}
+													<em class="ng-binding">{{dataPointItem.unit}}</em>
+												</div>
+											</div>
+			                                <div style="display: block;font-size:12px;text-indent:10px;clear: both;" class="ng-binding"></div>
+										</div>
+									</div>
+			                        <div class="col-xs-6 col-sm-6 col-md-2 data_history history_padding ">
+			                            <a href="#" type="button"  class="btn btn-primary waves-effect waves-light" >历史数据 <i class="ion-stats-bars"></i></a>
+			                        </div>
+			                    </div>
+			
+			                </div>
+			            </div>
+			            
+			            
 				</div>
 			</div>
 		</div>

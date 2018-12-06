@@ -1,5 +1,6 @@
 package com.heqichao.springBootDemo.base.control;
 
+import com.github.pagehelper.PageInfo;
 import com.heqichao.springBootDemo.base.param.ResponeResult;
 import com.heqichao.springBootDemo.base.service.EquipmentService;
 import java.util.List;
@@ -29,9 +30,13 @@ public class EquipmentController extends BaseController{
     public ResponeResult getUsers() {
     	return new ResponeResult(eService.queryEquipmentList());
     }
+    @RequestMapping(value = "/getEquById")
+    public ResponeResult getEquById() {
+    	return new ResponeResult(eService.getEquById());
+    }
     @RequestMapping(value = "/getEquPage")
     public ResponeResult queryEquipmentPage() {
-    	return eService.queryEquipmentPage();
+    	return new ResponeResult(eService.queryEquipmentPage());
     }
     
     @RequestMapping(value = "/getEquAll")

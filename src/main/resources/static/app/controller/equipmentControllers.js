@@ -15,6 +15,7 @@ function equCtrl($scope, $http, $rootScope) {
     		search:false,	
     		addEnq:false
     };
+	$scope.seleItem={};
 	$scope.edit_cmp=$rootScope.edit_cmp;
     $scope.init=function(){
     	$scope.loadCtl.search = true;
@@ -43,6 +44,14 @@ function equCtrl($scope, $http, $rootScope) {
         $scope.quereyData.page=1;
         $scope.pages=0;
         $scope.init();
+    }
+    //选中行
+    $scope.selEquInfo=function(equ){
+    	$scope.seleItem=equ;
+    }
+    //关闭详情框
+    $scope.closeEquModal=function(){
+    	$scope.seleItem={};
     }
     
     

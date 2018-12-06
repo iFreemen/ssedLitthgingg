@@ -69,9 +69,7 @@ function equAddCtrl($scope, $http,$rootScope,$location,$timeout) {
 			        }else{
 			        	//修改成功后
 			        	swal("新增成功", null, "success");
-			        	setTimeout(function () {
-			        		$location.path("/module/equView");
-			        	},500);
+			        	$location.path("/module/equView");
 			        }
         });
 		

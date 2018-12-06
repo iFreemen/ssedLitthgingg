@@ -45,6 +45,17 @@ public interface EquipmentMapper {
 	@Select("SELECT * FROM equipments where valid = 'N' and dev_id = #{devId} ")
 	public Equipment getEquipmentInfo(@Param("devId") String  devId);
 	
+	@Select("SELECT e.id,e.name,e.dev_id,e.type_cd,e.model_id,e.group_id,e.group_adm_id,e.app_id,"+
+			" e.verification,e.support_code,e.supporter,e.site,e.address,e.remark,e.online,e.uid,e.udp_date," + 
+			" u.company uName,m.model_name,a.app_name," + 
+			" case e.type_cd when 'L' then 'Lora' when 'N' then 'Nbiot' when 'G' then '2G' else null end as typeName " + 
+			"  FROM equipments e" + 
+			"  left join users u on e.uid=u.id" + 
+			"  left join model m on e.model_id=m.id" + 
+			"  left join applications a on e.app_id=a.id" + 
+			"  where e.valid = 'N' and e.dev_id = #{devId} ")
+	public Equipment getEquById(@Param("devId") String  devId);
+	
 	@Select("SELECT dev_id FROM equipments where valid = 'N' ")
 	public List<String> getEquipmentIdListAll();
 	
@@ -77,8 +88,8 @@ public interface EquipmentMapper {
 			@Param("sType")String sType,
 			@Param("sStatus")String sStatus);
 	
-	@Insert("insert into equipments (name,dev_id,type_cd,model_id,group_id,app_id,verification,support_code,supporter,site,remark,uid,valid,add_uid,udp_uid)"
-			+ " values(#{name},#{devId},#{typeCd},#{modelId},#{groupId},#{appId},#{verification},#{supportCode},#{supporter},#{site},#{remark},#{uid},#{valid},#{addUid},#{addUid}) ")
+	@Insert("insert into equipments (name,dev_id,type_cd,model_id,group_id,app_id,verification,support_code,supporter,site,address,remark,uid,valid,add_uid,udp_uid,online)"
+			+ " values(#{name},#{devId},#{typeCd},#{modelId},#{groupId},#{appId},#{verification},#{supportCode},#{supporter},#{site},#{address},#{remark},#{uid},#{valid},#{addUid},#{addUid},1) ")
 	public int insertEquipment(Equipment equ);
 	
 

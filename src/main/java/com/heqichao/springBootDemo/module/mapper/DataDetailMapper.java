@@ -40,8 +40,15 @@ public interface DataDetailMapper {
             +" order by add_date desc "
             +"</script>")
     List<DataDetail> queryDetail( @Param("devId") String devId, @Param("dataName") String dataName,@Param("status") String status, @Param("start") String start, @Param("end") String end);
+    
+    @Select("<script>"
+    		+" select d.id,d.udp_date,d.dev_id,d.unit,d.data_name,d.data_value from data_detail d " + 
+    		" where d.log_id = (select l.id from data_log l where l.dev_id=#{devId} and l.data_status='N' order by l.udp_date desc limit 1) " + 
+    		" and d.data_status='N'"
+    		+"</script>")
+    List<DataDetail> queryDetailByDevId( @Param("devId") String devId);
 
-
+    
 
 
 }

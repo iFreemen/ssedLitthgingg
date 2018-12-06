@@ -2,8 +2,6 @@ function devLstCtrl($scope, $http,$rootScope,$location,$timeout) {
 	var elem = document.createElement("script");
 	elem.src = 'assets/js/jquery.easyui.min.js';
 	document.body.appendChild(elem);
-	 $scope.devAlarm=[];
-     $scope.devItems=[];
    //为后台请求参数 带分页数据
      $scope.quereyData={
          page:1, //当前页码 初始化为1
@@ -40,8 +38,8 @@ function devLstCtrl($scope, $http,$rootScope,$location,$timeout) {
     	 $scope.loadCtl.search = true;
     	 $scope.quereyData.page=!page ? page : 1;
     	 $scope.quereyData.gid=$('.easyui-combotree').combotree('getValue');
-      	$http.post("service/getEquipments",$scope.quereyData).success(function(data) {
-      		console.log(data.resultObj.list);
+      	$http.post("service/getEquPage",$scope.quereyData).success(function(data) {
+      		console.log(data.resultObj);
       		$scope.equipments = data.resultObj.list;
       		$scope.pages=data.resultObj.pages;
       		$scope.total=data.resultObj.total;
@@ -51,19 +49,9 @@ function devLstCtrl($scope, $http,$rootScope,$location,$timeout) {
       	});
      }
      $scope.init=function(){
-     	$scope.loadCtl.search = true;
-     	$http.post("service/getEquipments",$scope.quereyData).success(function(data) {
-     		console.log(data.resultObj.list);
-     		$scope.equipments = data.resultObj.list;
-     		$scope.pages=data.resultObj.pages;
-//     		$scope.pageArr=data.resultObj.navigatepageNums;
-     		$scope.quereyData.page=data.resultObj.pageNum;
-     		$scope.loadCtl.search = false;
-     		$scope.devListLoadFinished = true;
-     	});
+    	 $scope.getDevGroupsList();
      }
    //初始化
-     $scope.getDevGroupsList();
      $scope.init();
    //翻页
      $scope.changePage=function(page){
