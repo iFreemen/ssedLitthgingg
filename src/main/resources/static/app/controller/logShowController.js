@@ -4,6 +4,8 @@
 
 function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.pages=0;
 
+
+
     $scope.fmtDate = function(date){
         var y = 1900+date.getYear();
         var m = "0"+(date.getMonth()+1);
@@ -36,9 +38,11 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.
     //时间组件
     $("#datepickerStrat"). datepicker().on('changeDate', function () {
         $scope.param.start=$("#datepickerStrat").val();
+        $scope.init();
     });
     $("#datepickerEnd"). datepicker().on('changeDate', function (e) {
         $scope.param.end =$("#datepickerEnd").val();
+        $scope.init();
     });
 
     //初始化数据
@@ -89,6 +93,7 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.
             if($scope.param.attrKey == $scope.attrList[i].attrName){
                 $scope.attrType=$scope.attrList[i].dataType;
                 $scope.unit=$scope.attrList[i].unit;
+                $scope.init();
                 break;
             }
         }

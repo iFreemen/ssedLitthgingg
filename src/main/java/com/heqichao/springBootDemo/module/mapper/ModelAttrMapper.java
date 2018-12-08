@@ -29,9 +29,9 @@ public interface ModelAttrMapper {
     List<ModelAttr> queryByModelId(@Param("modelID") Integer modelID);
 
     @Insert("<script>"
-            +"insert into model_attr (add_date,udp_date,add_uid,udp_uid,model_id,attr_name,data_type,value_type,number_format,unit,expression,order_no) values "
+            +"insert into model_attr (add_date,udp_date,add_uid,udp_uid,model_id,attr_name,data_type,value_type,number_format,unit,expression,memo,order_no) values "
             + "<foreach  collection=\"list\"  separator=\",\" item=\"o\" >"
-            + "(#{o.addDate},#{o.udpDate},#{o.addUid},#{o.udpUid},#{o.modelId},#{o.attrName},#{o.dataType},#{o.valueType},#{o.numberFormat},#{o.unit},#{o.expression},#{o.orderNo})"
+            + "(#{o.addDate},#{o.udpDate},#{o.addUid},#{o.udpUid},#{o.modelId},#{o.attrName},#{o.dataType},#{o.valueType},#{o.numberFormat},#{o.unit},#{o.expression},#{o.memo},#{o.orderNo})"
             + "</foreach>"
             +"</script>")
     int saveModelAttr(@Param("list") List<ModelAttr> list);

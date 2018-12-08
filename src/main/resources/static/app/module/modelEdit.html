@@ -1,6 +1,6 @@
 <div class="container" >
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">雷击记录列表</h3>
@@ -23,7 +23,7 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <label  class="col-sm-1 control-label">模板名称</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" ng-model="modelName">
+                                <input type="text" class="form-control" ng-model="modelName" maxlength="20">
                             </div>
                             <div  class="col-sm-6 "></div>
                         </div>
@@ -51,6 +51,7 @@
                                             <th>小数位数</th>
                                             <th>单位</th>
                                             <th>公式</th>
+                                            <th>备注</th>
                                             <th>操作</th>
                                         </tr>
                                         </thead>
@@ -58,7 +59,7 @@
 
                                         <tr class="gradeU" ng-repeat="entity in list">
                                             <td>
-                                                <input type="text" class="form-control" name="$index_attrName" ng-model="entity.attrName"  placeholder="属性名称">
+                                                <input type="text" class="form-control" name="$index_attrName" ng-model="entity.attrName" maxlength="20" placeholder="属性名称">
                                             </td>
                                             <td>
                                                 <select name="$index_dataType" ng-model="entity.dataType" aria-controls="datatable-editable" class="form-control input-sm" ng-change="changepType(entity)"  required>
@@ -89,19 +90,26 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <input type="number" class="form-control" name="$index_numberFormat" ng-model="entity.numberFormat"  placeholder="小数位数" ng-disabled="'INT_TYPE'!=entity.dataType">
+                                                <input type="number" class="form-control" onkeyup="this.value=this.value.replace(/\D/g,'')" oninput="if(value.length>2)value=value.slice(0,2)" onafterpaste="this.value=this.value.replace(/\D/g,'')" name="$index_numberFormat" ng-model="entity.numberFormat" min="0"   maxlength="1" placeholder="小数位数" ng-disabled="'INT_TYPE'!=entity.dataType">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" name="$index_unit" ng-model="entity.unit"  placeholder="单位" ng-disabled="'INT_TYPE'!=entity.dataType">
+                                                <input type="text" class="form-control" name="$index_unit" ng-model="entity.unit" maxlength="20"  placeholder="单位" ng-disabled="'INT_TYPE'!=entity.dataType">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" name="$index_expression" ng-model="entity.expression"  placeholder="公式：如(x+1)*2" ng-disabled="'INT_TYPE'!=entity.dataType">
+                                                <input type="text" class="form-control" name="$index_expression" ng-model="entity.expression" maxlength="20"  placeholder="如(x+1)*2" ng-disabled="'INT_TYPE'!=entity.dataType">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" name="$index_memo" ng-model="entity.memo"  placeholder="备注" maxlength="20">
                                             </td>
                                             <td class="actions">
                                               <!--  <a class=" on-editing save-row" ng-if="entity.isEdit == true "><i class="fa fa-save"></i></a>
                                                 &lt;!&ndash;   <a class=" on-editing cancel-row"><i class="fa fa-times"></i></a>&ndash;&gt;
                                                 <a class="on-default edit-row"  ng-if="entity.isEdit != true " ng-click="edit(entity)" ><i class="fa fa-pencil"></i></a>-->
-                                                <a class="on-default remove-row"  ng-click="deleteItem(entity)"><i class="fa fa-trash-o"></i></a>
+                                              <!--  <a class="on-default remove-row"  ng-click="deleteItem(entity)"><i class="fa fa-trash-o"></i></a>-->
+
+                                                <button class="btn btn-icon waves-effect waves-light btn-danger m-b-5 btn-sm" ng-click="deleteItem(entity)">
+                                                    <i class="fa fa-trash-o" style="color:  #fff;"></i>
+                                                </button>
                                             </td>
                                         </tr>
 

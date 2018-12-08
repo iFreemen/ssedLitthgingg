@@ -20,16 +20,18 @@ public interface DataLogService {
      * 保存数据
      * @param devId 设备ID
      * @param mesage 所接收到的数据内容(密文，未解析)
+     * @param devId devType 设备类型
      */
-    void saveDataLog(String devId,String mesage);
+    void saveDataLog(String devId,String mesage,String devType);
 
     /**
      *  保存数据
      * @param devId 设备ID
      * @param data 已解析的数据内容（16进制码）
      * @param srcData 所接收到的数据内容(密文，未解析)
+     *  @param devId devType 设备类型
      */
-    void saveDataLog(String devId,String data, String srcData);
+    void saveDataLog(String devId,String data, String srcData,String devType);
 
     List<DataDetail> queryDataDetail(String devId, String key, String startTime, String endTime);
 

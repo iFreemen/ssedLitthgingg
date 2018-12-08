@@ -70,8 +70,8 @@ public class DataLogController extends BaseController{
             map.put("attrList",attrList);
         }
 
-        //查找数据
-        if(StringUtil.isNotEmpty(queryLog) && "TRUE".equals(queryLog.toUpperCase())){
+        //查找数据 StringUtil.isNotEmpty(queryLog) && "TRUE".equals(queryLog.toUpperCase())
+        if(true){
             String start= (String) param.get("start");
             String end= (String) param.get("end");
             if(StringUtil.isNotEmpty(end)){
