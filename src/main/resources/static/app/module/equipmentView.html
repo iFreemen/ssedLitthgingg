@@ -18,12 +18,12 @@
 				<form role="form" class="form-horizontal" >
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                <label  class="col-sm-1 control-label">设备名称：</label>
+                                <label  class="col-sm-2 control-label">设备名称或编号：</label>
                                 <div class="col-sm-3">
                                     <input type="text" class="form-control" ng-model="quereyData.eid" placeholder="模糊搜索">
                                 </div>
                                 <label  class="col-sm-2 control-label">设备类型：</label>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                      <select class="form-control"  ng-model="quereyData.type" >
 									<option  value="L">LORA</option>
 									<option  value="N">NBIOT</option>
@@ -41,7 +41,7 @@
                         </div>
                         <div class="form-group row-margin-top">
                             <div class="col-sm-5 col-md-offset-9 ">
-	                             <a href="#/module/equAdd" type="button" class="btn btn-primary waves-effect waves-light" >新增设备 <i class="fa fa-plus"></i></a>
+	                             <a href="#/module/equAdd" type="button" ng-if="edit_cmp" class="btn btn-primary waves-effect waves-light" >新增设备 <i class="fa fa-plus"></i></a>
                                 <button  class="btn btn-primary waves-effect waves-light" type="submit"  btn-loading="loadCtl.search" ng-click="init()">搜索</button>
                                 <button class="btn btn-default waves-effect" type="button" ng-click="resetSearch()">重置</button>
                             </div>
@@ -57,10 +57,11 @@
 										<th>设备名称</th>
 										<th>设备编号</th>
 										<th>设备类型</th>
+										<th>数据模板</th>
 										<th>所属分组</th>
 										<th>所属用户</th>
 										<th>修改时间</th>
-										<th>操作</th>
+										<th ng-if="edit_cmp">操作</th>
 									</tr>
 									</thead>
 									<tbody>
@@ -68,13 +69,16 @@
 									<td>{{ equStatus[eqm.eStatus] }}</td>
 									<td>{{ eqm.name }}</td>
 									<td>{{ eqm.devId}}</td>
-									<td>{{ eqm.typeCd }}</td>
-									<td>{{ eqm.modelId }}</td>
-									<td>{{ eqm.groupId }}</td>
-									<td>{{ eqm.uid }}</td>
-									<td>{{ eqm.udpUid }}</td>
-									<td> 
-										<a href="javascript:void(0)"  ng-click="delEqu(eqm.id)"><span>删除</span></a></td>
+									<td>{{ eqm.typeName }}</td>
+									<td>{{ eqm.modelName }}</td>
+									<td>{{ eqm.groupName }}</td>
+									<td>{{ eqm.uName }}</td>
+									<td>{{ eqm.udpDate }}</td>
+									<td ng-if="edit_cmp"> 
+										<a href="javascript:void(0)" class="operation" title="详情" data-toggle="modal" data-target="#equ-info-modal" ng-click="selEquInfo(eqm)"><i class="ion-information-circled"></i></a>
+										<a href="#/module/equAdd" class="operation" title="编辑"><i class="fa fa-pencil"></i></a>
+										<a href="javascript:void(0)" class="operation" ng-click="delEqu(eqm.id)" title="删除"><i class="fa fa-trash-o"></i></a>
+								   </td>
 									</tr>
 									
 
@@ -83,71 +87,71 @@
 							</div>
 						</div>
 						 <!-- 分页 -->
-                        <page-info pages="pages" curpage="quereyData.page" change="changePage(page)"></page-info>
+                        <page-info pages="pages" curpage="quereyData.page" change="changePage(page)" total="total"></page-info>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div id="equ-add-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addEquModal" aria-hidden="true" style="display: none">
+	<div id="equ-info-modal" class="modal fade" tabindex="-1" role="dialog"  aria-hidden="true" style="display: none">
          <div class="modal-dialog"> 
              <div class="modal-content"> 
                  <div class="modal-header"> 
-                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closeAddEquModal()">×</button> 
-                     <h4 class="modal-title">添加设备</h4> 
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closeEquModal()">×</button> 
+                     <h5 class="modal-title">设备详情</h4> 
                  </div> 
-                 <form class="modal-body" ng-submit="addEqu()" name="addEquForm" novalidate="novalidate">
-	               		<div class="row" ng-show="chkCmp == 2"> 
-	                       <div class="col-md-12"> 
-	                           <div class="form-group "> 
-	                                <label  class="control-label">请选择设备所属客户<span style="color : red">*</span></label>  
-	                                <select ng-if="chkCmp == 2" class="form-control" name="seleCompany"  ng-model="$parent.seleCompany" ng-options="x for (x, y) in selCompanys" required>
-								</select>
-	                           </div> 
-	                       </div> 
-	                   </div> 
-                     <div class="row"> 
-                         <div class="col-md-12"> 
-                             <div class="form-group"> 
-                                 <label  class="control-label">杆塔ID<span style="color : red">*</span></label> 
-                                 <input type="text" class="form-control" name="eid" ng-model="eid" required >
-                             </div> 
-                         </div> 
-                        </div> 
-                        <div class="row"> 
-                            <div class="col-md-4"> 
-                                <div class="form-group"> 
-                                    <label  class="control-label">设备种类</label> 
-                                    <input type="text" class="form-control" name="eType" ng-model="eType"   > 
-                                </div> 
-                            </div> 
-                         <div class="col-md-4"> 
-                             <div class="form-group"> 
-                                 <label  class="control-label">设备数量</label> 
-                                 <input type="number" class="form-control" name="amount" ng-model="amount"  > 
-                             </div> 
-                         </div> 
-                         <div class="col-md-4"> 
-                             <div class="form-group"> 
-                                 <label  class="control-label">测量范围</label> 
-                                 <input type="text" class="form-control" name="eRange" ng-model="eRange"  > 
-                             </div> 
-                         </div> 
-                     </div> 
-                      <div class="row"> 
-	                        <div class="col-md-12"> 
-	                            <div class="form-group no-margin"> 
-	                                 <label  class="control-label">备注</label>  
-	                                <textarea  class="form-control autogrow" name="eRemark" ng-model="eRemark" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 75px"></textarea> 
-	                            </div> 
-	                        </div> 
-	                    </div>     
-                 <div class="modal-footer"> 
-                     <button id="close-add-equ-modal" type="button" class="btn btn-default waves-effect" data-dismiss="modal" ng-click="closeAddEquModal()" >关闭</button> 
-                     <button type="submit" class="btn btn-info waves-effect waves-light"  ng-disabled="addEquForm.$invalid" btn-loading="loadCtl.addEnq">保存并添加</button> 
+                 <div class="modal-body" >
+               		<div class="form-group clearfix">
+				        <label class="col-sm-5 control-label ng-binding" style="text-align: right">设备名称：</label>
+				        <div class="col-sm-7 ng-binding">{{seleItem.name}}</div>
+			        </div>
+               		<div class="form-group clearfix">
+				        <label class="col-sm-5 control-label ng-binding" style="text-align: right">设备编号：</label>
+				        <div class="col-sm-7 ng-binding">{{seleItem.devId}}</div>
+			        </div>
+               		<div class="form-group clearfix">
+				        <label class="col-sm-5 control-label ng-binding" style="text-align: right">设备类型：</label>
+				        <div class="col-sm-7 ng-binding">{{seleItem.typeName}}</div>
+			        </div>
+               		<div class="form-group clearfix">
+				        <label class="col-sm-5 control-label ng-binding" style="text-align: right">数据模板：</label>
+				        <div class="col-sm-7 ng-binding">{{seleItem.modelName}}</div>
+			        </div>
+               		<div class="form-group clearfix">
+				        <label class="col-sm-5 control-label ng-binding" style="text-align: right">所属分组：</label>
+				        <div class="col-sm-7 ng-binding">{{seleItem.groupName}}</div>
+			        </div>
+               		<div class="form-group clearfix" ng-if="!!seleItem.appName">
+				        <label class="col-sm-5 control-label ng-binding" style="text-align: right">所属应用：</label>
+				        <div class="col-sm-7 ng-binding">{{$parent.seleItem.appName}}</div>
+			        </div>
+               		<div class="form-group clearfix">
+				        <label class="col-sm-5 control-label ng-binding" style="text-align: right">所属用户：</label>
+				        <div class="col-sm-7 ng-binding">{{seleItem.uName}}</div>
+			        </div>
+               		<div class="form-group clearfix">
+				        <label class="col-sm-5 control-label ng-binding" style="text-align: right">设备地址：</label>
+				        <div class="col-sm-7 ng-binding">{{seleItem.address}}<em class="info_em">{{seleItem.site}}</em></div>
+			        </div>
+               		<div class="form-group clearfix">
+				        <label class="col-sm-5 control-label ng-binding" style="text-align: right">验证码：</label>
+				        <div class="col-sm-7 ng-binding">{{seleItem.verification}}</div>
+			        </div>
+               		<div class="form-group clearfix">
+				        <label class="col-sm-5 control-label ng-binding" style="text-align: right">厂商ID：</label>
+				        <div class="col-sm-7 ng-binding">{{seleItem.supportCode}}</div>
+			        </div>
+               		<div class="form-group clearfix">
+				        <label class="col-sm-5 control-label ng-binding" style="text-align: right">厂商名称：</label>
+				        <div class="col-sm-7 ng-binding">{{seleItem.supporter}}</div>
+			        </div>
+               		<div class="form-group clearfix">
+				        <label class="col-sm-5 control-label ng-binding" style="text-align: right">备注：</label>
+				        <div class="col-sm-7 ng-binding">{{seleItem.remark}}</div>
+			        </div>
                  </div> 
-                 </form> 
              </div> 
          </div>
      </div>
+     
 </div>

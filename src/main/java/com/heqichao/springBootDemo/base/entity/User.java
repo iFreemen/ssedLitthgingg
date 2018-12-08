@@ -181,6 +181,9 @@ public class User implements Serializable {
 		this.upadteUID = upadteUID;
 	}
 
+	public boolean getCmp() {
+		return this.competence!=4;
+	}
 
 
 

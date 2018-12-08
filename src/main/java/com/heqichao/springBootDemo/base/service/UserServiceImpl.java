@@ -112,13 +112,16 @@ public class UserServiceImpl implements UserService {
 
 	@Override
     public ResponeResult getCompanySelectList() {
-    	Integer cmp = ServletUtil.getSessionUser().getCompetence();
-    	if(cmp == UserService.ROOT) {
-    		Map<String, Integer> res =  userMapper.getCompanySelectList().stream().collect(
-    						Collectors.toMap(User::getCompany,User::getId, (k1,k2)->k1)
-    					);
-    		return new ResponeResult(res);
+    	Integer uid = ServletUtil.getSessionUser().getId();
+    	if(uid==null) {
+    		new ResponeResult(true,"页面过期请刷新页面","errorMsg");
     	}
+		Map<String, Integer> res =  userMapper.getCompanySelectList(uid).stream().collect(
+						Collectors.toMap(User::getCompany,User::getId, (k1,k2)->k1)
+					);
+		if(res.size()>0) {
+			return new ResponeResult(res);
+		}
     	return  new ResponeResult(false,"");
     }
     

@@ -25,13 +25,6 @@
                               </div>
                          </div> 
                          <div class="form-group "> 
-                              <label  class="col-md-2 control-label ">所属分组<span style="color : red">*</span></label>  
-							  <div class="col-md-9">
-	                               <select  class="form-control" name="groupId"  ng-model="addFrom.groupId" ng-options="x for (x, y) in selCompanys" required>
-									</select>
-                              </div>
-                         </div> 
-                         <div class="form-group "> 
                               <label  class="col-md-2 control-label ">设备名称<span style="color : red">*</span></label>  
 							  <div class="col-md-9">
 	                                <input type="text" class="form-control" name="name" ng-model="addFrom.name" required >
@@ -46,11 +39,16 @@
                          <div class="form-group "> 
                               <label  class="col-md-2 control-label ">数据模板<span style="color : red">*</span></label>  
 							  <div class="col-md-9">
-	                               <select class="form-control"  ng-model="addFrom.modelId" required>
-									<option  value="1" >默认数据模板</option>
+	                               <select  class="form-control" name="modelId"  ng-model="addFrom.modelId" ng-options="x for (x, y) in selUserModel" required>
 									</select>
                               </div>
                          </div>  
+                         <div class="form-group "> 
+                              <label  class="col-md-2 control-label ">所属分组<span style="color : red">*</span></label>  
+							  <div class="col-md-9">
+	                               <input id="equ_easyui_combotree" class="easyui-combotree"  style="display: none;">
+                              </div>
+                         </div> 
                          <div class="form-group "> 
                               <label  class="col-md-2 control-label ">设备类型<span style="color : red">*</span></label>  
 							  <div class="col-md-9">
@@ -69,14 +67,14 @@
 				                   
                               </div>
                          </div> 
-                         <div class="form-group "> 
+                         <div class="form-group " ng-if="chkType"> 
                               <label  class="col-md-2 control-label ">所属应用<span style="color : red">*</span></label>  
 							  <div class="col-md-6">
-	                               <select  class="form-control" name="appId"  ng-model="addFrom.appId" ng-options="x for (x, y) in selCompanys" required>
+	                               <select  class="form-control" name="appId"  ng-model="$parent.addFrom.appId" ng-options="x for (x, y) in selApps" required>
 									</select>
                               </div>
                               <div class="col-md-3">
-									<a href="#/module/equMap" type="button" class="btn btn-primary waves-effect waves-light" >应用管理</a>
+									<a href="#/module/liteApp" type="button" class="btn btn-primary waves-effect waves-light" >应用管理</a>
                          		</div>
                          </div> 
                          <div class="form-group "> 
@@ -97,19 +95,23 @@
 	                                <input type="text" class="form-control" name="supporter" ng-model="addFrom.supporter"  >
                               </div>
                          </div>
-                         <div class="form-group "> 
-                              <label  class="col-md-2 control-label ">设备位置</label>  
-							  <div class="col-md-9">
-	                                <input type="text" class="form-control" name="site" ng-model="addFrom.site"  >
-                              </div>
-                         </div>
-	                   
                           <div class="form-group"> 
                                <label  class="col-md-2 control-label">备注</label>
                                <div class="col-md-9">  
                               		<textarea  class="form-control autogrow" name="remark" ng-model="addFrom.remark" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 75px"></textarea> 
                           		</div>
                           </div> 
+                         <div class="form-group "> 
+                              <label  class="col-md-2 control-label ">设备位置</label>  
+							  <div class="col-md-9" style="background-color: #f5f3f0;">
+							  <div id="add-site-map" style="height: 350px; width: 100%; overflow: hidden; position: relative; z-index: 0; background-color: rgb(243, 241, 236); color: rgb(0, 0, 0); text-align: left;"></div>
+	                          <div class="map_position clearfix">
+			                      <input id="suggest-address" class="form-control ng-valid ng-not-empty ng-dirty ng-touched" ng-model="addFrom.address"  placeholder="" ng-click="searchMap()" autocomplete="off" style="">
+			                    </div>
+			                    <div class="map_position clearfix ng-binding">{{locationPoint}}</div>
+                              </div>
+                         </div>
+	                   
                  <div class="form-group "> 
                  	<label  class="col-md-4 control-label">
                      <button type="submit" class="btn btn-info waves-effect waves-light"   btn-loading="loadCtl.addEnq">保存并添加</button> 

@@ -13,6 +13,7 @@ public interface GroupsService {
 	ResponeResult getGroups();
 	ResponeResult insertGroup();
 	ResponeResult updateGroup();
+	ResponeResult deleteGroup();
 
 
 
