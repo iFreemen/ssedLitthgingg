@@ -43,7 +43,7 @@ public interface EquipmentService {
 	/**
 	 * 更新设备的量程
 	 * @param eid
-	 * @param status
+	 * @param range
 	 * @return
 	 */
 	int updateRange(String eid, Integer range);
@@ -72,6 +72,11 @@ public interface EquipmentService {
 	 * @return
 	 */
 	List<String> queryByTypeAndOnline( String type_cd, String online);
+
+	ResponeResult getEquEditById();
+
+	ResponeResult editEqu(Map map);
+
 
 	/**
 	 * 更新设备在线离线状态

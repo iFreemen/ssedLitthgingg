@@ -17,6 +17,9 @@ var demoApp =angular.module("demoApp", ["ngRoute"]);
 	}).when("/module/equAdd", {
 		templateUrl: "app/module/equAdd.html",
 		controller: equAddCtrl
+	}).when("/module/equEdit/:devId/:id", {
+		templateUrl: "app/module/equEdit.html",
+		controller: equEditCtrl
 	}).when("/module/equView", {
 		templateUrl: "app/module/equipmentView.html",
 		controller: equCtrl

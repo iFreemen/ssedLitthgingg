@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.heqichao.springBootDemo.base.param.ResponeResult;
+import com.heqichao.springBootDemo.module.service.DataLogService;
 import com.heqichao.springBootDemo.module.service.LiteNAService;
 
 @RestController
@@ -16,6 +17,8 @@ public class LiteNAController {
 
 	@Autowired
 	private LiteNAService liteNAService;
+	@Autowired
+	private DataLogService dataLogService;
 	
 	@RequestMapping(value = "/getDataChange")
     ResponeResult getDataChange() throws Exception {
@@ -34,7 +37,9 @@ public class LiteNAController {
 	
 	@RequestMapping(value = "/nbiotCallback/{callurl:^[A-Za-z0-9]+$}")
 	ResponeResult liteNaCallback(@RequestBody Object map) throws Exception {
-		liteNAService.chg(map);
+//		liteNAService.chg(map);
+		Map<String, String> req = liteNAService.NBReturnFmt(map);
+		dataLogService.saveDataLog(req.get("devid"), req.get("data"), req.get("srcdata"));
 		return new ResponeResult();
 	}
 

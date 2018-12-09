@@ -77,6 +77,7 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.
             }
             if(data.resultObj.equip){
                 $scope.equip=data.resultObj.equip;
+                $scope.getMap();
             }
             if(data.resultObj.equipUserName) {
                 //设备用户名
@@ -258,5 +259,22 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.
         var time= y + '-' + m + '-' + d+' \n '+h+':'+minute+':'+second;
         // time =time.replace(" "," \n ");
         return time;
+    };
+    $scope.getMap=function () {
+        // 百度地图API功能
+        var point={};
+        if ($scope.equip.site) {
+        	var position = $scope.equip.site.split(',');
+            point = new BMap.Point(position[0], position[1]);
+        }else {
+            point=new BMap.Point(114.070855, 22.551052);
+        }
+        var map = new BMap.Map("map");    // 创建Map实例
+        map.centerAndZoom(point, 11);  // 初始化地图,设置中心点坐标和地图级别
+        map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+        map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+        var marker = new BMap.Marker(point);  // 创建标注
+        map.addOverlay(marker);               // 将标注添加到地图中
+
     };
 }
