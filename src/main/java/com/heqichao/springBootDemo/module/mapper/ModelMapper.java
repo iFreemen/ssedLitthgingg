@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by heqichao on 2018-7-15.
@@ -46,4 +47,16 @@ public interface ModelMapper {
             + "<if test =\"modelName !=null  and modelName!='' \"> and model_name like CONCAT(CONCAT('%',#{modelName}),'%')  </if>"
             +"</script>")
     List<Model> queryByUserIds(@Param("list") List<Integer> list,@Param("modelName")String modelName);
+
+    @Select("<script>"
+            +" select m.model_name , a.*  from model m INNER JOIN model_attr a ON m.id = a.model_id where 1=1  "
+            + "<if test =\"list !=null \">  and addUid in "
+            + "<foreach  collection=\"list\" open=\"(\" close=\")\" separator=\",\" item=\"uid\" >"
+            + "#{uid}"
+            + "</foreach>"
+            +" </if> "
+            +" order by model_id, order_no "
+            +"</script>"
+    )
+    List<Map> queryExportInfo(@Param("list") List<Integer> list);
 }

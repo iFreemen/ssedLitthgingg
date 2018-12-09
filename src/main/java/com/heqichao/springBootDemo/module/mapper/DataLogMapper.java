@@ -16,8 +16,8 @@ public interface DataLogMapper {
 
     @Insert(
             "<script>"
-            +" insert into data_log (add_date,udp_date,add_uid,udp_uid,dev_id,src_data,data,main_data,data_status) " +
-                    " values(#{addDate},#{udpDate},#{addUid},#{udpUid},#{devId},#{srcData},#{data},#{mainData},#{dataStatus}) "
+            +" insert into data_log (add_date,udp_date,add_uid,udp_uid,dev_id,src_data,data,main_data,data_status,dev_type) " +
+                    " values(#{addDate},#{udpDate},#{addUid},#{udpUid},#{devId},#{srcData},#{data},#{mainData},#{dataStatus},#{devType}) "
             +"</script>"
     )
     @Options(useGeneratedKeys=true, keyProperty="id", keyColumn="id")

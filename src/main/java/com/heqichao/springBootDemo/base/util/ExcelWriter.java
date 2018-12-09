@@ -19,6 +19,11 @@ import java.util.Map.Entry;
  */
 @SuppressWarnings({ "rawtypes" })
 public class ExcelWriter {
+
+	// 声明一个工作薄
+	public static HSSFWorkbook createWorkBook(){
+		return new HSSFWorkbook();
+	}
 	
 	/**
 	 * 
@@ -28,30 +33,28 @@ public class ExcelWriter {
 	 * @param title		导出的EXCEL文件中的sheet名称
 	 * @param headers	导出列名数组
 	 * @param data		待导出的数据集合
-	 * @param keys		列名数组(非必须参数,该参数不为空时按该数组中的列名顺序取map中的值)
+	 * @param keys		列名数组(非必须参数,该参数不为空时按该数组中的列名顺序取data map中的值)
 	 * @return 
 	 */
-	public static HSSFWorkbook export(String title,String [] headers,List data,String [] keys){
-		  
-		//logOperation(7, "导出"+title);
-		
-		HSSFWorkbook workbook = new HSSFWorkbook();	// 声明一个工作薄
-		HSSFSheet sheet = workbook.createSheet();	// 生成一个表格
+	public static HSSFWorkbook export(HSSFWorkbook workbook,String title,String [] headers,List data,String [] keys){
+
+		//HSSFWorkbook workbook = new HSSFWorkbook();	// 声明一个工作薄
+		HSSFSheet sheet = workbook.createSheet(title);	// 生成一个表格
 		HSSFCellStyle style = workbook.createCellStyle();	//标题样式
 		HSSFCellStyle style2 = workbook.createCellStyle();	//文本单元格样式
 		HSSFCellStyle style3 = workbook.createCellStyle();	//常规单元格样式
 		HSSFFont font = workbook.createFont();	//字体
 		HSSFFont font2 = workbook.createFont();	//生成另一个字体
 		HSSFRow row;
-		
-		workbook.setSheetName(0, title);
+
+		//workbook.setSheetName(0, title);
 		sheet.setDefaultColumnWidth(20);	// 设置表格默认列宽度为15个字节
 		font.setColor(HSSFColor.VIOLET.index);
 		font.setFontHeightInPoints((short) 12);
 		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-		
+
 		font2.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
-		
+
 		style.setFillForegroundColor(HSSFColor.SKY_BLUE.index);//设置样式
 		style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 		style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
@@ -60,7 +63,7 @@ public class ExcelWriter {
 		style.setBorderTop(HSSFCellStyle.BORDER_THIN);
 		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		style.setFont(font);	//把字体应用到当前的样式
-		
+
 		style2.setFillForegroundColor(HSSFColor.LIGHT_YELLOW.index);
 		style2.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 		style2.setBorderBottom(HSSFCellStyle.BORDER_THIN);
@@ -71,9 +74,9 @@ public class ExcelWriter {
 		style2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
 		style2.setFont(font2);// 把字体应用到当前的样式
 		style2.setWrapText(true);
-		HSSFDataFormat format = workbook.createDataFormat();   
-		style2.setDataFormat(format.getFormat("@"));   
-		
+		HSSFDataFormat format = workbook.createDataFormat();
+		style2.setDataFormat(format.getFormat("@"));
+
 		style3.setFillForegroundColor(HSSFColor.LIGHT_YELLOW.index);
 		style3.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 		style3.setBorderBottom(HSSFCellStyle.BORDER_THIN);
@@ -85,16 +88,16 @@ public class ExcelWriter {
 		style3.setFont(font2);// 把字体应用到当前的样式
 		style3.setWrapText(true);
 		style3.setDataFormat(format.getFormat("General"));
-		
+
 		//产生表格标题行
 		row = sheet.createRow(0);
 		for (int i = 0; i < headers.length; i++) {
 			HSSFCell cell = row.createCell(i);
 	//		cell.setEncoding(HSSFCell.ENCODING_UTF_16);
-			cell.setCellStyle(style); 
+			cell.setCellStyle(style);
 			cell.setCellValue(headers[i]);
 		}
-        
+
 		//遍历集合数据，产生数据行
 		Iterator it = data.iterator();
 		int index = 0;
@@ -104,7 +107,7 @@ public class ExcelWriter {
 				index++;
 				row = sheet.createRow(index);
 				row.setHeightInPoints(20);
-				Map map = (Map) it.next(); 
+				Map map = (Map) it.next();
 				int cellNum = 0;
 				for(int j=0;j<keys.length;j++){
 					HSSFCell cell = row.createCell(cellNum);

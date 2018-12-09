@@ -155,7 +155,7 @@
                                         <a href="#/module/modelList"><span>数据模板</span></a>
                                     </li>
                                     <li>
-                                        <a href="#/module/logShow"><span>历史数据</span></a>
+                                        <a href="#/module/logShow/"><span>历史数据</span></a>
                                     </li>
 									<li>
                                         <a ng-click="clearData()"><span>清空数据</span></a>
@@ -205,7 +205,7 @@
 				2018 © SSED.
 			</footer>
 		</div>
-
+		<iframe name="downLoadFileFrame" hidden="hidden"></iframe>
 <!-- <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&amp;ak=TmYyujvLywBDOj91omCGrbmS0YQ6oswu"></script> -->
 <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&amp;ak=0UeqWhqYsjiNbWkLdaPdvSqc"></script>
 <script type="text/javascript" src="https://api.map.baidu.com/getscript?v=3.0&amp;ak=0UeqWhqYsjiNbWkLdaPdvSqc&amp;services=&amp;t=20181204121730"></script>
@@ -511,6 +511,47 @@
 								swal("删除成功", null, "success");
 							}
 						});
+				}
+
+
+				//下载文件
+				$rootScope.downLoadFile = function (url, data) {
+
+					if (!url) throw new Error('没有提供下载URL');
+
+					var f = document.getElementsByName("downLoadFileFrame")[0];
+					f.src = url;
+
+					//postToIframe(url, data, 'downLoadFileFrame');
+
+					return false;
+				};
+
+				function postToIframe(path, params, target, method) {
+					var method = "post"; // Set method to post by default if not specified.
+
+					// The rest of this code assumes you are not using a library.
+					// It can be made less wordy if you use one.
+					var form = document.getElementById('hiddenPostForm');
+					if (!form) {
+						// create hidden form
+						$('body').append('<form name="hiddenPostForm" id="hiddenPostForm" class="hidden" ' +
+								'method="' + method + '" action="' + path + '" ' +
+								'accept-charset="UTF-8" enctype="application/x-www-form-urlencoded">' +
+								'<input name="hiddenPostData" id="hiddenPostData" type="hidden" />' +
+								'</form>'
+						);
+						form = document.getElementById('hiddenPostForm');
+					}
+
+					form.setAttribute("action", path);
+					if (target) form.setAttribute("target", target);
+					if (method) form.setAttribute("method", method);
+
+					var hiddenField = document.getElementById('hiddenPostData');
+					hiddenField.setAttribute("value", angular.isString(params) ? params : $.param(params));
+
+					form.submit();
 				}
 
 			});

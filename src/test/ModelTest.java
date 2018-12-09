@@ -20,6 +20,7 @@ public class ModelTest {
 
     @Test
     public void  saveDataLog(){
-        dataLogService.saveDataLog("1","AQMAGQABGAUkFhYj+xkE5gAQDwIO/lgFAAEAAgADAAQABWQf");
+       // dataLogService.saveDataLog("1","AQMAGQABGAUkFhYj+xkE5gAQDwIO/lgFAAEAAgADAAQABWQf","TEST");
+        dataLogService.saveDataLog("1","AQMUAAEYCAIURin7GQTmABAPAg7+WAWgrQ==","TEST");
     }
 }

@@ -24,6 +24,18 @@ public class DataLog extends BaseEntity {
     //数据状态
     private String dataStatus;
 
+    //设备类型
+    private String devType;
+
+
+    public String getDevType() {
+        return devType;
+    }
+
+    public void setDevType(String devType) {
+        this.devType = devType;
+    }
+
     public String getDevId() {
         return devId;
     }

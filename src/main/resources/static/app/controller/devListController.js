@@ -120,5 +120,8 @@ function devLstCtrl($scope, $http,$rootScope,$location,$timeout) {
              }
          })
      }
-     
+
+     $scope.gotoLog=function(devId,dataName){
+         $location.path("/module/logShow/"+devId+"/"+dataName);
+     }
 }
