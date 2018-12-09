@@ -37,7 +37,7 @@ function equEditCtrl($scope, $http,$rootScope,$location,$timeout,$routeParams) {
 	    		$('.easyui-combotree').combotree({
 	    			data:treeFmt
 	    		});
-	    		$('.easyui-combotree').combotree('setValue',1);
+	    		$('.easyui-combotree').combotree('setValue',$scope.addFrom.groupId);
     		},400);
     	});
     };

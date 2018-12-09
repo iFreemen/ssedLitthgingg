@@ -83,15 +83,15 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout) {
                       var point = new BMap.Point(position.split(',')[0], position.split(',')[1]);
                       var devidState = (data.resultObj.online == 0) ? '<img src="assets/img/offline.png" />' : '<img src="assets/img/online.png" />';
                       $scope.map.centerAndZoom(point, 18);
-                      var devidManage;
+//                      var devidManage;
                       var devidDataHistory;
                       var devidAlarmHistory;
-                      if($rootScope.ums_device_manage){
-                    	  devidManage='<a style="padding:5px 10px;margin:0 10px;background:#f60;color: #fff;line-height: 20px;border-radius:5px;" href="' + $scope.host + '/main.html#/device/deviceDatail/' + devid + '">设备管理</a>';
-                      }else {
-                    	  devidManage='<a style="padding:5px 10px;margin:0 10px;background:#f60;color: #fff;line-height: 20px;border-radius:5px;" href="' + $scope.host + '/main.html#/device/deviceDatail/' + devid + '">设备管理</a>';
-//                          devidManage='';
-                      }
+//                      if($rootScope.ums_device_manage){
+//                    	  devidManage='<a style="padding:5px 10px;margin:0 10px;background:#f60;color: #fff;line-height: 20px;border-radius:5px;" href="' + $scope.host + '/main.html#/device/deviceDatail/' + devid + '">设备管理</a>';
+//                      }else {
+//                    	  devidManage='<a style="padding:5px 10px;margin:0 10px;background:#f60;color: #fff;line-height: 20px;border-radius:5px;" href="' + $scope.host + '/main.html#/device/deviceDatail/' + devid + '">设备管理</a>';
+////                          devidManage='';
+//                      }
                       if($rootScope.ums_dataHistory_list){
                           devidDataHistory='<a style="padding:5px 10px;margin:0 10px;background:#f60;color: #fff;line-height: 20px;border-radius:5px;" href="' + $scope.host + '/main.html#/data/dataHistoryList/devId/' + devid + '/slaveIndex//dataId/">历史记录</a>';
                       }else {
@@ -111,9 +111,9 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout) {
                           '<b>设备编号 ：</b>' + data.resultObj.devId + '<br />' +
                           '<b>设备类型 ：</b>' + data.resultObj.typeName + '<br />' +
                           '<b>所属用户 ：</b>' + data.resultObj.uName + '<br />' +
-                          '<b>设备地址 ：</b>' + (!data.resultObj.address ? '' : data.resultObj.address) +
+                          '<b>设备地址 ：</b>' + (!data.resultObj.address ? data.resultObj.site : data.resultObj.address) +
                           '</div></div><div style="margin:20px auto;text-align: center;font-size:12px;">' +
-                          devidManage +
+//                          devidManage +
                           devidDataHistory +
                           devidAlarmHistory +
                           '</div>';
@@ -142,15 +142,15 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout) {
                       var point = new BMap.Point(e.target.getPosition().lng, e.target.getPosition().lat);
                       var devidState = (data.resultObj.onlineStatus == 0) ? '<img src="assets/img/offline.png" />' : '<img src="assets/img/online.png" />';
                       $scope.map.centerAndZoom(point, 18);
-                      var devidManage;
+//                      var devidManage;
                       var devidDataHistory;
                       var devidAlarmHistory;
-                      if($rootScope.ums_device_manage){
-                    	  devidManage='<a style="padding:5px 10px;margin:0 10px;background:#f60;color: #fff;line-height: 20px;border-radius:5px;" href="' + $scope.host + '/main.html#/device/deviceDatail/' + content + '">设备管理</a>';
-                      }else {
-                    	  devidManage='<a style="padding:5px 10px;margin:0 10px;background:#f60;color: #fff;line-height: 20px;border-radius:5px;" href="' + $scope.host + '/main.html#/device/deviceDatail/' + content + '">设备管理</a>';
-//                          devidManage='';
-                      }
+//                      if($rootScope.ums_device_manage){
+//                    	  devidManage='<a style="padding:5px 10px;margin:0 10px;background:#f60;color: #fff;line-height: 20px;border-radius:5px;" href="' + $scope.host + '/main.html#/device/deviceDatail/' + content + '">设备管理</a>';
+//                      }else {
+//                    	  devidManage='<a style="padding:5px 10px;margin:0 10px;background:#f60;color: #fff;line-height: 20px;border-radius:5px;" href="' + $scope.host + '/main.html#/device/deviceDatail/' + content + '">设备管理</a>';
+////                          devidManage='';
+//                      }
                       if($rootScope.ums_dataHistory_list){
                           devidDataHistory='<a style="padding:5px 10px;margin:0 10px;background:#f60;color: #fff;line-height: 20px;border-radius:5px;" href="' + $scope.host + '/main.html#/data/dataHistoryList/devId/' + content + '/slaveIndex//dataId/">历史记录</a>';
                       }else {
@@ -170,9 +170,9 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout) {
                           '<b>设备编号 ：</b>' + data.resultObj.devId + '<br />' +
                           '<b>设备类型 ：</b>' + data.resultObj.typeName + '<br />' +
                           '<b>所属用户 ：</b>' + data.resultObj.uName + '<br />' +
-                          '<b>设备地址 ：</b>' + (!data.resultObj.address ? '' : data.resultObj.address) +
+                          '<b>设备地址 ：</b>' + (!data.resultObj.address ? data.resultObj.site : data.resultObj.address) +
                           '</div></div><div style="margin:20px auto;text-align: center;font-size:12px;">' +
-                          devidManage +
+//                          devidManage +
                           devidDataHistory +
                           devidAlarmHistory +
                           '</div>';

@@ -89,4 +89,14 @@ function equCtrl($scope, $http,$location, $rootScope) {
 				}
 			});
 	}
+	//获取上下线图片
+    $scope.getStatusImg = function (status) {
+        if(status == 0){
+            return "assets/img/offline.png";
+        } else if(status == 1){
+            return "assets/img/online.png";
+        }else if(status == 2){
+            return "assets/img/alarmline.png";
+        }
+    };
 }

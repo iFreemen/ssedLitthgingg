@@ -20,9 +20,11 @@
                     </div>
                 </li>
                 <li ng-repeat="eqm in equipments" >
+                	<div class="pointer-div" ng-click="devidMap(eqm.devId,eqm.site)">
                     <div class="monitor_line"><img ng-src="{{getStatusImg(eqm.online)}}"/></div>
                     <div class="monitor_center">
-                        <a title="{{eqm.name}}" ng-click="devidMap(eqm.devId,eqm.site)">{{eqm.name}}</a><em>{{eqm.devId}}</em>
+                        <a title="{{eqm.name}}" >{{eqm.name}}</a><em>{{eqm.devId}}</em>
+                    </div>
                     </div>
                 </li>
             </ul>
