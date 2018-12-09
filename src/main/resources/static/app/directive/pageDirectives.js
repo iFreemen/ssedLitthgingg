@@ -12,7 +12,7 @@ demoApp.directive("pageInfo", function() {
 		' <div class="col-md-12 col-sm-12 col-xs-12">'
 		+'<div class="" style="text-align: center">'
 		+'<ul class="pagination m-b-5" ng-if="total > 0">'
-		+'<li ng-repeat="obj in pageArr">'
+		+'<li ng-repeat="obj in pageArr" ng-if="obj.num" >'
 		+'<a ng-if="obj.show" ng-click="changePage(obj.num)"  ng-class="{true:\'page-put\'}[curpage==obj.num]" ng-bind="obj.num"></a>'
 		+'<a ng-if="obj.hide" >...</a>'
 		+'</li>'

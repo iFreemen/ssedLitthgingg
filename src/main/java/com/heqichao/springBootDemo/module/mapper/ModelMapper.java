@@ -23,8 +23,9 @@ public interface ModelMapper {
 
     @Select("<script>"
             +"select count(1) from model  where model_name = #{modelName}   "
+            + "<if test =\"modelID !=null  \"> and id != #{modelID} </if>"
             +"</script>")
-    Integer queryCountByModelName(@Param("modelName") String modelName);
+    Integer queryCountByModelName(@Param("modelID") Integer modelID,@Param("modelName") String modelName);
 
     @Insert("<script>"
             +"insert into model (add_date,udp_date,add_uid,udp_uid,model_name) values (#{addDate},#{udpDate},#{addUid},#{udpUid},#{modelName})"

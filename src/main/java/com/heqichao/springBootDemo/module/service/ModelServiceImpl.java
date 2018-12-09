@@ -43,7 +43,7 @@ public class ModelServiceImpl implements ModelService {
         if(StringUtil.isEmpty(modelName)){
             throw new ResponeException("请输入模板名称！");
         }
-        Integer count = modelMapper.queryCountByModelName(modelName);
+        Integer count = modelMapper.queryCountByModelName(modelId,modelName);
         if(count>0){
             throw new ResponeException("模板名称 :"+modelName+" 已存在！");
         }

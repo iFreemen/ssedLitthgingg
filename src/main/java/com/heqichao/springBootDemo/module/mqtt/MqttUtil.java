@@ -86,7 +86,8 @@ public class MqttUtil {
         }
     }
 
-    public static void subscribeTopicMes(List<String> topsics) throws Exception {
+    public static void unSubscribeTopicMes(List<String> topsics) throws Exception {
+        String top =mqttOption.getTopic();
         if(topsics== null || topsics.size()<1){
             logger.info("MQTT 无订阅主题！！！");
             return;
@@ -95,7 +96,31 @@ public class MqttUtil {
 
         for(int i=0 ;i< topsics.size();i++){
             String s =topsics.get(i);
-            s="application/0000000000000001/node/"+s+"/rx";
+         //   s="application/0000000000000001/node/"+s+"/rx";
+            s=top.replace("#devId#",s);
+            topisArr[i]=s;
+        }
+
+        if(client==null){
+            connect();
+        }else{
+            client.unsubscribe(topisArr);
+        }
+
+    }
+
+    public static void subscribeTopicMes(List<String> topsics) throws Exception {
+        String top =mqttOption.getTopic();
+        if(topsics== null || topsics.size()<1){
+            logger.info("MQTT 无订阅主题！！！");
+            return;
+        }
+        String[] topisArr = new String[topsics.size()];
+
+        for(int i=0 ;i< topsics.size();i++){
+            String s =topsics.get(i);
+          //  s="application/0000000000000001/node/"+s+"/rx";
+            s=top.replace("#devId#",s);
             logger.info("MQTT订阅主题:"+s);
             topisArr[i]=s;
 
