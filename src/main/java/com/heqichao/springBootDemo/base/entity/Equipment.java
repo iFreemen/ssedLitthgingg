@@ -42,6 +42,7 @@ public class Equipment extends BaseEntity  {
     	
     }
     public Equipment(Map map) {
+    	super.id = StringUtil.getIntegerByMap(map,"id");
     	this.name = StringUtil.getStringByMap(map,"name");
     	this.devId = StringUtil.getStringByMap(map,"devId");
     	this.groupId =StringUtil.getIntegerByMap(map,"groupId");

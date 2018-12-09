@@ -98,7 +98,7 @@ public class EquipmentServiceImpl implements EquipmentService {
      */
     @Override
     public Equipment getEquipmentInfo(String  devId) {
-    	return eMapper.getEquipmentInfo(devId);
+    	return eMapper.getEquById(devId);
     }
     
     @Override
@@ -144,7 +144,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     	if(equ.getName() == null ||equ.getDevId() == null || uid == null || cmp == 4) {
     		return new ResponeResult(true,"Add Equipment Input Error!","errorMsg");
     	}
-    	if(eMapper.duplicatedEid(equ.getDevId(),uid)) {
+    	if(eMapper.duplicatedEid(equ.getDevId(),equ.getUid())) {
     		return new ResponeResult(true,"设备编号重复","errorMsg");
     	}
 		equ.setAddUid(uid);
@@ -163,6 +163,41 @@ public class EquipmentServiceImpl implements EquipmentService {
 		}
     	return  new ResponeResult(true,"Add Equipment fail","errorMsg");
     }
+	@Override
+	public ResponeResult editEqu(Map map) {
+		Equipment equ = new Equipment(map);
+		Integer uid = ServletUtil.getSessionUser().getId();
+		Integer cmp = ServletUtil.getSessionUser().getCompetence();
+		if(equ.getName() == null ||equ.getDevId() == null || uid == null || cmp == 4) {
+			return new ResponeResult(true,"Edit Equipment Input Error!","errorMsg");
+		}
+		if(eMapper.duplicatedEidEdit(equ.getDevId(),equ.getUid())) {
+			return new ResponeResult(true,"设备编号重复","errorMsg");
+		}
+		equ.setUdpUid(uid);
+		equ.setValid("N");
+		if(eMapper.editEquipment(equ)>0) {
+				return new ResponeResult();
+		}
+		return  new ResponeResult(true,"Edit Equipment fail","errorMsg");
+	}
+	@Override
+	public ResponeResult getEquEditById() {
+		Map map = RequestContext.getContext().getParamMap();
+		String devId = StringUtil.getStringByMap(map,"devId");
+		Integer id = StringUtil.getIntegerByMap(map,"id");
+		Integer uid = ServletUtil.getSessionUser().getId();
+    	Integer cmp = ServletUtil.getSessionUser().getCompetence();
+    	if(cmp == 4) {
+    		return new ResponeResult(true,"无编辑权限","errorMsg");
+    		
+    	}
+    	if(cmp != 2 && !eMapper.duplicatedEid(devId,uid)) {
+    		return new ResponeResult(true,"无编辑权限","errorMsg");
+    		
+    	}
+		return new ResponeResult(eMapper.getEquEditById(devId,id));
+	}
     
     @Override
     public ResponeResult deleteEquByID(Map map) {

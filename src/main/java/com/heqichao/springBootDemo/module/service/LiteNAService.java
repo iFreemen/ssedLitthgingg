@@ -31,4 +31,6 @@ public interface LiteNAService {
 	void chg(Object map);
 
 	PageInfo queryNBLightLog();
+
+	Map<String, String> NBReturnFmt(Object map);
 }

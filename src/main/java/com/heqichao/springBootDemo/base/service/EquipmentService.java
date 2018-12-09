@@ -56,5 +56,9 @@ public interface EquipmentService {
 
 	Equipment getEquById();
 
+	ResponeResult getEquEditById();
+
+	ResponeResult editEqu(Map map);
+
 
 }
