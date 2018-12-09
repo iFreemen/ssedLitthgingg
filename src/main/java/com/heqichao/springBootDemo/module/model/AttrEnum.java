@@ -291,7 +291,7 @@ public enum AttrEnum implements AttrAnalyze{
         }
     },
 
-    WAVE_TYPE("WAVE_TYPE","雷击波形",null){
+    WAVE_TYPE("WAVE_TYPE","波形",null){
         @Override
         public String execute(ModelAttr modelAttr, String context) {
 

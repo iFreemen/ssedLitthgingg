@@ -15,7 +15,7 @@ public class MqttOption {
     private String userName;
     private String password;
     private String hostPort;
-    //private String topic;
+    private String topic;
     private String clientId;
 
     private int retryTime=10; //连接重试次数 默认10
@@ -53,13 +53,13 @@ public class MqttOption {
         this.hostPort = hostPort;
     }
 
-   /* public String getTopic() {
+    public String getTopic() {
         return topic;
     }
 
     public void setTopic(String topic) {
         this.topic = topic;
-    }*/
+    }
 
     public int getRetryTime() {
         return retryTime;

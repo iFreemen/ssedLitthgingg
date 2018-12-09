@@ -42,7 +42,7 @@ public class ResponeExceptionHandler {
         logger.error("System_ResponeException:",ex);
         String err=DEFAULT_ERROR_MSG;
         if(StringUtil.isNotEmpty(ex.getMsg())){
-            err=ex.getMessage();
+            err=ex.getMsg();
         }
         ResponeResult responeResult= new ResponeResult(false,err);
 

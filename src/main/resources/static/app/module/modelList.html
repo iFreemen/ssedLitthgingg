@@ -22,8 +22,9 @@
                             <div  class="col-md-12 col-sm-12 col-xs-12 m-t-10">
                                 <div class="col-sm-1"></div>
                                 <div class="col-sm-9">
-                                 <button type="button" class="btn btn-primary waves-effect waves-light" ng-click="addModel()">新建模板 <i class="fa fa-plus"></i></button>
+                                 <button type="button" class="btn btn-primary waves-effect waves-light" ng-click="addModel()"><i class="fa fa-plus"></i>新建模板</button>
                                  <button class="btn btn-primary   waves-effect waves-light" btn-loading="loading" ng-click="exportAll()">全部导出</button>
+                                 <file-upload success-function="uploadSuccess()" url="/service/importModel" name="上传模板"  file-accept="application/vnd.ms-excel"></file-upload>
                                 </div>
                             </div>
                         </div>
@@ -56,9 +57,9 @@
                                     <tbody>
                                     <tr ng-repeat="entity in data"  >
                                         <td ng-bind="entity.modelName" ></td>
-                                        <td ng-bind="entity.addDate"  ></td>
+                                        <td ng-bind="entity.addDate | date:'yyyy-MM-dd hh:mm:ss'"  ></td>
                                         <td ng-bind="entity.addName"  ></td>
-                                        <td ng-bind="entity.udpDate"  ></td>
+                                        <td ng-bind="entity.udpDate | date:'yyyy-MM-dd hh:mm:ss'"  ></td>
                                         <td ng-bind="entity.udpName"  ></td>
                                         <td >
                                         <!--   <a ng-click="gotoModel(entity)" class="on-default edit-row" style="cursor:pointer"><i class="fa fa-pencil"></i></a>
@@ -94,7 +95,7 @@
                                 </ul>
                             </div>
                         </div>-->
-                        <page-info pages="pages" curpage="quereyData.page" change="changePage(page)"></page-info>
+                        <page-info pages="pages" curpage="quereyData.page" total="total" change="changePage(page)"></page-info>
                     </div>
                 </div>
             </div>

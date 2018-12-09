@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,10 +26,10 @@ public interface DataLogMapper {
 
     @Update(
             "<script>"
-            + "update data_log set  data_status = #{status} where dev_id in "
+            + "update data_log set  data_status = #{status},udp_date=#{date} where dev_id in "
             + "<foreach  collection=\"list\" open=\"(\" close=\")\" separator=\",\" item=\"uid\" >"
             + "#{uid}"
             + "</foreach>"
             + "</script>")
-    void updateStatus( @Param("status")String status ,@Param("list") List<String> list);
+    void updateStatus( @Param("status")String status ,@Param("list") List<String> list, @Param("date")Date date);
 }

@@ -11,6 +11,7 @@ function userCtrl($scope, $http, $rootScope) {
     		upPWD:false	
     };
 	$scope.pages=0;
+	$scope.total=0;
 	$scope.chkCmp = $rootScope.user.competence;
 	$scope.chkId = $rootScope.user.id;
     $scope.init=function(){
@@ -18,6 +19,7 @@ function userCtrl($scope, $http, $rootScope) {
     	$http.post("service/getUsers",$scope.quereyData).success(function(data) {
     		$scope.users = data.resultObj.list;
     		$scope.pages=data.resultObj.pages;
+			$scope.total=data.resultObj.total;
     		$scope.pageArr=data.resultObj.navigatepageNums;
     		$scope.quereyData.page=data.resultObj.pageNum;
     		$scope.loadCtl.search = false;
