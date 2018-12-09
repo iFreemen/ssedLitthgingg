@@ -2,6 +2,7 @@ package com.heqichao.springBootDemo.module.service;
 
 import com.heqichao.springBootDemo.module.entity.DataDetail;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -38,4 +39,21 @@ public interface DataLogService {
     void deleteDataLog(String... devId);
 
     Map querqueryEquAttrLog(String devId, String attrKey, String startTime, String endTime);
+
+    /**
+     * 查找在线的lora设备中在date时间内没接收到的数据
+     * @param type
+     * @param onLine
+     * @param date
+     * @return
+     */
+    List<String> checkOffLineDev(String type, String onLine, Date date);
+
+    /**
+     * 查找在线线的lora设备
+     * @param type
+     * @param date
+     * @return
+     */
+    List<String> checkOnLineDev(String type,  Date date);
 }

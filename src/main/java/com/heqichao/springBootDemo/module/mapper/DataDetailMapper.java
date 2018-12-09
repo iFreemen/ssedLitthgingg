@@ -49,8 +49,15 @@ public interface DataDetailMapper {
     		+"</script>")
     List<DataDetail> queryDetailByDevId( @Param("devId") String devId);
 
-    
+    @Select("<script>" +
+            "select DISTINCT dev_id from equipments where online =#{onLine} and type_cd= #{type} and dev_id not in (select DISTINCT dev_id from data_log where add_date > #{date} and dev_type=#{type} )" +
+            "</script>")
+    List<String> checkOffLineDev(@Param("type") String type,@Param("onLine") String onLine,@Param("date")Date date);
 
+    @Select("<script>" +
+            "select DISTINCT dev_id from data_log where  dev_type=#{type} add_date > #{date} " +
+            "</script>")
+    List<String> checkOnLineDev(@Param("type") String type,@Param("date")Date date);
 
 }
 
