@@ -108,7 +108,7 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.
 
     $scope.showChart=function(){
         $scope.plotDownloads =[];
-        //非雷击波形
+        //非波形
         if( $scope.attrType != "WAVE_TYPE"){
             for(var j=0;j<$scope.log.length;j++){
                 var obj =$scope.log[j];
@@ -212,7 +212,7 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.
                     //autoscaleMargin:'1',
                     color: 'rgba(0,0,0,0)',
                     tickFormatter: function (val, axis) {
-                        //非雷击波形
+                        //非波形
                         if( $scope.attrType != "WAVE_TYPE"){
                             return formatDateTime(val);
                         }else{

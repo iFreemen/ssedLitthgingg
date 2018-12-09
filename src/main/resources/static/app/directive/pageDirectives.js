@@ -11,13 +11,13 @@ demoApp.directive("pageInfo", function() {
 		template:
 		' <div class="col-md-12 col-sm-12 col-xs-12">'
 		+'<div class="" style="text-align: center">'
-		+'<ul class="pagination m-b-5" ng-show="total > 0">'
+		+'<ul class="pagination m-b-5" ng-if="total > 0">'
 		+'<li ng-repeat="obj in pageArr">'
 		+'<a ng-if="obj.show" ng-click="changePage(obj.num)"  ng-class="{true:\'page-put\'}[curpage==obj.num]" ng-bind="obj.num"></a>'
 		+'<a ng-if="obj.hide" >...</a>'
 		+'</li>'
 		+'</ul>'
-		+'<div class="no-items" ng-show="total <= 0">暂无数据</div>'
+		+'<div class="no-items" ng-if="total <= 0">暂无数据</div>'
 		+'</div>'
 		+'</div>',
 		controller: function ($scope,$attrs) {

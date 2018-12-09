@@ -11,8 +11,10 @@ import java.util.*;
  */
 public class ModelUtil {
 
-    private static  Map typeKeyMap=new HashMap();
-    private static  Map subTypeKeyMap=new HashMap();
+    private static  Map typeKeyMap=new HashMap();  //key:name
+    private static  Map typeNameMap=new HashMap(); //name:key
+    private static  Map subTypeKeyMap=new HashMap(); //name:key
+    private static  Map subTypeNmeMap=new HashMap(); //key:name
 
     /**
      * 根据数据属性进行转译
@@ -37,7 +39,7 @@ public class ModelUtil {
         return result;
     }
 
-    public static String getTypeName(String key){
+    public static String getNameByType(String key){
         if(StringUtil.isEmpty(key)){
             return "";
         }
@@ -47,7 +49,17 @@ public class ModelUtil {
         return (String) typeKeyMap.get(key);
     }
 
-    public static String getSubTypeName(String key){
+    public static String getTypeByName(String name){
+        if(StringUtil.isEmpty(name)){
+            return "";
+        }
+        if(typeNameMap.size()<1){
+            getTypeNames();
+        }
+        return (String) typeNameMap.get(name);
+    }
+
+    public static String getSubeNameByTyp(String key){
         if(StringUtil.isEmpty(key)){
             return "";
         }
@@ -55,6 +67,16 @@ public class ModelUtil {
             getIntSubTypeNames();
         }
         return (String) subTypeKeyMap.get(key);
+    }
+
+    public static String getSubTypeByName(String key){
+        if(StringUtil.isEmpty(key)){
+            return "";
+        }
+        if(subTypeNmeMap.size()<1){
+            getIntSubTypeNames();
+        }
+        return (String) subTypeNmeMap.get(key);
     }
 
     /**
@@ -71,6 +93,7 @@ public class ModelUtil {
                     //防重复记录数值类型
                     if(typeKeyMap.get(type)==null){
                         typeKeyMap.put(type,typeName);
+                        typeNameMap.put(typeName,type);
                     }
                 }
             }
@@ -90,6 +113,7 @@ public class ModelUtil {
                     String type =att.getType();
                     if("INT_TYPE".equals(type)){
                         subTypeKeyMap.put(att.getSubType(),att.getSubTypeName());
+                        subTypeNmeMap.put(att.getSubTypeName(),att.getSubType());
                     }
                 }
             }

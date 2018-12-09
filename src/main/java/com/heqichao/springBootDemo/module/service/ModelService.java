@@ -10,6 +10,11 @@ import java.util.Map;
  * Created by heqichao on 2018-11-19.
  */
 public interface ModelService {
+
+    String[] title = new String[]{"名称","数据类型","数值类型","小数位数","单位","公式","备注"};
+    String[] code = new String[]{"attr_name","data_type","value_type","number_format", "unit","expression","memo"};
+
+
     Integer saveOrUpdateModel(Integer modelId,String modelName,List<Map> attrs);
     Map queryModelAndAttrsByModelId(Integer modelId);
     void deleteByModelId(Integer modelId);
@@ -40,4 +45,6 @@ public interface ModelService {
      * @return
      */
     Map<String,List> queryExportInfo();
+
+    void saveImport(Map map);
 }

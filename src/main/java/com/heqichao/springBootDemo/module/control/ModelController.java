@@ -2,11 +2,12 @@ package com.heqichao.springBootDemo.module.control;
 
 import com.alibaba.fastjson.JSONArray;
 import com.heqichao.springBootDemo.base.control.BaseController;
+import com.heqichao.springBootDemo.base.exception.ResponeException;
 import com.heqichao.springBootDemo.base.param.ResponeResult;
-import com.heqichao.springBootDemo.base.util.ExcelWriter;
-import com.heqichao.springBootDemo.base.util.FileUtil;
-import com.heqichao.springBootDemo.base.util.StringUtil;
+import com.heqichao.springBootDemo.base.util.*;
 import com.heqichao.springBootDemo.module.entity.Model;
+import com.heqichao.springBootDemo.module.entity.ModelAttr;
+import com.heqichao.springBootDemo.module.model.ModelUtil;
 import com.heqichao.springBootDemo.module.service.ModelAttrService;
 import com.heqichao.springBootDemo.module.service.ModelService;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -36,6 +37,7 @@ public class ModelController extends BaseController{
 
     @Autowired
     private ModelAttrService modelAttrService;
+
 
     private  Logger logger = LoggerFactory.getLogger(ModelController.class);
 
@@ -125,8 +127,7 @@ public class ModelController extends BaseController{
 
        Map<String,List> map = modelService.queryExportInfo();
         if(map!=null){
-            String[] title = new String[]{"名称","数据类型","数值类型","小数位数","单位","公式","备注"};
-            String[] code = new String[]{"attr_name","data_type","value_type","number_format", "unit","expression","memo"};
+
             FileOutputStream fos = null;
             File file =null;
             try{
@@ -140,15 +141,16 @@ public class ModelController extends BaseController{
                     String key = (String) entry.getKey();
                     List<Map> attrList = (List<Map>) entry.getValue();
                     String modelName = key.split(ModelService.EXCEL_NAME_SPLIT)[1];
-                    ExcelWriter.export(workbook,modelName,title,attrList,code);
+                    ExcelWriter.export(workbook,modelName,ModelService.title,attrList,ModelService.code);
                 }
                 workbook.write(fos);
             }catch (Exception e){
-
+                e.printStackTrace();
             }finally {
                 if(fos!=null){
                     try {
                         fos.close();
+                       // logger.info("文件地址:"+file.getPath());
                         download(file);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -168,10 +170,16 @@ public class ModelController extends BaseController{
         File file =FileUtil.createTempDownloadFile( System.currentTimeMillis()+".xml");
         try {
             multipartFile.transferTo(file);
+
+            Map map =ExcelReader.readFile(file);
+            modelService.saveImport(map);
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            FileUtil.deleteFile(file);
         }
 
         return new ResponeResult();
     }
+
 }

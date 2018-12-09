@@ -3,6 +3,7 @@ package com.heqichao.springBootDemo.module.service;
 import com.github.pagehelper.PageInfo;
 import com.heqichao.springBootDemo.base.entity.User;
 import com.heqichao.springBootDemo.base.exception.ResponeException;
+import com.heqichao.springBootDemo.base.param.ApplicationContextUtil;
 import com.heqichao.springBootDemo.base.service.EquipmentService;
 import com.heqichao.springBootDemo.base.service.UserService;
 import com.heqichao.springBootDemo.base.util.*;
@@ -38,6 +39,13 @@ public class ModelServiceImpl implements ModelService {
         Date date = new Date();
         if(!UserUtil.hasCRDPermission() ){
             throw new ResponeException("没有该权限操作！");
+        }
+        if(StringUtil.isEmpty(modelName)){
+            throw new ResponeException("请输入模板名称！");
+        }
+        Integer count = modelMapper.queryCountByModelName(modelName);
+        if(count>0){
+            throw new ResponeException("模板名称 :"+modelName+" 已存在！");
         }
 
         Integer userId =ServletUtil.getSessionUser().getId();
@@ -118,20 +126,22 @@ public class ModelServiceImpl implements ModelService {
         List<Map> returnList =new ArrayList<>();
         Integer cmp =ServletUtil.getSessionUser().getCompetence();
         Integer userId =ServletUtil.getSessionUser().getId();
+        PageInfo pageInfo =null;
         if(cmp !=null ) {
             //管理员查询所有
             if (UserService.ROOT.equals(cmp)) {
                 PageUtil.setPage();
-                list=modelMapper.queryAll(modelName);
+                pageInfo=new PageInfo(modelMapper.queryAll(modelName));
             }else {
                 Integer parentId =equipmentService.getUserParent(userId);
                 List<Integer> userList =new ArrayList<>();
                 userList.add(userId);
                 userList.add(parentId);
                 PageUtil.setPage();
-                list= modelMapper.queryByUserIds(userList,modelName);
+                pageInfo=new PageInfo(modelMapper.queryByUserIds(userList,modelName));
             }
         }
+        list=pageInfo.getList();
         if(list!=null && list.size()>0){
             //补充人员名字
             for(Model model :list){
@@ -142,8 +152,7 @@ public class ModelServiceImpl implements ModelService {
                 returnList.add(map);
             }
         }
-
-        PageInfo pageInfo = new PageInfo(returnList);
+        pageInfo.setList(returnList);
         return pageInfo;
     }
 
@@ -206,8 +215,8 @@ public class ModelServiceImpl implements ModelService {
                 map = new HashMap<String,List>();
                 for(Map m :mapList){
                     //翻译
-                    m.put("data_type",ModelUtil.getTypeName((String) m.get("data_type")));
-                    m.put("value_type",ModelUtil.getSubTypeName((String) m.get("value_type")));
+                    m.put("data_type",ModelUtil.getNameByType((String) m.get("data_type")));
+                    m.put("value_type",ModelUtil.getSubeNameByTyp((String) m.get("value_type")));
                     String modelId = (String) m.get("model_id");
                     String modelName = (String) m.get("model_name");
                     if(map.get(modelId+EXCEL_NAME_SPLIT+modelName) == null){
@@ -219,4 +228,109 @@ public class ModelServiceImpl implements ModelService {
         }
         return map;
     }
+
+    @Override
+    public void saveImport(Map map) {
+        if(map==null || map.size()<1){
+            return;
+        }
+        Iterator entries = map.entrySet().iterator();
+        ModelService modelService = (ModelService) ApplicationContextUtil.getApplicationContext().getBean("modelServiceImpl");
+        while (entries.hasNext()) {
+            Map.Entry entry = (Map.Entry) entries.next();
+            String modelNme = (String) entry.getKey();
+            List<Map> attrList =new ArrayList<>();
+            if(entry.getValue() instanceof ArrayList){
+                List attrs= (List) entry.getValue();
+                if(attrs!=null && attrs.size()>1){
+                    //去掉第一行标题
+                    for(int i=1;i<attrs.size();i++){
+                        List<String> row = (List<String>) attrs.get(i);
+                        Map rowMap =  CollectionUtil.listStringTranToMap(row,code,true);
+                        attrList.add(rowMap);
+                    }
+                }
+                checkAttr(modelNme,attrList);
+                modelService.saveOrUpdateModel(null,modelNme,attrList);
+            }
+        }
+    }
+
+
+
+    private void checkAttr(String modelName,List<Map> attrList){
+        Map nameMap =new HashMap();
+        if(modelName.length()>20){
+            throw new ResponeException("模板名称长度不允许超过20："+modelName);
+        }
+
+        if(attrList!=null && attrList.size()>0){
+            for(Map map :attrList){
+                String name = (String) map.get("attrName");
+                if(StringUtil.isEmpty(name)){
+                    throw new ResponeException("属性名称不允许为空");
+                }
+                if(nameMap.get(name)!=null){
+                    throw new ResponeException("属性名称不允许重复："+name);
+                }
+                nameMap.put(name,new Object());
+                if(name.length()> 20){
+                    throw new ResponeException("属性名称长度不允许超过20："+modelName);
+                }
+
+                String dataTypeName = (String) map.get("dataType");
+                if(StringUtil.isEmpty(dataTypeName)){
+                    throw new ResponeException("数据类型不允许为空");
+                }
+                String dataType =ModelUtil.getTypeByName(dataTypeName);
+                if(StringUtil.isEmpty(dataType)){
+                    throw new ResponeException("无效的数据类型："+dataTypeName);
+                }else{
+                    map.put("dataType",dataType);
+                }
+
+                String valueTypeName = (String) map.get("valueType");
+                if(StringUtil.isNotEmpty(valueTypeName)){
+                    String valueType =ModelUtil.getSubTypeByName(valueTypeName);
+                    map.put("valueType",valueType);
+                }
+
+                String numberFormat = (String) map.get("numberFormat");
+                if(StringUtil.isNotEmpty(numberFormat)){
+                    try{
+                        int num = Integer.parseInt(numberFormat);
+                        if(num>9 || num <0){
+                            throw new ResponeException("小数位数在0到9之间");
+                        }
+                        map.put("numberFormat",num);
+                    }catch (Exception e){
+                        throw new ResponeException("无效的小数位数："+numberFormat);
+                    }
+                }
+
+                String unit = (String) map.get("unit");
+                if(StringUtil.isNotEmpty(unit)){
+                    if(unit.length()> 20){
+                        throw new ResponeException("单位长度不允许超过20："+unit);
+                    }
+                }
+
+                String expression = (String) map.get("expression");
+                if(StringUtil.isNotEmpty(expression)){
+                    if(unit.length()> 20){
+                        throw new ResponeException("公式长度不允许超过20："+expression);
+                    }
+                }
+
+                String memo = (String) map.get("memo");
+                if(StringUtil.isNotEmpty(expression)){
+                    if(unit.length()> 20){
+                        throw new ResponeException("备注长度不允许超过20："+memo);
+                    }
+                }
+            }
+        }
+
+    }
+
 }

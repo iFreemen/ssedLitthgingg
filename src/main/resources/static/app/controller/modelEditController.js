@@ -107,7 +107,7 @@ function modelEditCtrl($scope, $http, $rootScope,$routeParams,$location) {
                 //控制波形类型一定要在最后
                 if("WAVE_TYPE"== $scope.list[i].dataType){
                     if(i != $scope.list.length-1){
-                        swal("雷击波形只能设置在最后！", null, "error");
+                        swal("波形只能设置在最后！", null, "error");
                         return;
                     }
                 }

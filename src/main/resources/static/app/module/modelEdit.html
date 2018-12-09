@@ -67,7 +67,7 @@
                                                     <option value="ALARM_TYPE">报警型</option>
                                                     <option value="DATE_TYPE">时间型</option>
                                                     <option value="SWITCH_TYPE">开关型</option>
-                                                    <option value="WAVE_TYPE">雷击波形</option>
+                                                    <option value="WAVE_TYPE">波形</option>
                                                 </select>
                                             <!--    <select name="datatable-editable_length" aria-controls="datatable-editable" class="form-control input-sm">
                                                     <option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option>
@@ -88,7 +88,7 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <input type="number" class="form-control" onkeyup="this.value=this.value.replace(/\D/g,'')" oninput="if(value.length>2)value=value.slice(0,2)" onafterpaste="this.value=this.value.replace(/\D/g,'')" name="$index_numberFormat" ng-model="entity.numberFormat" min="0"   maxlength="1" placeholder="小数位数" ng-disabled="'INT_TYPE'!=entity.dataType">
+                                                <input type="number" class="form-control" onkeyup="this.value=this.value.replace(/\D/g,'')" oninput="if(value.length>1)value=value.slice(0,1)" onafterpaste="this.value=this.value.replace(/\D/g,'')" name="$index_numberFormat" ng-model="entity.numberFormat" min="0"   maxlength="1" placeholder="小数位数" ng-disabled="'INT_TYPE'!=entity.dataType">
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" name="$index_unit" ng-model="entity.unit" maxlength="20"  placeholder="单位" ng-disabled="'INT_TYPE'!=entity.dataType">

@@ -21,6 +21,11 @@ public interface ModelMapper {
             +"</script>")
      List<Model> queryByModelId(@Param("modelID") Integer modelID);
 
+    @Select("<script>"
+            +"select count(1) from model  where model_name = #{modelName}   "
+            +"</script>")
+    Integer queryCountByModelName(@Param("modelName") String modelName);
+
     @Insert("<script>"
             +"insert into model (add_date,udp_date,add_uid,udp_uid,model_name) values (#{addDate},#{udpDate},#{addUid},#{udpUid},#{modelName})"
             +"</script>")
@@ -35,6 +40,7 @@ public interface ModelMapper {
     @Select("<script>"
             +"select * from model  where 1=1  "
             + "<if test =\"modelName !=null  and modelName!='' \"> and model_name like CONCAT(CONCAT('%',#{modelName}),'%')  </if>"
+            +" order by udp_date desc"
             +"</script>")
     List<Model> queryAll(@Param("modelName")String modelName);
 
@@ -45,6 +51,7 @@ public interface ModelMapper {
             + "#{uid}"
             + "</foreach>"
             + "<if test =\"modelName !=null  and modelName!='' \"> and model_name like CONCAT(CONCAT('%',#{modelName}),'%')  </if>"
+            +" order by udp_date desc"
             +"</script>")
     List<Model> queryByUserIds(@Param("list") List<Integer> list,@Param("modelName")String modelName);
 
