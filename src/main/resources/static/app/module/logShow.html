@@ -113,7 +113,7 @@
 
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <div><strong>设备类型：</strong><span class=" about-info-p text-muted"  ng-bind="equip.typeCd"></span></div>
+                                            <div><strong>设备类型：</strong><span class=" about-info-p text-muted"  ng-bind="equip.typeName"></span></div>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -140,7 +140,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <div><strong>所属用户：</strong><span class=" about-info-p text-muted"  ng-bind="equipUserName"></span></div>
+                                            <div><strong>所属用户：</strong><span class=" about-info-p text-muted"  ng-bind="equip.uName"></span></div>
                                         </div>
                                     </div>
                                   <!--  <div class="col-md-12">
@@ -158,6 +158,8 @@
                             <h3 class="panel-title">地图</h3>
                         </div>
                         <div class="panel-body">
+                        <div id="map" style="height:300px;" >
+                			</div>
 
                         </div>
                     </div>

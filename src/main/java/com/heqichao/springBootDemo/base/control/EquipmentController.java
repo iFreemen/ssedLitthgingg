@@ -43,11 +43,20 @@ public class EquipmentController extends BaseController{
     public List<String> getEquipmentIdListAll() {
     	return eService.getEquipmentIdListAll();
     }
+    @RequestMapping(value = "/getEquEditInfo")
+    public ResponeResult getEquEdit() {
+    	return eService.getEquEditById();
+    }
     
     @RequestMapping(value = "/addEqu" )
     @ResponseBody
-    public ResponeResult addUser(@RequestBody Map map) throws Exception {
+    public ResponeResult addEqu(@RequestBody Map map) throws Exception {
         return eService.insertEqu(map);
+    }
+    @RequestMapping(value = "/editEqu" )
+    @ResponseBody
+    public ResponeResult editEqu(@RequestBody Map map) throws Exception {
+    	return eService.editEqu(map);
     }
     
     @RequestMapping(value = "/delEqu" )

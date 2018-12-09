@@ -1,4 +1,4 @@
-function equCtrl($scope, $http, $rootScope) {
+function equCtrl($scope, $http,$location, $rootScope) {
 	$scope.equStatus={
 	        "N":"在线", 
 	        "F":"故障", 
@@ -74,7 +74,9 @@ function equCtrl($scope, $http, $rootScope) {
         });
 		
 	}
-	
+	 $scope.gotoEdit=function(devId,id){
+         $location.path("/module/equEdit/"+devId+"/"+id);
+     }
 	$scope.delEquById = function(eid){
 		$scope.currDel = eid;
 		$http.post("service/delEqu",

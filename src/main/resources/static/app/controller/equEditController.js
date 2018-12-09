@@ -1,14 +1,31 @@
-function equAddCtrl($scope, $http,$rootScope,$location,$timeout) {
+function equEditCtrl($scope, $http,$rootScope,$location,$timeout,$routeParams) {
 	var elem = document.createElement("script");
 	elem.src = 'assets/js/jquery.easyui.min.js';
 	document.body.appendChild(elem);
 	$scope.loadCtl={
     		addEnq:false
     };
-	$scope.addFrom = {
-			uid:$rootScope.user.id,
-			typeCd : 'L'
-	}
+	$scope.addFrom = {};
+	$scope.dataOnReady=false;
+	//初始化
+	$scope.getEquEditInfo = function(){
+		$http.post("service/getEquEditInfo",$scope.addFrom).success(function(data) {
+			if(data.resultObj == "errorMsg"){
+				swal(data.message, null, "error");
+				$location.path("/module/equView");
+			}else{
+				$scope.addFrom = data.resultObj;
+				  $scope.init();
+			}
+		});
+	};
+	if($routeParams){
+		console.log($routeParams);
+        $scope.addFrom.devId=$routeParams.devId;
+        $scope.addFrom.id=$routeParams.id;
+        $scope.getEquEditInfo();
+    }
+	// 判断是否为NB设备
 	$scope.chkType=false;
 	
 	//获取设备分组列表
@@ -41,6 +58,7 @@ function equAddCtrl($scope, $http,$rootScope,$location,$timeout) {
     			swal(data.message, null, "error");
     		}else{
     			$scope.selUserModel = data.resultObj;
+    			$scope.dataOnReady=true;
     		}
     	});
     };
@@ -61,14 +79,13 @@ function equAddCtrl($scope, $http,$rootScope,$location,$timeout) {
 	$scope.addEqu = function() {
     	$scope.loadCtl.addEnq = true;
     	$scope.addFrom.groupId = $('#equ_easyui_combotree').combotree('getValue');
-    	console.log($scope.addFrom);
-        $http.post("service/addEqu",$scope.addFrom).success(function(data) {
+        $http.post("service/editEqu",$scope.addFrom).success(function(data) {
 			    	if(data.resultObj == "errorMsg"){
 			    		swal(data.message, null, "error");
 			    		$scope.loadCtl.addEnq = false;
 			        }else{
 			        	//修改成功后
-			        	swal("新增成功", null, "success");
+			        	swal("修改成功", null, "success");
 			        	$location.path("/module/equView");
 			        }
         });
@@ -76,7 +93,7 @@ function equAddCtrl($scope, $http,$rootScope,$location,$timeout) {
     };
     
     
-    $scope.init();
+  
 	
 	$scope.selEquType = function(type){
 		if(type=='N'){
@@ -172,7 +189,6 @@ function equAddCtrl($scope, $http,$rootScope,$location,$timeout) {
                     $scope.addFrom.address = rs.address;
                 });
             })
-            console.log($scope.addFrom);
         });
     },10);
 }

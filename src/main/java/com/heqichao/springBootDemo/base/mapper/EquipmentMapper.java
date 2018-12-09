@@ -56,6 +56,17 @@ public interface EquipmentMapper {
 			"  where e.valid = 'N' and e.dev_id = #{devId} ")
 	public Equipment getEquById(@Param("devId") String  devId);
 	
+	@Select("SELECT e.id,e.name,e.dev_id,e.type_cd,e.model_id,e.group_id,e.group_adm_id,e.app_id,"+
+			" e.verification,e.support_code,e.supporter,e.site,e.address,e.remark,e.online,e.uid,e.udp_date," + 
+			" u.company uName,m.model_name,a.app_name," + 
+			" case e.type_cd when 'L' then 'Lora' when 'N' then 'Nbiot' when 'G' then '2G' else null end as typeName " + 
+			"  FROM equipments e" + 
+			"  left join users u on e.uid=u.id" + 
+			"  left join model m on e.model_id=m.id" + 
+			"  left join applications a on e.app_id=a.id" + 
+			"  where e.valid = 'N' and e.dev_id = #{devId} and e.id=#{id}")
+	public Equipment getEquEditById(@Param("devId") String  devId,@Param("id") Integer  id);
+	
 	@Select("SELECT dev_id FROM equipments where valid = 'N' ")
 	public List<String> getEquipmentIdListAll();
 	
@@ -89,8 +100,14 @@ public interface EquipmentMapper {
 			@Param("sStatus")String sStatus);
 	
 	@Insert("insert into equipments (name,dev_id,type_cd,model_id,group_id,app_id,verification,support_code,supporter,site,address,remark,uid,valid,add_uid,udp_uid,online)"
-			+ " values(#{name},#{devId},#{typeCd},#{modelId},#{groupId},#{appId},#{verification},#{supportCode},#{supporter},#{site},#{address},#{remark},#{uid},#{valid},#{addUid},#{addUid},1) ")
+			+ " values(#{name},#{devId},#{typeCd},#{modelId},#{groupId},#{appId},#{verification},#{supportCode},#{supporter},#{site},#{address},#{remark},#{uid},#{valid},#{addUid},#{addUid},0) ")
 	public int insertEquipment(Equipment equ);
+	
+	@Update("update equipments set name=#{name},dev_id=#{devId},type_cd=#{typeCd},model_id=#{modelId},"
+			+ "group_id=#{groupId},app_id=#{appId},verification=#{verification},support_code=#{supportCode},"
+			+ "supporter=#{supporter},site=#{site},address=#{address},remark=#{remark},uid=#{uid},valid=#{valid},udp_uid=#{udpUid},udp_date=sysdate()"
+			+ " where id=#{id}")
+	public int editEquipment(Equipment equ);
 	
 
 	
@@ -102,6 +119,9 @@ public interface EquipmentMapper {
 	
 	@Select("select count(1)>0 from equipments where dev_id = #{devId} and valid = 'N' and uid=#{uid} ")
 	public boolean duplicatedEid(@Param("devId")String devId,@Param("uid")Integer uid);
+	
+	@Select("select count(1)>1 from equipments where dev_id = #{devId} and valid = 'N' and uid=#{uid} ")
+	public boolean duplicatedEidEdit(@Param("devId")String devId,@Param("uid")Integer uid);
 
 	@Update("update equipments set  e_range = #{range} where eid=#{eid} and valid = 'N'")
 	 int updateRange(@Param("eid")String eid,@Param("range")Integer range);
