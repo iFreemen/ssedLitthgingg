@@ -86,6 +86,11 @@ public class MqttUtil {
         }
     }
 
+    /**
+     * 取消订阅
+     * @param topsics
+     * @throws Exception
+     */
     public static void unSubscribeTopicMes(List<String> topsics) throws Exception {
         String top =mqttOption.getTopic();
         if(topsics== null || topsics.size()<1){

@@ -1,6 +1,7 @@
 package com.heqichao.springBootDemo.base.mapper;
 
 import java.sql.ResultSet;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -91,9 +92,23 @@ public interface EquipmentMapper {
 	@Insert("insert into equipments (name,dev_id,type_cd,model_id,group_id,app_id,verification,support_code,supporter,site,address,remark,uid,valid,add_uid,udp_uid,online)"
 			+ " values(#{name},#{devId},#{typeCd},#{modelId},#{groupId},#{appId},#{verification},#{supportCode},#{supporter},#{site},#{address},#{remark},#{uid},#{valid},#{addUid},#{addUid},1) ")
 	public int insertEquipment(Equipment equ);
-	
 
-	
+	@Select("<script>"
+			+" select dev_id from equipments  "
+			+" where online = #{online} and type_cd =#{type_cd} "
+			+"</script>")
+	List<Integer> queryByTypeAndOnline( @Param("type_cd") String type_cd,@Param("online") String online);
+
+	@Update(
+			"<script>"
+					+ "update data_detail set  data_status = #{status},udp_date=#{date} where dev_id in "
+					+ "<foreach  collection=\"list\" open=\"(\" close=\")\" separator=\",\" item=\"uid\" >"
+					+ "#{uid}"
+					+ "</foreach>"
+					+ "</script>")
+	void updateStatus(@Param("status")String status , @Param("list") List<String> list, @Param("date")Date date);
+
+
 	@Update("update equipments set  update_time = sysdate(), udp_uid = #{udid}, valid = 'D' where id=#{id} and valid = 'N' ")
 	public int delEquById(@Param("id")Integer eid,@Param("udid")Integer udid);
 	
