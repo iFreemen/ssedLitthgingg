@@ -96,7 +96,7 @@ public class MqttUtilCallback implements MqttCallback {
             mqttUtilCallback.equipmentService.setEquStatus(devId,EquipmentService.BREAKDOWN);
         }else{
 
-            mqttUtilCallback.dataLogService.saveDataLog(devId,mes);
+            mqttUtilCallback.dataLogService.saveDataLog(devId,mes,"MQTT");
 
           /*  LightningLog log =MqttUtil.saveTransData(mes);
             if(log!=null){

@@ -16,7 +16,14 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <button class="btn btn-primary   waves-effect waves-light" btn-loading="loading" ng-click="init()">搜索</button>
-                                    <button type="button" class="btn btn-primary waves-effect waves-light" ng-click="addModel()">新建模板 <i class="fa fa-plus"></i></button>
+
+                                </div>
+                            </div>
+                            <div  class="col-md-12 col-sm-12 col-xs-12 m-t-10">
+                                <div class="col-sm-1"></div>
+                                <div class="col-sm-9">
+                                 <button type="button" class="btn btn-primary waves-effect waves-light" ng-click="addModel()">新建模板 <i class="fa fa-plus"></i></button>
+                                 <button class="btn btn-primary   waves-effect waves-light" btn-loading="loading" ng-click="exportAll()">全部导出</button>
                                 </div>
                             </div>
                         </div>
@@ -32,7 +39,7 @@
 
                     </form>
 
-                    <div class="row" style="margin-top: 10px">
+                    <div class="row m-t-10">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="table-responsive">
                                 <table class="table">
@@ -54,10 +61,19 @@
                                         <td ng-bind="entity.udpDate"  ></td>
                                         <td ng-bind="entity.udpName"  ></td>
                                         <td >
-                                           <a ng-click="gotoModel(entity)" class="on-default edit-row" style="cursor:pointer"><i class="fa fa-pencil"></i></a>
-                                            <!--<a ng-click="deleteModel(entity)" class="on-default edit-row" style="cursor:pointer">删除</a>-->
-                                           <!-- <a class="on-default edit-row"  ng-if="entity.isEdit != true " ng-click="gotoModel(entity)" ><i class="fa fa-pencil"></i></a>-->
+                                        <!--   <a ng-click="gotoModel(entity)" class="on-default edit-row" style="cursor:pointer"><i class="fa fa-pencil"></i></a>
+                                            &lt;!&ndash;<a ng-click="deleteModel(entity)" class="on-default edit-row" style="cursor:pointer">删除</a>&ndash;&gt;
+                                           &lt;!&ndash; <a class="on-default edit-row"  ng-if="entity.isEdit != true " ng-click="gotoModel(entity)" ><i class="fa fa-pencil"></i></a>&ndash;&gt;
                                             <a class="on-default remove-row"  ng-click="deleteModel(entity)"><i class="fa fa-trash-o" style="color: #ef5350"></i></a>
+-->
+                                            <button class="btn btn-icon waves-effect waves-light btn-info btn-sm m-b-5" ng-click="gotoModel(entity)">
+                                                <i class="fa fa-pencil" style="color:  #fff;"></i>
+                                            </button>
+
+                                            <button class="btn btn-icon waves-effect waves-light btn-danger btn-sm m-b-5" ng-click="deleteModel(entity)">
+                                                <i class="fa fa-trash-o" style="color:  #fff;"></i>
+                                            </button>
+
                                         </td>
                                     </tr>
 

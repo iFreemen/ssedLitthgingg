@@ -32,7 +32,9 @@ function modelListCtrl($scope, $http, $rootScope,$routeParams,$location) { $scop
         $scope.quereyData.page=page;
         $scope.init();
     }
-
+    $scope.exportAll=function () {
+        $rootScope.downLoadFile("/service/exportAllUserModel" );
+    };
 
 
     $scope.gotoModel=function(entity){

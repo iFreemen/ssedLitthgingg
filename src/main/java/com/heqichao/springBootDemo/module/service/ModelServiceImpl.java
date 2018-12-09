@@ -185,4 +185,38 @@ public class ModelServiceImpl implements ModelService {
         return res;
         // End Muzzy
     }
+
+    @Override
+    public Map<String,List> queryExportInfo() {
+       Map<String,List> map =null;
+        Integer cmp =ServletUtil.getSessionUser().getCompetence();
+        Integer userId =ServletUtil.getSessionUser().getId();
+        List<Integer> userList =new ArrayList<>();
+        if(cmp !=null ) {
+            //管理员查询所有
+            if (UserService.ROOT.equals(cmp)) {
+                userList=null;
+            }else {
+                Integer parentId =equipmentService.getUserParent(userId);
+                userList.add(userId);
+                userList.add(parentId);
+            }
+           List<Map> mapList = modelMapper.queryExportInfo(userList);
+            if(mapList!=null && mapList.size()>0){
+                map = new HashMap<String,List>();
+                for(Map m :mapList){
+                    //翻译
+                    m.put("data_type",ModelUtil.getTypeName((String) m.get("data_type")));
+                    m.put("value_type",ModelUtil.getSubTypeName((String) m.get("value_type")));
+                    String modelId = (String) m.get("model_id");
+                    String modelName = (String) m.get("model_name");
+                    if(map.get(modelId+EXCEL_NAME_SPLIT+modelName) == null){
+                        map.put(modelId+EXCEL_NAME_SPLIT+modelName,new ArrayList<Map>());
+                    }
+                    map.get(modelId+EXCEL_NAME_SPLIT+modelName).add(m);
+                }
+            }
+        }
+        return map;
+    }
 }

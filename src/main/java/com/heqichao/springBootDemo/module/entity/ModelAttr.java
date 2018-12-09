@@ -22,8 +22,18 @@ public class ModelAttr extends BaseEntity {
     private String unit;
     //公式
     private String expression;
+    //备注
+    private String memo;
     //排序
     private int orderNo;
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
 
     public Integer getModelId() {
         return modelId;

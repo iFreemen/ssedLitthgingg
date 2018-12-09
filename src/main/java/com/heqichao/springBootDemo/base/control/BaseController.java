@@ -2,10 +2,17 @@ package com.heqichao.springBootDemo.base.control;
 
 import com.heqichao.springBootDemo.base.exception.ResponeException;
 import com.heqichao.springBootDemo.base.param.RequestContext;
+import com.heqichao.springBootDemo.base.util.FileUtil;
 import com.heqichao.springBootDemo.base.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,5 +53,48 @@ public class BaseController {
             map =new HashMap();
         }
         return  map;
+    }
+
+
+
+
+
+    protected void download(File file){
+        if(file == null){
+            return;
+        }
+        BufferedInputStream fis = null;
+        BufferedOutputStream toClient = null;
+        try {
+            HttpServletResponse response=RequestContext.getContext().getResponse();
+            fis = new BufferedInputStream(new FileInputStream(file));
+            byte[] buffer = new byte[fis.available()];
+            fis.read(buffer);
+            // 清空response
+            response.reset();
+            toClient = new BufferedOutputStream(response.getOutputStream());
+            response.setContentType("application/octet-stream");
+            response.setHeader("Content-Disposition", "attachment;filename=" + new String(file.getName().getBytes("gb2312"), "ISO8859-1"));
+            toClient.write(buffer);
+            toClient.flush();
+        }catch (Exception err){
+            throw new ResponeException(err);
+        } finally{
+            try {
+                if (toClient != null) {
+                    toClient.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                if (fis != null) {
+                    fis.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            FileUtil.deleteFile(file);
+        }
     }
 }
