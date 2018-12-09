@@ -79,12 +79,6 @@ public interface EquipmentService {
 	ResponeResult editEqu(Map map);
 
 
-
-	ResponeResult getEquEditById();
-
-	ResponeResult editEqu(Map map);
-
-
 	/**
 	 * 更新设备在线离线状态
 	 * @param online
