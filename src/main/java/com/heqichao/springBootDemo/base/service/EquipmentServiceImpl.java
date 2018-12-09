@@ -17,10 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Muzzy Xu.
@@ -107,8 +104,21 @@ public class EquipmentServiceImpl implements EquipmentService {
     	String devId = StringUtil.getStringByMap(map,"devId");
     	return eMapper.getEquById(devId);
     }
-    
-    /**
+
+	@Override
+	public List<String> queryByTypeAndOnline(String type_cd, String online) {
+		return eMapper.queryByTypeAndOnline(type_cd, online);
+	}
+
+	@Override
+	public void updateOnlineStatus(String online, List<String> list, Date date) {
+		if(list==null || list.size()<1){
+			return;
+		}
+		eMapper.updateOnlineStatus(online,list,date);
+	}
+
+	/**
      * 查找所有设备dev_id
      */
     @Override
