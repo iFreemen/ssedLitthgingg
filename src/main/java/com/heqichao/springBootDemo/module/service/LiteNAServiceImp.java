@@ -171,6 +171,25 @@ public class LiteNAServiceImp implements LiteNAService {
 
 	}
 	@Override
+	public Map<String,String> NBReturnFmt(Object map){
+		String mes =map.toString();
+		logger.info("调用回调url传入参数："+mes);
+		
+		JSONObject jsonObject =changeMse(mes);
+		JSONObject service =jsonObject.getJSONObject("service");
+		String deviceId =jsonObject.getString("deviceId");
+		JSONObject data=service.getJSONObject("data");
+		String dataFmt = data.toJSONString().split(":")[1];
+		dataFmt =dataFmt.replaceAll("\"", "");
+		dataFmt =dataFmt.replaceAll("}", "");
+		Map<String,String> res = new HashMap<String, String>();
+		res.put("devid", deviceId);
+		res.put("data", dataFmt);
+		res.put("srcdata", mes);
+		return res;
+		
+	}
+	@Override
 	public void chg(Object map) {
 		String mes =map.toString();
 		logger.info("调用回调url传入参数："+mes);
