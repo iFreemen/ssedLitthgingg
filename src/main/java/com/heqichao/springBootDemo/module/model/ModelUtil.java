@@ -11,21 +11,8 @@ import java.util.*;
  */
 public class ModelUtil {
 
-    /**
-     * 判断模板是否有使用波形
-     * @param list
-     * @return
-     */
-    public static boolean hasWaveType(List<ModelAttr> list){
-        if(list!=null && list.size()>0){
-            for(ModelAttr attr :list){
-                if(AttrEnum.WAVE_TYPE.getType().equals(attr.getDataType())){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+    private static  Map typeKeyMap=new HashMap();
+    private static  Map subTypeKeyMap=new HashMap();
 
     /**
      * 根据数据属性进行转译
@@ -50,24 +37,45 @@ public class ModelUtil {
         return result;
     }
 
+    public static String getTypeName(String key){
+        if(StringUtil.isEmpty(key)){
+            return "";
+        }
+        if(typeKeyMap.size()<1){
+            getTypeNames();
+        }
+        return (String) typeKeyMap.get(key);
+    }
+
+    public static String getSubTypeName(String key){
+        if(StringUtil.isEmpty(key)){
+            return "";
+        }
+        if(subTypeKeyMap.size()<1){
+            getIntSubTypeNames();
+        }
+        return (String) subTypeKeyMap.get(key);
+    }
+
     /**
      * 获取主类型信息
      * @return
      */
     public static Map getTypeNames(){
-        AttrEnum[] attrs = AttrEnum.values();
-        Map keyMap=new HashMap();
-        if(attrs!=null && attrs.length>0){
-            for(AttrEnum att :attrs){
-                String type =att.getType();
-                String typeName =att.getTypeName();
-                //防重复记录数值类型
-                if(keyMap.get(type)==null){
-                    keyMap.put(type,typeName);
+        if(typeKeyMap.size()<1){
+            AttrEnum[] attrs = AttrEnum.values();
+            if(attrs!=null && attrs.length>0){
+                for(AttrEnum att :attrs){
+                    String type =att.getType();
+                    String typeName =att.getTypeName();
+                    //防重复记录数值类型
+                    if(typeKeyMap.get(type)==null){
+                        typeKeyMap.put(type,typeName);
+                    }
                 }
             }
         }
-        return keyMap;
+        return typeKeyMap;
     }
 
     /**
@@ -75,17 +83,19 @@ public class ModelUtil {
      * @return
      */
     public static Map getIntSubTypeNames(){
-        AttrEnum[] attrs = AttrEnum.values();
-        Map keyMap=new HashMap();
-        if(attrs!=null && attrs.length>0){
-            for(AttrEnum att :attrs){
-                String type =att.getType();
-                if("INT_TYPE".equals(type)){
-                    keyMap.put(att.getSubType(),att.getSubTypeName());
+        if(subTypeKeyMap.size()<1){
+            AttrEnum[] attrs = AttrEnum.values();
+            if(attrs!=null && attrs.length>0){
+                for(AttrEnum att :attrs){
+                    String type =att.getType();
+                    if("INT_TYPE".equals(type)){
+                        subTypeKeyMap.put(att.getSubType(),att.getSubTypeName());
+                    }
                 }
             }
         }
-        return keyMap;
+
+        return subTypeKeyMap;
     }
 
 }

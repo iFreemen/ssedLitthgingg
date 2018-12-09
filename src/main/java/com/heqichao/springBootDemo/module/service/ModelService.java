@@ -14,6 +14,7 @@ public interface ModelService {
     Map queryModelAndAttrsByModelId(Integer modelId);
     void deleteByModelId(Integer modelId);
 
+    String EXCEL_NAME_SPLIT="&_&_&";
     /**
      * 获取数据类型和数值类型数据
      * @return
@@ -33,4 +34,10 @@ public interface ModelService {
      */
 //    List<Map> queryUserModel();
     Map<String, Integer> queryUserModel();
+
+    /**
+     * 导出所有模板
+     * @return
+     */
+    Map<String,List> queryExportInfo();
 }

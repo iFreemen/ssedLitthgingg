@@ -3,6 +3,16 @@
  */
 
 function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.pages=0;
+    $scope.param={};
+    $scope.param.devId="";
+    $scope.param.attrKey="";
+    if($routeParams){
+        $scope.param.devId=$routeParams.devId;
+        $scope.param.attrKey=$routeParams.dataName;
+        //初始化选择
+        //只有第一次从列表跳入时初始化
+        $scope.param.initOption='TRUE';
+    }
 
 
 
@@ -19,10 +29,7 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.
     //图型数据
     $scope.plotDownloads =new Array();
     $scope.attrType="";
-    $scope.param={};
-    $scope.param.devId="";
-    $scope.param.attrKey="";
-    $scope.param.queryLog="TRUE";
+
     $scope.param.end =$scope.fmtDate(new Date());
     var date = new Date();//获取当前时间
     date.setDate(date.getDate()-30);//设置天数 -30天
@@ -48,8 +55,7 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.
     //初始化数据
     $scope.init=function(){
         $http.post("/service/queryEquAttrLog",$scope.param).success(function(data) {
-            $scope.param.queryLog="TRUE";
-            console.info(data.resultObj);
+            $scope.param.initOption='FALSE';
             if(data.resultObj.devList){
                 $scope.devList = data.resultObj.devList;
             }
@@ -84,7 +90,6 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.
 
     $scope.changeDevId=function () {
         $scope.param.attrKey="";
-        $scope.param.queryLog="FALSE";
         $scope.init();
     }
 

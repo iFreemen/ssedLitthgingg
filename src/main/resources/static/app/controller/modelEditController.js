@@ -17,6 +17,7 @@ function modelEditCtrl($scope, $http, $rootScope,$routeParams,$location) {
     });*/
 
 
+
     $scope.init=function(){
         if( $scope.modelId && "add" != $scope.modelId){
             $http.post("/service/queryAllByModelId",{"modelId":$scope.modelId}).success(function(data) {
