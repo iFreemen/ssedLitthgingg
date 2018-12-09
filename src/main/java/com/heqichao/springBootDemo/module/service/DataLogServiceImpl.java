@@ -205,4 +205,14 @@ public class DataLogServiceImpl implements DataLogService {
         }
         return map;
     }
+
+    @Override
+    public List<String> checkOffLineDev(String type, String onLine, Date date) {
+        return dataDetailMapper.checkOffLineDev(type, onLine, date);
+    }
+
+    @Override
+    public List<String> checkOnLineDev(String type, Date date) {
+        return dataDetailMapper.checkOnLineDev(type, date);
+    }
 }

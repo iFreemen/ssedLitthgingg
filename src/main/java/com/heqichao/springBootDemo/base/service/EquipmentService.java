@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.heqichao.springBootDemo.base.entity.Equipment;
 import com.heqichao.springBootDemo.base.param.ResponeResult;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,14 @@ public interface EquipmentService {
 	//设备只有在线和离线线状态，所以把故障状态也改为下线状态B
 	String NORMAL = "N";
 	String BREAKDOWN = "B";
+
+	String ON_LINE="0";
+	String OFF_LINE="1";
+
+	String EQUIPMENT_LORA="L";
+	String EQUIPMENT_NB="N";
+	String EQUIPMENT_GPRS="G";
+
 
 	PageInfo queryEquipmentList();
 
@@ -56,5 +65,19 @@ public interface EquipmentService {
 
 	Equipment getEquById();
 
+	/**
+	 * 根据类型、在线状态查找设备ID
+	 * @param type_cd
+	 * @param online
+	 * @return
+	 */
+	List<String> queryByTypeAndOnline( String type_cd, String online);
 
+	/**
+	 * 更新设备在线离线状态
+	 * @param online
+	 * @param list
+	 * @param date
+	 */
+	void updateOnlineStatus(String online , List<String> list,Date date);
 }
