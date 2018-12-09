@@ -805,6 +805,9 @@ body.fixed-left .side-menu.left {
 .clear {
     clear:both;
 }
+.pointer-div{
+	cursor: pointer;
+}
 @media (min-width: 992px) {
     .left_monitor {
         width:30%;
