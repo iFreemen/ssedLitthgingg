@@ -65,6 +65,7 @@ public interface EquipmentService {
 
 	Equipment getEquById();
 
+
 	/**
 	 * 根据类型、在线状态查找设备ID
 	 * @param type_cd
@@ -72,6 +73,12 @@ public interface EquipmentService {
 	 * @return
 	 */
 	List<String> queryByTypeAndOnline( String type_cd, String online);
+
+	ResponeResult getEquEditById();
+
+	ResponeResult editEqu(Map map);
+
+
 
 	ResponeResult getEquEditById();
 
