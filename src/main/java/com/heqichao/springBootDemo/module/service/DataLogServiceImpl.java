@@ -180,9 +180,10 @@ public class DataLogServiceImpl implements DataLogService {
             throw new ResponeException("没有该权限操作！");
         }
         if(devId!=null && devId.length>0){
+            Date date =new Date();
            List<String > ids = Arrays.asList(devId);
-            dataLogMapper.updateStatus(UN_ENABLE_STATUS,ids);
-            dataDetailMapper.updateStatus(UN_ENABLE_STATUS,ids);
+            dataLogMapper.updateStatus(UN_ENABLE_STATUS,ids,date);
+            dataDetailMapper.updateStatus(UN_ENABLE_STATUS,ids,date);
         }
     }
 

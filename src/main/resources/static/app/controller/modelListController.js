@@ -1,6 +1,5 @@
 
-function modelListCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.pages=0;
-
+function modelListCtrl($scope, $http, $rootScope,$filter,$location,fileUpload) { $scope.pages=0;
     $scope.clear=function(){
         $scope.quereyData.modelName="";
     }
@@ -13,6 +12,7 @@ function modelListCtrl($scope, $http, $rootScope,$routeParams,$location) { $scop
     };
     $scope.pageArr=[1];//页码数组
     $scope.pages= $scope.pageArr.length; //总页数
+    $scope.total=0;
     //初始化数据
     $scope.loading=false;
     $scope.init=function(){
@@ -20,6 +20,7 @@ function modelListCtrl($scope, $http, $rootScope,$routeParams,$location) { $scop
         $http.post("/service/queryModelList",$scope.quereyData).success(function(data) {
             $scope.data = data.resultObj.list;
             $scope.pages=data.resultObj.pages;
+            $scope.total=data.resultObj.total;
             $scope.quereyData.page=data.resultObj.pageNum;
             $scope.loading=false;
         });
@@ -35,7 +36,18 @@ function modelListCtrl($scope, $http, $rootScope,$routeParams,$location) { $scop
     $scope.exportAll=function () {
         $rootScope.downLoadFile("/service/exportAllUserModel" );
     };
+   /* $scope.fileToUpload;
+    $scope.sendFile = function(){
+        var url = "/service/importModel",
+            file = $scope.fileToUpload;
+        if ( !file ) return;
+        fileUpload.uploadFileToUrl( file, url );
+    };*/
 
+   $scope.uploadSuccess=function () {
+       swal("导入成功", null, "success");
+       $scope.init();
+   }
 
     $scope.gotoModel=function(entity){
         $location.path("/module/modelEdit/"+entity.id);
