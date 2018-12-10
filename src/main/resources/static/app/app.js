@@ -62,6 +62,9 @@ var demoApp =angular.module("demoApp", ["ngRoute"]);
 		}).when("/module/logShow/:devId/:dataName", {
 			templateUrl: "app/module/logShow.html",
 			controller: logShowCtrl
+		}).when("/module/logShow/:devId", {
+			templateUrl: "app/module/logShow.html",
+			controller: logShowCtrl
 		}).otherwise({
 		templateUrl: "app/module/home.html",
 			controller: homeCtrl
