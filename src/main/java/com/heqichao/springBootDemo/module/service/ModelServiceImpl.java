@@ -170,6 +170,9 @@ public class ModelServiceImpl implements ModelService {
                 map.put("addName",UserCache.getUserName(model.getAddUid()));
                 map.put("udpName",UserCache.getUserName(model.getUdpUid()));
                 returnList.add(map);
+
+
+                
             }
         }
         pageInfo.setList(returnList);
