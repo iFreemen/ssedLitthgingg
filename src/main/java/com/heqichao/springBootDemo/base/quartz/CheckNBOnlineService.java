@@ -14,7 +14,7 @@ import java.util.List;
  * Created by heqichao on 2018-12-9.
  */
 @Component
-public class CheckMqttOnlineService {
+public class CheckNBOnlineService {
 
     @Autowired
     private DataLogService dataLogService;
@@ -22,14 +22,14 @@ public class CheckMqttOnlineService {
     @Autowired
     private EquipmentService equipmentService;
 
-    @Scheduled(cron = "0 0/10 * * * ?")
+    @Scheduled(cron = "0 0 0/12 * * ? ")
     public void timerToNow(){
         Date nowDate =new Date();
-        //10分钟前
-        Date date = DateUtil.addMinute(nowDate,-10);
+        //12小时前
+        Date date = DateUtil.addMinute(nowDate,-12 * 60);
 
-        //查找10分钟内没接收到消息的在线lora设备
-        List<String> devIds =dataLogService.checkOffLineDev(EquipmentService.EQUIPMENT_LORA,EquipmentService.ON_LINE,date);
+        //查找12小时内没接收到消息的在线NB设备
+        List<String> devIds =dataLogService.checkOffLineDev(EquipmentService.EQUIPMENT_NB,EquipmentService.ON_LINE,date);
         if(devIds!=null && devIds.size()>0){
             //更新设备为下线
             equipmentService.updateOnlineStatus(EquipmentService.OFF_LINE,devIds,nowDate);

@@ -10,6 +10,7 @@ import com.heqichao.springBootDemo.base.util.*;
 import com.heqichao.springBootDemo.module.entity.Model;
 import com.heqichao.springBootDemo.module.entity.ModelAttr;
 import com.heqichao.springBootDemo.module.mapper.ModelMapper;
+import com.heqichao.springBootDemo.module.model.AttrEnum;
 import com.heqichao.springBootDemo.module.model.ModelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,11 +62,14 @@ public class ModelServiceImpl implements ModelService {
         //删除所有的属性重新保存
         modelAttrService.deleteByModelId(modelId);
         if(attrs!=null && attrs.size()>0){
+            checkAttr(modelName,attrs);
+            checkHeartBeatProxy(attrs);
             List<ModelAttr> list =new ArrayList<>();
             for(int i=0;i< attrs.size();i++){
                 Map map=attrs.get(i);
                 ModelAttr modelAttr =new ModelAttr();
                 BeanUtil.copyProperties(modelAttr,map);
+                String dataType =modelAttr.getDataType();
                 modelAttr.setOrderNo(i+1);
                 modelAttr.setModelId(modelId);
                 modelAttr.setAddDate(date);
@@ -79,6 +83,23 @@ public class ModelServiceImpl implements ModelService {
         return modelId;
     }
 
+    /**
+     * 检查是否为心跳协议
+     */
+    private void checkHeartBeatProxy(List<Map> attrs){
+        if(attrs!=null && attrs.size()==1){
+            String valueType = (String) attrs.get(0).get("valueType");
+            String dataType = (String) attrs.get(0).get("dataType");
+            String mess ="当前模板格式与心跳协议冲突！请重新设置";
+            if(AttrEnum.ALARM_TYPE.getType().equals(dataType) || AttrEnum.SWITCH_TYPE.getType().equals(dataType)){
+                throw new ResponeException(mess);
+            }else if(AttrEnum.INT_TYPE__TWO_SIGNED.getType().equals(dataType)){
+                if(AttrEnum.INT_TYPE__TWO_SIGNED.getSubType().equals(valueType) || AttrEnum.INT_TYPE__TWO_UNSIGNED.equals(valueType)){
+                    throw new ResponeException(mess);
+                }
+            }
+        }
+    }
 
     @Override
     public Map queryModelAndAttrsByModelId(Integer modelId) {
@@ -196,7 +217,7 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
-    public Map<String,List> queryExportInfo() {
+    public Map<String,List> queryExportInfo(Integer model) {
        Map<String,List> map =null;
         Integer cmp =ServletUtil.getSessionUser().getCompetence();
         Integer userId =ServletUtil.getSessionUser().getId();
@@ -210,7 +231,7 @@ public class ModelServiceImpl implements ModelService {
                 userList.add(userId);
                 userList.add(parentId);
             }
-           List<Map> mapList = modelMapper.queryExportInfo(userList);
+           List<Map> mapList = modelMapper.queryExportInfo(userList,model);
             if(mapList!=null && mapList.size()>0){
                 map = new HashMap<String,List>();
                 for(Map m :mapList){
@@ -231,6 +252,9 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     public void saveImport(Map map) {
+        if(!UserUtil.hasCRDPermission() ){
+            throw new ResponeException("没有该权限操作！");
+        }
         if(map==null || map.size()<1){
             return;
         }
@@ -250,7 +274,6 @@ public class ModelServiceImpl implements ModelService {
                         attrList.add(rowMap);
                     }
                 }
-                checkAttr(modelNme,attrList);
                 modelService.saveOrUpdateModel(null,modelNme,attrList);
             }
         }

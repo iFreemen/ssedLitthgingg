@@ -2,6 +2,7 @@ package com.heqichao.springBootDemo.module.control;
 
 import java.util.Map;
 
+import com.heqichao.springBootDemo.base.service.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +40,7 @@ public class LiteNAController {
 	ResponeResult liteNaCallback(@RequestBody Object map) throws Exception {
 //		liteNAService.chg(map);
 		Map<String, String> req = liteNAService.NBReturnFmt(map);
-		dataLogService.saveDataLog(req.get("devid"), req.get("data"), req.get("srcdata"));
+		dataLogService.saveDataLog(req.get("devid"), req.get("data"), req.get("srcdata"), EquipmentService.EQUIPMENT_NB);
 		return new ResponeResult();
 	}
 

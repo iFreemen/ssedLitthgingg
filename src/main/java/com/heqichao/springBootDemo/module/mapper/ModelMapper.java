@@ -63,8 +63,9 @@ public interface ModelMapper {
             + "#{uid}"
             + "</foreach>"
             +" </if> "
+            + "<if test =\"modelID !=null  \"> and model_id = #{modelID} </if>"
             +" order by model_id, order_no "
             +"</script>"
     )
-    List<Map> queryExportInfo(@Param("list") List<Integer> list);
+    List<Map> queryExportInfo(@Param("list") List<Integer> list,@Param("modelID") Integer modelID);
 }

@@ -47,10 +47,9 @@ public class DataLogServiceImpl implements DataLogService {
 
     @Override
     public void saveDataLog(String devId,String data, String srcData,String devType){
-
-
+        Date date =new Date();
         if(StringUtil.isNotEmpty(devId) && StringUtil.isNotEmpty(data)){
-            Date date =new Date();
+
             //去除前后的主数据
             String mainData="";
             DataLog dataLog =new DataLog();
@@ -75,6 +74,11 @@ public class DataLogServiceImpl implements DataLogService {
                 return;
             }
 
+            //0.判断是否心跳 长度为7字节
+            if(data.length() == 14){
+                dataLog.setDataStatus(DataLogService.ENABLE_STATUS);
+                return;
+            }
             try{
                 //默认去除前面没用3字节
                 int frontByte =3;
@@ -140,6 +144,10 @@ public class DataLogServiceImpl implements DataLogService {
             }catch (Exception e){
                 dataLog.setDataStatus(DataLogService.ERROR_STATUS);
             }finally {
+                //更新设备为在线
+                List<String> devIds=new ArrayList<>();
+                devIds.add(devId);
+                equipmentService.updateOnlineStatus(EquipmentService.ON_LINE,devIds,date);
                 dataLogMapper.save(dataLog);
                 if(dataDetails.size()>0){
                     for(DataDetail dataDetail :dataDetails){

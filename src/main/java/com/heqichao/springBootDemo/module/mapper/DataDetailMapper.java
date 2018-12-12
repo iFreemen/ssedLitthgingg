@@ -55,7 +55,7 @@ public interface DataDetailMapper {
     List<String> checkOffLineDev(@Param("type") String type,@Param("onLine") String onLine,@Param("date")Date date);
 
     @Select("<script>" +
-            "select DISTINCT dev_id from data_log where  dev_type=#{type} add_date > #{date} " +
+            "select DISTINCT dev_id from data_log where  dev_type=#{type} and add_date > #{date} " +
             "</script>")
     List<String> checkOnLineDev(@Param("type") String type,@Param("date")Date date);
 
