@@ -93,7 +93,7 @@ public class ModelServiceImpl implements ModelService {
             if(AttrEnum.ALARM_TYPE.getType().equals(dataType) || AttrEnum.SWITCH_TYPE.getType().equals(dataType)){
                 throw new ResponeException(mess);
             }else if(AttrEnum.INT_TYPE__TWO_SIGNED.getType().equals(dataType)){
-                if(AttrEnum.INT_TYPE__TWO_SIGNED.getSubType().equals(valueType) || AttrEnum.INT_TYPE__TWO_UNSIGNED.equals(valueType)){
+                if(AttrEnum.INT_TYPE__TWO_SIGNED.getSubType().equals(valueType) || AttrEnum.INT_TYPE__TWO_UNSIGNED.getSubType().equals(valueType)){
                     throw new ResponeException(mess);
                 }
             }
@@ -170,6 +170,9 @@ public class ModelServiceImpl implements ModelService {
                 map.put("addName",UserCache.getUserName(model.getAddUid()));
                 map.put("udpName",UserCache.getUserName(model.getUdpUid()));
                 returnList.add(map);
+
+
+                
             }
         }
         pageInfo.setList(returnList);
