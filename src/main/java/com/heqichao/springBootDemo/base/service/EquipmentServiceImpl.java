@@ -5,19 +5,32 @@ import com.heqichao.springBootDemo.base.param.RequestContext;
 import com.heqichao.springBootDemo.base.param.ResponeResult;
 import com.github.pagehelper.PageInfo;
 import com.heqichao.springBootDemo.base.entity.Equipment;
+import com.heqichao.springBootDemo.base.exception.ResponeException;
+import com.heqichao.springBootDemo.base.util.ExcelWriter;
+import com.heqichao.springBootDemo.base.util.FileUtil;
 import com.heqichao.springBootDemo.base.util.PageUtil;
 import com.heqichao.springBootDemo.base.util.ServletUtil;
 import com.heqichao.springBootDemo.base.util.StringUtil;
 import com.heqichao.springBootDemo.module.mapper.DataDetailMapper;
 import com.heqichao.springBootDemo.module.mqtt.MqttUtil;
+import com.heqichao.springBootDemo.module.service.ModelService;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.util.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Muzzy Xu.
@@ -222,6 +235,80 @@ public class EquipmentServiceImpl implements EquipmentService {
     		}
     	}
     	return  new ResponeResult(true,"Delete Equipment fail","errorMsg");
+    }
+    
+    @Override
+    public void exportEquipments(String typeName,String type,String[] header,String[] key) {
+    	Integer uid = ServletUtil.getSessionUser().getId();
+    	Integer pid = ServletUtil.getSessionUser().getParentId();
+    	Integer cmp = ServletUtil.getSessionUser().getCompetence();
+    	List<Map<String,Object>> lst = eMapper.getEquipmentsForExport(cmp, uid, pid, type);
+    	if(lst!=null){
+
+            FileOutputStream fos = null;
+            File file =null;
+            try{
+                file = FileUtil.createTempDownloadFile("导出"+typeName+"设备.xls");
+                fos= new FileOutputStream(file);
+                // 声明一个工作薄
+                HSSFWorkbook workbook = ExcelWriter.createWorkBook();
+                ExcelWriter.export(workbook,typeName,header,lst,key);
+                workbook.write(fos);
+            }catch (Exception e){
+                e.printStackTrace();
+            }finally {
+                if(fos!=null){
+                    try {
+                        fos.close();
+                       // logger.info("文件地址:"+file.getPath());
+                        download(file);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+
+        }
+    }
+    
+    protected void download(File file){
+        if(file == null){
+            return;
+        }
+        BufferedInputStream fis = null;
+        BufferedOutputStream toClient = null;
+        try {
+            HttpServletResponse response=RequestContext.getContext().getResponse();
+            fis = new BufferedInputStream(new FileInputStream(file));
+            byte[] buffer = new byte[fis.available()];
+            fis.read(buffer);
+            // 清空response
+            response.reset();
+            toClient = new BufferedOutputStream(response.getOutputStream());
+            response.setContentType("application/octet-stream");
+            response.setHeader("Content-Disposition", "attachment;filename=" + new String(file.getName().getBytes("gb2312"), "ISO8859-1"));
+            toClient.write(buffer);
+            toClient.flush();
+        }catch (Exception err){
+            throw new ResponeException(err);
+        } finally{
+            try {
+                if (toClient != null) {
+                    toClient.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                if (fis != null) {
+                    fis.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            FileUtil.deleteFile(file);
+        }
     }
 
 }

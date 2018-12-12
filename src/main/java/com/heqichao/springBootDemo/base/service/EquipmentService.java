@@ -19,8 +19,8 @@ public interface EquipmentService {
 	String NORMAL = "N";
 	String BREAKDOWN = "B";
 
-	String ON_LINE="0";
-	String OFF_LINE="1";
+	String ON_LINE="1";
+	String OFF_LINE="0";
 
 	String EQUIPMENT_LORA="L";
 	String EQUIPMENT_NB="N";
@@ -86,4 +86,6 @@ public interface EquipmentService {
 	 * @param date
 	 */
 	void updateOnlineStatus(String online , List<String> list,Date date);
+
+	void exportEquipments(String typeName, String type, String[] header, String[] key);
 }
