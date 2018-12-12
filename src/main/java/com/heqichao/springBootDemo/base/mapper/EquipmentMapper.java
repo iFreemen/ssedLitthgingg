@@ -174,6 +174,12 @@ public interface EquipmentMapper {
 	@Select("select u.id from model u where u.model_name=#{modelName} and add_uid=#{uid} limit 1")
 	Integer getModelIdByName(@Param("modelName")String modelName,@Param("uid")Integer uid);
 	
+	@Select("select u.id from group_equ u where u.name=#{groupName} and uid=#{uid} and u.valid = 'N' limit 1")
+	Integer getGroupIdByName(@Param("groupName")String groupName,@Param("uid")Integer uid);
+	
+	@Select("select u.id from applications u where u.app_name=#{appName} and uid=#{uid} and u.valid = 'N' limit 1")
+	Integer getAppIdByName(@Param("appName")String appName,@Param("uid")Integer uid);
+	
 	@Select({ "call p_equ_enq_page("
 			+ "#{crrNum,mode=IN,jdbcType=INTEGER},"
 			+ "#{pagSize,mode=IN,jdbcType=INTEGER},"

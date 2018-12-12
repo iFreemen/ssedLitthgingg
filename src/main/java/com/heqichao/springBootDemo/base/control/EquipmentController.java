@@ -85,21 +85,37 @@ public class EquipmentController extends BaseController{
     }
     
     @RequestMapping(value = "/importLora")
-    ResponeResult importModel(@RequestParam("file") MultipartFile multipartFile){
+    ResponeResult importLora(@RequestParam("file") MultipartFile multipartFile){
         File file =FileUtil.createTempDownloadFile( System.currentTimeMillis()+".xml");
+        String res= null;
         try {
             multipartFile.transferTo(file);
 
             Map map =ExcelReader.readFile(file);
-            eService.saveUploadImport(map, eService.codeLora, "L");
-//            modelService.saveImport(map);
+            res=eService.saveUploadImport(map, eService.codeLora, "L");
         } catch (IOException e) {
             e.printStackTrace();
         }finally {
             FileUtil.deleteFile(file);
         }
 
-        return new ResponeResult("sssss");
+        return new ResponeResult(res);
+    }
+    @RequestMapping(value = "/importNbiot")
+    ResponeResult importNbiot(@RequestParam("file") MultipartFile multipartFile){
+    	File file =FileUtil.createTempDownloadFile( System.currentTimeMillis()+".xml");
+    	String res= null;
+    	try {
+    		multipartFile.transferTo(file);
+    		Map map =ExcelReader.readFile(file);
+    		res=eService.saveUploadImport(map, eService.codeNbiot, "N");
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}finally {
+    		FileUtil.deleteFile(file);
+    	}
+    	
+    	return new ResponeResult(res);
     }
 
 }

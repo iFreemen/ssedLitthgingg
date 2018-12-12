@@ -298,14 +298,14 @@ public class EquipmentServiceImpl implements EquipmentService {
         }
     }
     @Override
-    public void saveUploadImport(Map map,String[] typecode,String type) {
+    public String saveUploadImport(Map map,String[] typecode,String type) {
     	Integer uid = ServletUtil.getSessionUser().getId();
     	Integer cmp = ServletUtil.getSessionUser().getCompetence();
         if(cmp==4){
             throw new ResponeException("无编辑权限");
         }
         if(map==null || map.size()<1){
-            return;
+        	throw new ResponeException("文件为空");
         }
         Iterator entries = map.entrySet().iterator();
         String resKey = type+"_"+System.currentTimeMillis();
@@ -321,25 +321,17 @@ public class EquipmentServiceImpl implements EquipmentService {
                         //获取行数据Map
                         Map rowMap =  CollectionUtil.listStringTranToMap(row,typecode,true);
                         Equipment equ = new Equipment(rowMap,type);
-                        System.out.println(equ);
+                        checkUploadRow(equ, uid, cmp, i+1, resKey);
                     }
                 }
             }
         }
+        return resKey;
     }
     public void checkUploadRow(Equipment equ,Integer uid,Integer cmp,Integer index,String resKey ) {
     	UploadResultEntity res = new UploadResultEntity();
     	res.setResKey(resKey);
     	res.setAddUid(uid);
-    	Integer currId = eMapper.getUserIdByName(equ.getuName());
-    	equ.setUid(currId);
-    	if(cmp==3 && uid!=currId) {
-    		res.setResIndex(index);
-    		res.setResStatus("失败");
-    		res.setErrReason("操作账户无法为该用户添加设备");
-    		eMapper.insertUploadResult(res);
-    		return;
-    	}
     	if(StringUtil.isEmpty(equ.getName())) {
     		res.setResIndex(index);
     		res.setResStatus("失败");
@@ -354,20 +346,83 @@ public class EquipmentServiceImpl implements EquipmentService {
     		eMapper.insertUploadResult(res);
     		return;
     	}
-    	if(eMapper.duplicatedEid(equ.getDevId(),equ.getUid())) {
+    	if(StringUtil.isEmpty(equ.getModelName())) {
+    		res.setResIndex(index);
+    		res.setResStatus("失败");
+    		res.setErrReason("数据模板为空");
+    		eMapper.insertUploadResult(res);
+    		return;
+    	}
+    	if(StringUtil.isEmpty(equ.getGroupName())) {
+    		res.setResIndex(index);
+    		res.setResStatus("失败");
+    		res.setErrReason("所属分组为空");
+    		eMapper.insertUploadResult(res);
+    		return;
+    	}
+    	if(StringUtil.isEmpty(equ.getuName())) {
+    		res.setResIndex(index);
+    		res.setResStatus("失败");
+    		res.setErrReason("所属用户为空");
+    		eMapper.insertUploadResult(res);
+    		return;
+    	}
+    	if("N".equals(equ.getTypeCd())) {
+    		if(StringUtil.isEmpty(equ.getAppName())) {
+    			res.setResIndex(index);
+    			res.setResStatus("失败");
+    			res.setErrReason("所属应用为空");
+    			eMapper.insertUploadResult(res);
+    			return;
+    		}
+    		
+    		Integer appId = eMapper.getAppIdByName(equ.getAppName(), uid);
+    		if(appId==null) {
+        		res.setResIndex(index);
+        		res.setResStatus("失败");
+        		res.setErrReason("此用户没有该所属应用");
+        		eMapper.insertUploadResult(res);
+        		return;
+        	}
+    		equ.setAppId(appId);
+    	}
+    	Integer currId = eMapper.getUserIdByName(equ.getuName());
+    	if(cmp==3 && uid!=currId) {
+    		res.setResIndex(index);
+    		res.setResStatus("失败");
+    		res.setErrReason("操作账户无法为该用户添加设备");
+    		eMapper.insertUploadResult(res);
+    		return;
+    	}
+    	if(eMapper.duplicatedEid(equ.getDevId(),currId)) {
     		res.setResIndex(index);
     		res.setResStatus("失败");
     		res.setErrReason("设备编号重复");
     		eMapper.insertUploadResult(res);
     		return;
     	}
-    	if(eMapper.duplicatedEid(equ.getDevId(),equ.getUid())) {
+    	Integer modelId = eMapper.getModelIdByName(equ.getModelName(), currId);
+    	if(modelId==null) {
     		res.setResIndex(index);
     		res.setResStatus("失败");
-    		res.setErrReason("设备编号为空");
+    		res.setErrReason("此用户没有该数据模板");
     		eMapper.insertUploadResult(res);
     		return;
     	}
+    	Integer groupId = eMapper.getGroupIdByName(equ.getGroupName(), currId);
+    	if(groupId==null) {
+    		groupId=1;
+    		res.setErrReason("此用户没有该设备分组，分配至默认分组");
+    	}
+    	equ.setUid(currId);
+    	equ.setModelId(modelId);
+    	equ.setGroupId(groupId);
+    	equ.setAddUid(uid);
+    	equ.setValid("N");
+    	res.setResIndex(index);
+		res.setResStatus("成功");
+    	eMapper.insertUploadResult(res);
+    	eMapper.insertEquipment(equ);
     }
     
     protected void download(File file){

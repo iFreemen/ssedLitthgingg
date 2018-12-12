@@ -96,5 +96,5 @@ public interface EquipmentService {
 	void exportEquipments(String typeName, String type, String[] header, String[] key);
 
 
-	void saveUploadImport(Map map, String[] typecode, String type);
+	String saveUploadImport(Map map, String[] typecode, String type);
 }

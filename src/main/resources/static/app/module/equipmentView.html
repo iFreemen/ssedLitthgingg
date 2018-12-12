@@ -33,18 +33,15 @@
                                 <label  class="col-sm-1 control-label">状态：</label>
                                 <div class="col-sm-2">
                                     <select class="form-control"  ng-model="quereyData.seleStatus" >
-									<option  value="N">在线</option>
-									<option  value="B">离线</option>
+									<option  value="1">在线</option>
+									<option  value="0">离线</option>
 								</select>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row-margin-top">
-                            <div class="col-sm-5 col-md-offset-8 ">
-                            <file-upload success-function="uploadSuccess(data)" url="/service/importLora" name="上传模板"  file-accept="application/vnd.ms-excel"></file-upload>
-	                             <a href="#/module/equAdd" type="button" ng-if="edit_cmp" class="btn btn-primary waves-effect waves-light" >新增设备 <i class="fa fa-plus"></i></a>
-                                <button  class="btn btn-primary waves-effect waves-light" type="submit"  btn-loading="loadCtl.search" ng-click="init()">搜索</button>
-                                <button class="btn btn-default waves-effect" type="button" ng-click="resetSearch()">重置</button>
+                            <div class="col-sm-5 col-md-offset-7 ">
+                            <button type="button" class="btn btn-info dropdown-toggle waves-effect waves-light" data-toggle="modal" data-target="#file-upload-modal">批量导入</button>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-info dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">批量导出<span class="caret"></span></button>
                                     <ul class="dropdown-menu" role="menu">
@@ -53,6 +50,10 @@
                                         <li><a >导出GPRS设备</a></li>
                                     </ul>
                                 </div>
+                            <!-- <file-upload success-function="uploadSuccess(data)" url="/service/importLora" name="上传模板"  file-accept="application/vnd.ms-excel"></file-upload> -->
+	                             <a href="#/module/equAdd" type="button" ng-if="edit_cmp" class="btn btn-primary waves-effect waves-light" >新增设备 <i class="fa fa-plus"></i></a>
+                                <button  class="btn btn-primary waves-effect waves-light" type="submit"  btn-loading="loadCtl.search" ng-click="init()">搜索</button>
+                                <button class="btn btn-default waves-effect" type="button" ng-click="resetSearch()">重置</button>
                             </div>
                         </div>
                     </form>
@@ -107,7 +108,7 @@
              <div class="modal-content"> 
                  <div class="modal-header"> 
                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closeEquModal()">×</button> 
-                     <h5 class="modal-title">设备详情</h4> 
+                     <h5 class="modal-title">设备详情</h5> 
                  </div> 
                  <div class="modal-body" >
                		<div class="form-group clearfix">
@@ -158,6 +159,21 @@
 				        <label class="col-sm-5 control-label ng-binding" style="text-align: right">备注：</label>
 				        <div class="col-sm-7 ng-binding">{{seleItem.remark}}</div>
 			        </div>
+                 </div> 
+             </div> 
+         </div>
+     </div>
+	<div id="file-upload-modal" class="modal fade" tabindex="-1" role="dialog"  aria-hidden="true" style="display: none">
+         <div class="modal-dialog"> 
+             <div class="modal-content"> 
+                 <div class="modal-header"> 
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closeUploadModal()">×</button> 
+                     <h5 class="modal-title">批量导入</h5> 
+                 </div> 
+                 <div class="modal-body" >
+                 <file-upload success-function="uploadSuccess(data)" url="/service/importLora" name="导入LORA"  file-accept="application/vnd.ms-excel"></file-upload>
+                 <file-upload success-function="uploadSuccess(data)" url="/service/importNbiot" name="导入NBIOT"  file-accept="application/vnd.ms-excel"></file-upload>
+                 <file-upload success-function="uploadSuccess(data)" url="/service/importGPRS" name="导入GPRS"  file-accept="application/vnd.ms-excel"></file-upload>
                  </div> 
              </div> 
          </div>
