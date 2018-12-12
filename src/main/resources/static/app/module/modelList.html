@@ -22,8 +22,8 @@
                             <div  class="col-md-12 col-sm-12 col-xs-12 m-t-10">
                                 <div class="col-sm-1"></div>
                                 <div class="col-sm-9">
-                                 <button type="button" class="btn btn-primary waves-effect waves-light" ng-click="addModel()"><i class="fa fa-plus"></i>新建模板</button>
-                                 <button class="btn btn-primary   waves-effect waves-light" btn-loading="loading" ng-click="exportAll()">全部导出</button>
+                                 <button  class="btn btn-primary waves-effect waves-light" ng-click="addModel()"><i class="fa fa-plus"></i>新建模板</button>
+                                 <button type="button" class="btn btn-primary   waves-effect waves-light" btn-loading="loading" ng-click="exportAll()">全部导出</button>
                                  <file-upload success-function="uploadSuccess()" url="/service/importModel" name="上传模板"  file-accept="application/vnd.ms-excel"></file-upload>
                                 </div>
                             </div>
@@ -69,6 +69,10 @@
 -->
                                             <button class="btn btn-icon waves-effect waves-light btn-info btn-sm m-b-5" ng-click="gotoModel(entity)">
                                                 <i class="fa fa-pencil" style="color:  #fff;"></i>
+                                            </button>
+
+                                            <button class="btn btn-icon waves-effect waves-light btn-info btn-sm m-b-5" ng-click="exportModel(entity)">
+                                                <i class="fa  fa-download" style="color:  #fff;"></i>
                                             </button>
 
                                             <button class="btn btn-icon waves-effect waves-light btn-danger btn-sm m-b-5" ng-click="deleteModel(entity)">
