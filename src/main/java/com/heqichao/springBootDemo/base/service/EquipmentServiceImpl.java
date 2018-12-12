@@ -1,16 +1,20 @@
 package com.heqichao.springBootDemo.base.service;
 
 import com.heqichao.springBootDemo.base.mapper.EquipmentMapper;
+import com.heqichao.springBootDemo.base.param.ApplicationContextUtil;
 import com.heqichao.springBootDemo.base.param.RequestContext;
 import com.heqichao.springBootDemo.base.param.ResponeResult;
 import com.github.pagehelper.PageInfo;
 import com.heqichao.springBootDemo.base.entity.Equipment;
+import com.heqichao.springBootDemo.base.entity.UploadResultEntity;
 import com.heqichao.springBootDemo.base.exception.ResponeException;
+import com.heqichao.springBootDemo.base.util.CollectionUtil;
 import com.heqichao.springBootDemo.base.util.ExcelWriter;
 import com.heqichao.springBootDemo.base.util.FileUtil;
 import com.heqichao.springBootDemo.base.util.PageUtil;
 import com.heqichao.springBootDemo.base.util.ServletUtil;
 import com.heqichao.springBootDemo.base.util.StringUtil;
+import com.heqichao.springBootDemo.base.util.UserUtil;
 import com.heqichao.springBootDemo.module.mapper.DataDetailMapper;
 import com.heqichao.springBootDemo.module.mqtt.MqttUtil;
 import com.heqichao.springBootDemo.module.service.ModelService;
@@ -173,15 +177,19 @@ public class EquipmentServiceImpl implements EquipmentService {
 		equ.setAddUid(uid);
 		equ.setValid("N");
 		if(eMapper.insertEquipment(equ)>0) {
-			List<String> mqId = new ArrayList<String>();
-			mqId.add(equ.getDevId());
-			try {
-				MqttUtil.subscribeTopicMes(mqId);
+			if("L".equals(equ.getTypeCd())) {
+				List<String> mqId = new ArrayList<String>();
+				mqId.add(equ.getDevId());
+				try {
+					MqttUtil.subscribeTopicMes(mqId);
+					return new ResponeResult();
+				} catch (Exception e) {
+					e.printStackTrace();
+					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+					return new ResponeResult(true,"创建错误，mqtt注册失败","errorMsg");
+				}
+			}else {
 				return new ResponeResult();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			}
 		}
     	return  new ResponeResult(true,"Add Equipment fail","errorMsg");
@@ -194,13 +202,31 @@ public class EquipmentServiceImpl implements EquipmentService {
 		if(equ.getName() == null ||equ.getDevId() == null || uid == null || cmp == 4) {
 			return new ResponeResult(true,"Edit Equipment Input Error!","errorMsg");
 		}
-		if(eMapper.duplicatedEidEdit(equ.getDevId(),equ.getUid())) {
+		String oId = eMapper.getEquIdOld(equ.getId(),equ.getUid());
+		boolean chgDevId = oId.equals(equ.getDevId());
+		if(chgDevId&&eMapper.duplicatedEid(equ.getDevId(),equ.getUid())) {
 			return new ResponeResult(true,"设备编号重复","errorMsg");
 		}
 		equ.setUdpUid(uid);
 		equ.setValid("N");
 		if(eMapper.editEquipment(equ)>0) {
+			if(chgDevId&&"L".equals(equ.getTypeCd())) {
+				List<String> omqId = new ArrayList<String>();
+				omqId.add(oId);
+				try {
+					MqttUtil.unSubscribeTopicMes(omqId);
+					List<String> mqId = new ArrayList<String>();
+					mqId.add(equ.getDevId());
+					MqttUtil.subscribeTopicMes(mqId);
+					return new ResponeResult();
+				} catch (Exception e) {
+					e.printStackTrace();
+					 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+					 return new ResponeResult(true,"修改错误，mqtt注册失败","errorMsg");
+				}
+			}else {
 				return new ResponeResult();
+			}
 		}
 		return  new ResponeResult(true,"Edit Equipment fail","errorMsg");
 	}
@@ -270,6 +296,78 @@ public class EquipmentServiceImpl implements EquipmentService {
 
 
         }
+    }
+    @Override
+    public void saveUploadImport(Map map,String[] typecode,String type) {
+    	Integer uid = ServletUtil.getSessionUser().getId();
+    	Integer cmp = ServletUtil.getSessionUser().getCompetence();
+        if(cmp==4){
+            throw new ResponeException("无编辑权限");
+        }
+        if(map==null || map.size()<1){
+            return;
+        }
+        Iterator entries = map.entrySet().iterator();
+        String resKey = type+"_"+System.currentTimeMillis();
+        //循环工作簿
+        while (entries.hasNext()) {
+            Map.Entry entry = (Map.Entry) entries.next();
+            if(entry.getValue() instanceof ArrayList){
+                List attrs= (List) entry.getValue();
+                if(attrs!=null && attrs.size()>1){
+                    //去掉第一行标题
+                    for(int i=1;i<attrs.size();i++){
+                        List<String> row = (List<String>) attrs.get(i);
+                        //获取行数据Map
+                        Map rowMap =  CollectionUtil.listStringTranToMap(row,typecode,true);
+                        Equipment equ = new Equipment(rowMap,type);
+                        System.out.println(equ);
+                    }
+                }
+            }
+        }
+    }
+    public void checkUploadRow(Equipment equ,Integer uid,Integer cmp,Integer index,String resKey ) {
+    	UploadResultEntity res = new UploadResultEntity();
+    	res.setResKey(resKey);
+    	res.setAddUid(uid);
+    	Integer currId = eMapper.getUserIdByName(equ.getuName());
+    	equ.setUid(currId);
+    	if(cmp==3 && uid!=currId) {
+    		res.setResIndex(index);
+    		res.setResStatus("失败");
+    		res.setErrReason("操作账户无法为该用户添加设备");
+    		eMapper.insertUploadResult(res);
+    		return;
+    	}
+    	if(StringUtil.isEmpty(equ.getName())) {
+    		res.setResIndex(index);
+    		res.setResStatus("失败");
+    		res.setErrReason("设备名称为空");
+    		eMapper.insertUploadResult(res);
+    		return;
+    	}
+    	if(StringUtil.isEmpty(equ.getDevId())) {
+    		res.setResIndex(index);
+    		res.setResStatus("失败");
+    		res.setErrReason("设备编号为空");
+    		eMapper.insertUploadResult(res);
+    		return;
+    	}
+    	if(eMapper.duplicatedEid(equ.getDevId(),equ.getUid())) {
+    		res.setResIndex(index);
+    		res.setResStatus("失败");
+    		res.setErrReason("设备编号重复");
+    		eMapper.insertUploadResult(res);
+    		return;
+    	}
+    	if(eMapper.duplicatedEid(equ.getDevId(),equ.getUid())) {
+    		res.setResIndex(index);
+    		res.setResStatus("失败");
+    		res.setErrReason("设备编号为空");
+    		eMapper.insertUploadResult(res);
+    		return;
+    	}
     }
     
     protected void download(File file){

@@ -31,7 +31,7 @@ demoApp.directive( "fileUpload", [ "$parse","$http", function( $parse ,$http){
                         inputE.value='';
                         if(data.success){
                             if (attrs.successFunction) {
-                                scope.successFunction(data);
+                                scope.successFunction({data:data});
                             }
                         }
                     }).error( function(data){

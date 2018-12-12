@@ -15,6 +15,7 @@ function equCtrl($scope, $http,$location, $rootScope) {
     		search:false,	
     		addEnq:false
     };
+	$scope.data= null;
 	$scope.seleItem={};
 	$scope.edit_cmp=$rootScope.edit_cmp;
     $scope.init=function(){
@@ -105,4 +106,8 @@ function equCtrl($scope, $http,$location, $rootScope) {
     $scope.exportNbiot=function () {
     	$rootScope.downLoadFile("/service/exprNbiot" );
     };
+    $scope.uploadSuccess=function (data) {
+    	console.log(data);
+        swal("导入成功", null, "success");
+    }
 }

@@ -15,6 +15,7 @@ import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.mapping.StatementType;
 
 import com.heqichao.springBootDemo.base.entity.Equipment;
+import com.heqichao.springBootDemo.base.entity.UploadResultEntity;
 
 /**
  * @author Muzzy Xu.
@@ -119,6 +120,10 @@ public interface EquipmentMapper {
 			@Param("parentId")Integer parentId,
 			@Param("type")String type);
 	
+	@Insert("insert into upload_result (add_uid,res_index,res_status,err_reason,res_key)"
+			+ " values(#{addUid},#{resIndex},#{resStatus},#{errReason},#{resKey}) ")
+	public int insertUploadResult(UploadResultEntity res);
+	
 	@Insert("insert into equipments (name,dev_id,type_cd,model_id,group_id,app_id,verification,support_code,supporter,site,address,remark,uid,valid,add_uid,udp_uid,online)"
 			+ " values(#{name},#{devId},#{typeCd},#{modelId},#{groupId},#{appId},#{verification},#{supportCode},#{supporter},#{site},#{address},#{remark},#{uid},#{valid},#{addUid},#{addUid},0) ")
 	public int insertEquipment(Equipment equ);
@@ -136,13 +141,12 @@ public interface EquipmentMapper {
 			+"</script>")
 	List<String> queryByTypeAndOnline( @Param("type_cd") String type_cd,@Param("online") String online);
 
-	@Update(
-			"<script>"
-					+ "update equipments set  online = #{online},udp_date=#{date} where dev_id in "
-					+ "<foreach  collection=\"list\" open=\"(\" close=\")\" separator=\",\" item=\"uid\" >"
-					+ "#{uid}"
-					+ "</foreach>"
-					+ "</script>")
+	@Update("<script>"
+			+ "update equipments set  online = #{online},udp_date=#{date} where dev_id in "
+			+ "<foreach  collection=\"list\" open=\"(\" close=\")\" separator=\",\" item=\"uid\" >"
+			+ "#{uid}"
+			+ "</foreach>"
+			+ "</script>")
 	void updateOnlineStatus(@Param("online")String online , @Param("list") List<String> list, @Param("date")Date date);
 
 
@@ -155,14 +159,20 @@ public interface EquipmentMapper {
 	@Select("select count(1)>0 from equipments where dev_id = #{devId} and valid = 'N' and uid=#{uid} ")
 	public boolean duplicatedEid(@Param("devId")String devId,@Param("uid")Integer uid);
 	
-	@Select("select count(1)>1 from equipments where dev_id = #{devId} and valid = 'N' and uid=#{uid} ")
-	public boolean duplicatedEidEdit(@Param("devId")String devId,@Param("uid")Integer uid);
+	@Select("select dev_id from equipments where id = #{id} and valid = 'N' and uid=#{uid}  ")
+	public String getEquIdOld(@Param("id")Integer id,@Param("uid")Integer uid);
 
 	@Update("update equipments set  e_range = #{range} where eid=#{eid} and valid = 'N'")
 	 int updateRange(@Param("eid")String eid,@Param("range")Integer range);
 
 	@Select("select e_range from equipments where eid = #{eid} and valid = 'N'")
 	Integer queryRange(@Param("eid")String eid);
+	
+	@Select("select u.id from users u where u.company=#{uName} and valid = 'N' ")
+	Integer getUserIdByName(@Param("uName")String uName);
+	
+	@Select("select u.id from model u where u.model_name=#{modelName} and add_uid=#{uid} limit 1")
+	Integer getModelIdByName(@Param("modelName")String modelName,@Param("uid")Integer uid);
 	
 	@Select({ "call p_equ_enq_page("
 			+ "#{crrNum,mode=IN,jdbcType=INTEGER},"

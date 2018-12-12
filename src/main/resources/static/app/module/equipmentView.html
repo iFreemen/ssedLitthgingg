@@ -41,6 +41,7 @@
                         </div>
                         <div class="form-group row-margin-top">
                             <div class="col-sm-5 col-md-offset-8 ">
+                            <file-upload success-function="uploadSuccess(data)" url="/service/importLora" name="上传模板"  file-accept="application/vnd.ms-excel"></file-upload>
 	                             <a href="#/module/equAdd" type="button" ng-if="edit_cmp" class="btn btn-primary waves-effect waves-light" >新增设备 <i class="fa fa-plus"></i></a>
                                 <button  class="btn btn-primary waves-effect waves-light" type="submit"  btn-loading="loadCtl.search" ng-click="init()">搜索</button>
                                 <button class="btn btn-default waves-effect" type="button" ng-click="resetSearch()">重置</button>
