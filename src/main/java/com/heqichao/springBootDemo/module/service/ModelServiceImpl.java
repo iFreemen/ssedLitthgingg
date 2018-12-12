@@ -62,7 +62,6 @@ public class ModelServiceImpl implements ModelService {
         //删除所有的属性重新保存
         modelAttrService.deleteByModelId(modelId);
         if(attrs!=null && attrs.size()>0){
-            checkAttr(modelName,attrs);
             checkHeartBeatProxy(attrs);
             List<ModelAttr> list =new ArrayList<>();
             for(int i=0;i< attrs.size();i++){
@@ -262,7 +261,7 @@ public class ModelServiceImpl implements ModelService {
         ModelService modelService = (ModelService) ApplicationContextUtil.getApplicationContext().getBean("modelServiceImpl");
         while (entries.hasNext()) {
             Map.Entry entry = (Map.Entry) entries.next();
-            String modelNme = (String) entry.getKey();
+            String modelName = (String) entry.getKey();
             List<Map> attrList =new ArrayList<>();
             if(entry.getValue() instanceof ArrayList){
                 List attrs= (List) entry.getValue();
@@ -274,7 +273,8 @@ public class ModelServiceImpl implements ModelService {
                         attrList.add(rowMap);
                     }
                 }
-                modelService.saveOrUpdateModel(null,modelNme,attrList);
+                checkAttr(modelName,attrs);
+                modelService.saveOrUpdateModel(null,modelName,attrList);
             }
         }
     }
