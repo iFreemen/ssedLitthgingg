@@ -100,6 +100,25 @@ public interface EquipmentMapper {
 			@Param("sType")String sType,
 			@Param("sStatus")String sStatus);
 	
+	@Select("<script>SELECT e.id,e.name,e.dev_id,e.type_cd,e.model_id,e.group_id,e.group_adm_id,e.app_id," + 
+			" e.verification,e.support_code,e.supporter,e.site,e.address,e.remark,e.online,e.uid,e.udp_date," + 
+			" u.company uName,m.model_name,a.app_name,g.name groupName," + 
+			" case e.type_cd when 'L' then 'Lora' when 'N' then 'Nbiot' when 'G' then '2G' else null end as typeName " + 
+			"  FROM group_equ g,equipments e" + 
+			"  left join users u on e.uid=u.id" + 
+			"  left join model m on e.model_id=m.id" + 
+			"  left join applications a on e.app_id=a.id" + 
+			"  where e.valid = 'N' and e.type_cd= #{type} "
+			+ "<if test=\"competence == 2 \"> and e.group_adm_id=g.id </if>"
+			+ "<if test=\"competence == 3 \"> and e.group_id=g.id and e.uid = #{id} </if>"
+			+ "<if test=\"competence == 4 \"> and e.group_id=g.id and e.uid = #{parentId} </if>"
+			+ " </script>")
+	public List<Map<String,Object>> getEquipmentsForExport(
+			@Param("competence")Integer competence,
+			@Param("uid")Integer uid,
+			@Param("parentId")Integer parentId,
+			@Param("type")String type);
+	
 	@Insert("insert into equipments (name,dev_id,type_cd,model_id,group_id,app_id,verification,support_code,supporter,site,address,remark,uid,valid,add_uid,udp_uid,online)"
 			+ " values(#{name},#{devId},#{typeCd},#{modelId},#{groupId},#{appId},#{verification},#{supportCode},#{supporter},#{site},#{address},#{remark},#{uid},#{valid},#{addUid},#{addUid},0) ")
 	public int insertEquipment(Equipment equ);

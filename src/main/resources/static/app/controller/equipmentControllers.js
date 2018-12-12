@@ -99,4 +99,10 @@ function equCtrl($scope, $http,$location, $rootScope) {
             return "assets/img/alarmline.png";
         }
     };
+    $scope.exportLora=function () {
+        $rootScope.downLoadFile("/service/exprLora" );
+    };
+    $scope.exportNbiot=function () {
+    	$rootScope.downLoadFile("/service/exprNbiot" );
+    };
 }

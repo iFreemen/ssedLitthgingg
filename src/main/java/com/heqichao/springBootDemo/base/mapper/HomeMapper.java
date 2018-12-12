@@ -26,6 +26,35 @@ public interface HomeMapper {
 			@Param("id")Integer id,
 			@Param("parentId")Integer parentId);
 	
+	@Select("<script>select count(1) from equipments e where e.valid='N' and e.type_cd='G' " 
+			+ "<if test=\"competence == 3 \"> and uid = #{id}  </if>"
+			+ "<if test=\"competence == 4 \"> and uid = #{parentId}  </if>"+
+			" union all" + 
+			" select count(1) from equipments e where e.valid='N' and e.type_cd='L' "
+			+ "<if test=\"competence == 3 \"> and uid = #{id}  </if>"
+			+ "<if test=\"competence == 4 \"> and uid = #{parentId}  </if>"+
+			" union all" + 
+			" select count(1) from equipments e where e.valid='N' and e.type_cd='N' "
+			+ "<if test=\"competence == 3 \"> and uid = #{id}  </if>"
+			+ "<if test=\"competence == 4 \"> and uid = #{parentId}  </if>"+
+			" union all" + 
+			" select count(1) from equipments e2 where e2.valid='N' and e2.type_cd='G' and e2.online=1"  
+			+ "<if test=\"competence == 3 \"> and uid = #{id}  </if>"
+			+ "<if test=\"competence == 4 \"> and uid = #{parentId}  </if>"+
+			" union all" + 
+			" select count(1) from equipments e2 where e2.valid='N' and e2.type_cd='L' and e2.online=1"
+			+ "<if test=\"competence == 3 \"> and uid = #{id}  </if>"
+			+ "<if test=\"competence == 4 \"> and uid = #{parentId}  </if>"
+			+" union all" + 
+			" select count(1) from equipments e2 where e2.valid='N' and e2.type_cd='N' and e2.online=1"
+			+ "<if test=\"competence == 3 \"> and uid = #{id}  </if>"
+			+ "<if test=\"competence == 4 \"> and uid = #{parentId}  </if>"
+			+ " </script>")
+	public List<Integer> queryHomeData(
+			@Param("competence")Integer competence,
+			@Param("id")Integer id,
+			@Param("parentId")Integer parentId);
+	
 	@Select("<script>" 
 			+"select count(1) from user where status = 'Y' and competence= 3" 
 			+" union all select count(1) from user where status = 'Y' and competence= 4"  

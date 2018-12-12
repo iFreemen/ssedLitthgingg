@@ -20,9 +20,17 @@ public class HomeEntity implements Serializable{
 	//设备总数
 	private Integer equAll;
 	//LOA设备总数
-	private Integer equNom;
+	private Integer lorNom;
 	//LOA在线设备
-	private Integer equBrD;
+	private Integer lorBrD;
+	//NB设备总数
+	private Integer nbNom;
+	//NB在线设备
+	private Integer nbBrD;
+	//GPRS设备总数
+	private Integer gprsNom;
+	//GPRS在线设备
+	private Integer gprsBrD;
 	//设备故障总数
 	private Integer warNum;
 	//设备待处理总数
@@ -75,18 +83,6 @@ public class HomeEntity implements Serializable{
 	public void setEquAll(Integer equAll) {
 		this.equAll = equAll;
 	}
-	public Integer getEquNom() {
-		return equNom;
-	}
-	public void setEquNom(Integer equNom) {
-		this.equNom = equNom;
-	}
-	public Integer getEquBrD() {
-		return equBrD;
-	}
-	public void setEquBrD(Integer equBrD) {
-		this.equBrD = equBrD;
-	}
 	public Integer getWarNum() {
 		return warNum;
 	}
@@ -128,6 +124,42 @@ public class HomeEntity implements Serializable{
 	}
 	public void setPieMap(List<Integer> pieMap) {
 		this.pieMap = pieMap;
+	}
+	public Integer getLorNom() {
+		return lorNom;
+	}
+	public void setLorNom(Integer lorNom) {
+		this.lorNom = lorNom;
+	}
+	public Integer getLorBrD() {
+		return lorBrD;
+	}
+	public void setLorBrD(Integer lorBrD) {
+		this.lorBrD = lorBrD;
+	}
+	public Integer getNbNom() {
+		return nbNom;
+	}
+	public void setNbNom(Integer nbNom) {
+		this.nbNom = nbNom;
+	}
+	public Integer getNbBrD() {
+		return nbBrD;
+	}
+	public void setNbBrD(Integer nbBrD) {
+		this.nbBrD = nbBrD;
+	}
+	public Integer getGprsNom() {
+		return gprsNom;
+	}
+	public void setGprsNom(Integer gprsNom) {
+		this.gprsNom = gprsNom;
+	}
+	public Integer getGprsBrD() {
+		return gprsBrD;
+	}
+	public void setGprsBrD(Integer gprsBrD) {
+		this.gprsBrD = gprsBrD;
 	}
 	
 }
