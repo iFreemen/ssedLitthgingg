@@ -17,7 +17,8 @@ function homeCtrl($scope, $http, $rootScope,$timeout) {
     var bgColor = '#fff';
     var pielabels = ["GPRS","LORA","NBIOT"];
     var pieColors = ['#7e57c2', '#2b9ac9', "#58c9c7"];
-	var pieDatas = [10,20,30];
+	var pieDatas = [0,0,0];
+	
     //creates plot graph
     Dashboard.prototype.createPlotGraph = function(selector,  data2, labels, colors, borderColor, bgColor) {
       //shows tooltip
@@ -142,6 +143,11 @@ function homeCtrl($scope, $http, $rootScope,$timeout) {
     //init Dashboard
     $.Dashboard = new Dashboard, $.Dashboard.Constructor = Dashboard;
     $.Dashboard.init();
+    $http.get("service/getHomePie").success(function(data) {
+		pieDatas = data.resultObj.pieMap;
+		$scope.home=data.resultObj;
+		$.Dashboard.init();
+	});
 
 //    console.log(datas);
 //	$timeout(function(){$.Dashboard.init(); }, 1000);

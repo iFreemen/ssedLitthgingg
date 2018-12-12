@@ -65,13 +65,29 @@ public class EquipmentController extends BaseController{
     	return eService.deleteEquByID(map);
     }
     
-    @RequestMapping(value = "/delEqu" )
+    @RequestMapping(value = "/exprLora" )
     public void exprLora() throws Exception {
 
-        String[] title = new String[]{"名称","数据类型","数值类型","小数位数","单位","公式","备注"};
-        String[] code = new String[]{"name","dev_id","typeName","model_name", "unit","expression","memo"};
+        String[] title = new String[]{"设备名称","设备编号","设备类型","数据模板","所属分组","所属用户","验证码","厂商ID","厂商名称","经纬度","备注"};
+        String[] code = new String[]{"name","dev_id","typeName","model_name", "groupName","uName","verification","support_code","supporter","site","remark"};
         
     	 eService.exportEquipments("Lora", "L", title, code);
+    }
+    @RequestMapping(value = "/exprNbiot" )
+    public void exprNbiot() throws Exception {
+    	
+    	String[] title = new String[]{"设备名称","设备编号","设备类型","数据模板","所属分组","所属应用","所属用户","验证码","厂商ID","厂商名称","经纬度","备注"};
+    	String[] code = new String[]{"name","dev_id","typeName","model_name", "groupName","app_name","uName","verification","support_code","supporter","site","remark"};
+    	
+    	eService.exportEquipments("Nbiot", "N", title, code);
+    }
+    @RequestMapping(value = "/exprGprs" )
+    public void exprGprs() throws Exception {
+    	
+    	String[] title = new String[]{"设备名称","设备编号","设备类型","数据模板","所属分组","所属用户","验证码","厂商ID","厂商名称","经纬度","备注"};
+    	String[] code = new String[]{"name","dev_id","typeName","model_name", "groupName","uName","verification","support_code","supporter","site","remark"};
+    	
+    	eService.exportEquipments("Lora", "L", title, code);
     }
     
 

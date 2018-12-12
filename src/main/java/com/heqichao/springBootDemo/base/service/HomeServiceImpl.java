@@ -7,6 +7,8 @@ import com.heqichao.springBootDemo.base.util.ServletUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,24 +31,30 @@ public class HomeServiceImpl implements HomeService {
     	Integer id = user.getId();
     	Integer parentId = user.getParentId();
     	HomeEntity hentity = new HomeEntity();
-    	List<Integer> pieMap = hMapper.queryPieData(competence, id, parentId);
-    	Integer equOnline = hMapper.queryOnlineEqu(competence, id, parentId);
-    	Integer equAll = hMapper.queryAllEqu(competence, id, parentId);
-    	if(competence == HomeService.ADMINCMP) {
-    		List<Integer> users =hMapper.queryUserData();
-    		hentity.setCustAll(users.get(0));
-    		hentity.setUserAll(users.get(1));
-    	}else {
-    		List<String> users =hMapper.queryUserMax(competence, id, parentId);
-    		hentity.setLastTime(users.get(0));
-    		hentity.setPeak(users.get(1));
-    		
+    	List<Integer> res = hMapper.queryHomeData(competence,id,parentId);
+    	hentity.setGprsNom(res.get(0));
+    	hentity.setGprsBrD(res.get(3));
+    	hentity.setLorNom(res.get(1));
+    	hentity.setLorBrD(res.get(4));
+    	hentity.setNbNom(res.get(2));
+    	hentity.setNbBrD(res.get(5));
+    	hentity.setEquAll(res.get(0)+res.get(1)+res.get(2));
+    	List<Integer> pieLst=new ArrayList<Integer>();
+    	for(int i=0;i<3;i++) {
+    		pieLst.add(res.get(i));
     	}
-    	hentity.setEquNom(pieMap.get(1));//LOA设备总数
-    	hentity.setEquBrD(equOnline);//在线设备
-    	hentity.setEquAll(equAll);//总设备
-    	hentity.setPieMap(pieMap);
+    	hentity.setPieMap(pieLst);
     	return hentity;
+    }
+    
+    int getLstValue(List<Integer> lst,int key) {
+    	
+    	try {
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+    	return 0;
     }
 
 

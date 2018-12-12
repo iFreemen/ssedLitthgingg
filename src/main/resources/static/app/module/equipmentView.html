@@ -40,10 +40,18 @@
                             </div>
                         </div>
                         <div class="form-group row-margin-top">
-                            <div class="col-sm-5 col-md-offset-9 ">
+                            <div class="col-sm-5 col-md-offset-8 ">
 	                             <a href="#/module/equAdd" type="button" ng-if="edit_cmp" class="btn btn-primary waves-effect waves-light" >新增设备 <i class="fa fa-plus"></i></a>
                                 <button  class="btn btn-primary waves-effect waves-light" type="submit"  btn-loading="loadCtl.search" ng-click="init()">搜索</button>
                                 <button class="btn btn-default waves-effect" type="button" ng-click="resetSearch()">重置</button>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-info dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">批量导出<span class="caret"></span></button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a ng-click="exportLora()" >导出Lora设备</a></li>
+                                        <li><a ng-click="exportNbiot()" >导出Nbiot设备</a></li>
+                                        <li><a >导出GPRS设备</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </form>
