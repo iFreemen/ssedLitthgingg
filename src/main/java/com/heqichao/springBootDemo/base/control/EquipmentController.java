@@ -65,5 +65,14 @@ public class EquipmentController extends BaseController{
     	return eService.deleteEquByID(map);
     }
     
+    @RequestMapping(value = "/delEqu" )
+    public void exprLora() throws Exception {
+
+        String[] title = new String[]{"名称","数据类型","数值类型","小数位数","单位","公式","备注"};
+        String[] code = new String[]{"name","dev_id","typeName","model_name", "unit","expression","memo"};
+        
+    	 eService.exportEquipments("Lora", "L", title, code);
+    }
+    
 
 }

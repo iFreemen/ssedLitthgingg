@@ -86,4 +86,6 @@ public interface EquipmentService {
 	 * @param date
 	 */
 	void updateOnlineStatus(String online , List<String> list,Date date);
+
+	void exportEquipments(String typeName, String type, String[] header, String[] key);
 }
