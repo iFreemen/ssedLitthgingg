@@ -36,6 +36,10 @@ function modelListCtrl($scope, $http, $rootScope,$filter,$location,fileUpload) {
     $scope.exportAll=function () {
         $rootScope.downLoadFile("/service/exportAllUserModel" );
     };
+
+    $scope.exportModel=function (entity) {
+        $rootScope.downLoadFile("/service/exportModel?id="+entity.id+"&name="+entity.modelName );
+    };
    /* $scope.fileToUpload;
     $scope.sendFile = function(){
         var url = "/service/importModel",

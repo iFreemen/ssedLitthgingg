@@ -41,10 +41,11 @@ public interface ModelService {
     Map<String, Integer> queryUserModel();
 
     /**
-     * 导出所有模板
+     * 导出模板
+     * @param modelId ==null 所有
      * @return
      */
-    Map<String,List> queryExportInfo();
+    Map<String,List> queryExportInfo(Integer modelId);
 
     void saveImport(Map map);
 }

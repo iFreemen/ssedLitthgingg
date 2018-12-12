@@ -125,14 +125,32 @@ public class ModelController extends BaseController{
     @RequestMapping(value = "/exportAllUserModel")
     void exportAllUserModel(){
 
-       Map<String,List> map = modelService.queryExportInfo();
+       Map<String,List> map = modelService.queryExportInfo(null);
+        export(map,"模板");
+
+    }
+
+    @RequestMapping(value = "/exportModel")
+    void exportModel(){
+        Integer integer =getIntegerParam("id");
+        String modelName = (String) getParamMap().get("name");
+        if(integer!=null){
+            Map<String,List> map = modelService.queryExportInfo(integer);
+            export(map,modelName);
+        }
+
+
+    }
+
+
+    private void export(Map<String,List> map,String fileName){
         if(map!=null){
 
             FileOutputStream fos = null;
             File file =null;
             try{
                 Iterator entries = map.entrySet().iterator();
-                file = FileUtil.createTempDownloadFile("模板.xls");
+                file = FileUtil.createTempDownloadFile(fileName+".xls");
                 fos= new FileOutputStream(file);
                 // 声明一个工作薄
                 HSSFWorkbook workbook = ExcelWriter.createWorkBook();
@@ -150,7 +168,6 @@ public class ModelController extends BaseController{
                 if(fos!=null){
                     try {
                         fos.close();
-                       // logger.info("文件地址:"+file.getPath());
                         download(file);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -160,10 +177,7 @@ public class ModelController extends BaseController{
 
 
         }
-
-
     }
-
 
     @RequestMapping(value = "/importModel")
     ResponeResult importModel(@RequestParam("file") MultipartFile multipartFile){
