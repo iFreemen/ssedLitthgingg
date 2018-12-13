@@ -43,10 +43,9 @@ public class UserCache {
     }
 
     /**
-     * 清楚用户缓存
-     * @param userId
+     * 清除用户缓存
      */
-    public static void cleanUserCache(Integer userId){
-        userMap.put(userId,null);
+    public static void cleanUserCache(){
+        userMap=new HashMap<>();
     }
 }
