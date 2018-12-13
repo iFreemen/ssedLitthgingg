@@ -19,7 +19,8 @@ public class MqttCheckOffLineUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(MqttCheckOffLineUtil.class);
 
-    @Scheduled(cron="0 0/20 * * * ?")
+    //这个是旧心跳，废弃
+   // @Scheduled(cron="0 0/20 * * * ?")
     public void checkOffLine() {
         logger.info(" 定时任务: 检查心跳");
         EquipmentService equipmentService= (EquipmentService) ApplicationContextUtil.getBean("equipmentServiceImpl");

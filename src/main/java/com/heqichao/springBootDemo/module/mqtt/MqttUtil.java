@@ -174,7 +174,8 @@ public class MqttUtil {
     public static void init() {
         try {
             String clentId =mqttOption.getClientId();
-            mqttOption.setClientId(DataUtil.getLocalIP()+"_"+clentId);
+            clentId=clentId.replace("{IP}",DataUtil.getLocalIP());
+            mqttOption.setClientId(clentId);
             logger.info("**** INIT MQTT START : "+mqttOption);
             connect(mqttOption.getRetryTime(),mqttOption.getRetrySpace());
             EquipmentService equipmentService= (EquipmentService) ApplicationContextUtil.getApplicationContext().getBean("equipmentServiceImpl");

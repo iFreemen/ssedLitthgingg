@@ -79,56 +79,11 @@ public class MqttUtilCallback implements MqttCallback {
 // subscribe后得到的消息会执行到这里面
         String devId =topic.replace("application/0000000000000001/node/","");
         devId =devId.replace("/rx","");
-        Date date =new Date();
         String mes =new String(message.getPayload());
         logger.info("接收消息主题 : " + topic);
         logger.info("接收消息Qos : " + message.getQos());
         logger.info("接收消息内容 : " + mes);
-        if(LightningLogService.OFF_LINE.equalsIgnoreCase(mes)) {
-            logger.error( devId+":"+LightningLogService.OFF_LINE+" 设备下线！！！");
-            //下线继续沿用原逻辑？？
-            LightningLog log =new LightningLog();
-            log.setDevEUI(devId);
-            log.setStatus(LightningLogService.OFF_LINE);
-            mqttUtilCallback.lightningLogService.save(log);
-
-            //todo
-            mqttUtilCallback.equipmentService.setEquStatus(devId,EquipmentService.BREAKDOWN);
-        }else{
-
-            mqttUtilCallback.dataLogService.saveDataLog(devId,mes,EquipmentService.EQUIPMENT_LORA);
-
-          /*  LightningLog log =MqttUtil.saveTransData(mes);
-            if(log!=null){
-                WarningLogService warningLogService=ApplicationContextUtil.getBean(WarningLogService.class);
-                logger.error( devId+":"+log.getStatus()+"  ！！！");
-                if(LightningLogService.HEART_BEAT_ERROR.equals(log.getStatus())){
-                    //设置设备故障
-                    logger.error( devId+":"+LightningLogService.HEART_BEAT_ERROR+" 设备故障,但状态仍为在线！！！");
-                    mqttUtilCallback.equipmentService.setEquStatus(devId,EquipmentService.BREAKDOWN);
-
-                    //检查如果已为故障则不保存
-                   List list = warningLogService.queryByDevAndStatus(devId,WarningLogService.FAULT);
-                    if(list==null || list.size()<1){
-                        //故障提醒
-                        WarningLog warningLog=new WarningLog();
-                        warningLog.setDevEUI(devId);
-                        warningLog.setStatus(WarningLogService.FAULT);
-                        warningLog.setData(log.getData());
-
-                        warningLog.setTime(log.getTime());
-                        warningLogService.save(warningLog);
-                    }
-
-                }else{
-                    logger.error(devId+ " 设备正常！！！");
-                    mqttUtilCallback.equipmentService.setEquStatus(devId,EquipmentService.NORMAL);
-
-                    //更新故障信息 有心跳则为已修复
-                    warningLogService.updateFix(devId);
-                }
-            }*/
-        }
+        mqttUtilCallback.dataLogService.saveDataLog(devId,mes,EquipmentService.EQUIPMENT_LORA);
 
     }
 
