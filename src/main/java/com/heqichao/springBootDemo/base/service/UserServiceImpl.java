@@ -9,6 +9,7 @@ import com.heqichao.springBootDemo.base.util.PageUtil;
 import com.heqichao.springBootDemo.base.util.ServletUtil;
 import com.heqichao.springBootDemo.base.util.StringUtil;
 
+import com.heqichao.springBootDemo.base.util.UserCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -87,6 +88,7 @@ public class UserServiceImpl implements UserService {
     	if(user.getCompany() == null || user.getContact() == null || user.getPhone() == null || uid == null) {
     		return new ResponeResult(true,"UserInfo Input Error!","errorMsg");
     	}else {
+			UserCache.cleanUserCache();
     		user.setId(uid);
     		if(userMapper.updateUserInfo(user)>0) {
     			User newUser = ServletUtil.getSessionUser();
@@ -147,6 +149,7 @@ public class UserServiceImpl implements UserService {
     	if(  uid == null || udid == null) {
     		return new ResponeResult(true,"Delete fail!","errorMsg");
     	}else {
+			UserCache.cleanUserCache();
     		if(userMapper.delUserById(uid,udid)>0) {
     			return new ResponeResult();
     		}
