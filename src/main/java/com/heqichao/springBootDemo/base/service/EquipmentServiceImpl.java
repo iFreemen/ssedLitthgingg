@@ -1,7 +1,6 @@
 package com.heqichao.springBootDemo.base.service;
 
 import com.heqichao.springBootDemo.base.mapper.EquipmentMapper;
-import com.heqichao.springBootDemo.base.param.ApplicationContextUtil;
 import com.heqichao.springBootDemo.base.param.RequestContext;
 import com.heqichao.springBootDemo.base.param.ResponeResult;
 import com.github.pagehelper.PageInfo;
@@ -14,11 +13,7 @@ import com.heqichao.springBootDemo.base.util.FileUtil;
 import com.heqichao.springBootDemo.base.util.PageUtil;
 import com.heqichao.springBootDemo.base.util.ServletUtil;
 import com.heqichao.springBootDemo.base.util.StringUtil;
-import com.heqichao.springBootDemo.base.util.UserUtil;
-import com.heqichao.springBootDemo.module.mapper.DataDetailMapper;
 import com.heqichao.springBootDemo.module.mqtt.MqttUtil;
-import com.heqichao.springBootDemo.module.service.ModelService;
-
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +26,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.util.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -47,8 +41,6 @@ import javax.servlet.http.HttpServletResponse;
 public class EquipmentServiceImpl implements EquipmentService {
     @Autowired
     private EquipmentMapper eMapper ;
-    @Autowired
-    private DataDetailMapper dMapper ;
 
     @Override
     public PageInfo queryEquipmentList() {
@@ -74,7 +66,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     	String type = StringUtil.getStringByMap(map,"type");
     	String seleStatus = StringUtil.getStringByMap(map,"seleStatus");
     	List<Map<String,Object>> newLst = new ArrayList<Map<String,Object>>();
-    	List<Equipment> eLst = eMapper.getEquipments(
+    	List<Equipment> eLst = eMapper.getEquipmentsForDevLstOrderBy(
         		ServletUtil.getSessionUser().getCompetence(),
         		ServletUtil.getSessionUser().getId(),
         		ServletUtil.getSessionUser().getParentId(),
@@ -86,7 +78,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     		newClu.put("devId", equ.getDevId());
     		newClu.put("type", equ.getTypeName());
     		newClu.put("online", equ.getOnline());
-    		newClu.put("dataPoints",dMapper.queryDetailByDevId(equ.getDevId()));
+    		newClu.put("dataPoints",eMapper.queryDetailByDevId(equ.getDevId()));
     		newLst.add(newClu);
     	}
     	PageUtil.setPage();
@@ -199,11 +191,11 @@ public class EquipmentServiceImpl implements EquipmentService {
 		Equipment equ = new Equipment(map);
 		Integer uid = ServletUtil.getSessionUser().getId();
 		Integer cmp = ServletUtil.getSessionUser().getCompetence();
-		if(equ.getName() == null ||equ.getDevId() == null || uid == null || cmp == 4) {
+		if(equ.getId()==null ||equ.getName() == null ||equ.getDevId() == null || uid == null || cmp == 4) {
 			return new ResponeResult(true,"Edit Equipment Input Error!","errorMsg");
 		}
-		String oId = eMapper.getEquIdOld(equ.getId(),equ.getUid());
-		boolean chgDevId = oId.equals(equ.getDevId());
+		String oId = eMapper.getEquIdOld(equ.getId());
+		boolean chgDevId = !oId.equals(equ.getDevId());//true为修改了设备编号
 		if(chgDevId&&eMapper.duplicatedEid(equ.getDevId(),equ.getUid())) {
 			return new ResponeResult(true,"设备编号重复","errorMsg");
 		}

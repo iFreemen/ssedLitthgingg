@@ -60,11 +60,11 @@ function devLstCtrl($scope, $http,$rootScope,$location,$timeout) {
      }
    //获取上下线图片
      $scope.getStatusImg = function (status) {
-         if(status == 2){
+         if(status == 0){
              return "assets/img/offline.png";
          } else if(status == 1){
              return "assets/img/online.png";
-         }else if(status == 3){
+         }else if(status == 2){
              return "assets/img/alarmline.png";
          }
      };

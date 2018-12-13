@@ -69,7 +69,7 @@
 			                                <div>
 												<div style="float:left;display: inline-block;color:black" class="ng-binding">
 													<em style="font-size:12px;" class="ng-binding">当前值：</em>
-													{{dataPointItem.dataValue}}
+													{{!dataPointItem.dataValue ? '无数据':dataPointItem.dataValue}}
 													<em class="ng-binding">{{dataPointItem.unit}}</em>
 												</div>
 											</div>
