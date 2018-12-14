@@ -320,41 +320,51 @@ public class EquipmentServiceImpl implements EquipmentService {
         }
         return resKey;
     }
+    
+    @Override
+    public List<UploadResultEntity> getUploadResult() {
+    	Map map = RequestContext.getContext().getParamMap();
+    	String key = StringUtil.getStringByMap(map,"reskey");
+    	List<UploadResultEntity> res = eMapper.getUploadResult(key);
+    	return res;
+    }
+
+    
     public void checkUploadRow(Equipment equ,Integer uid,Integer cmp,Integer index,String resKey ) {
     	UploadResultEntity res = new UploadResultEntity();
     	res.setResKey(resKey);
     	res.setAddUid(uid);
     	if(StringUtil.isEmpty(equ.getName())) {
     		res.setResIndex(index);
-    		res.setResStatus("失败");
+    		res.setResStatus(UPLOAD_FAIL);
     		res.setErrReason("设备名称为空");
     		eMapper.insertUploadResult(res);
     		return;
     	}
     	if(StringUtil.isEmpty(equ.getDevId())) {
     		res.setResIndex(index);
-    		res.setResStatus("失败");
+    		res.setResStatus(UPLOAD_FAIL);
     		res.setErrReason("设备编号为空");
     		eMapper.insertUploadResult(res);
     		return;
     	}
     	if(StringUtil.isEmpty(equ.getModelName())) {
     		res.setResIndex(index);
-    		res.setResStatus("失败");
+    		res.setResStatus(UPLOAD_FAIL);
     		res.setErrReason("数据模板为空");
     		eMapper.insertUploadResult(res);
     		return;
     	}
     	if(StringUtil.isEmpty(equ.getGroupName())) {
     		res.setResIndex(index);
-    		res.setResStatus("失败");
+    		res.setResStatus(UPLOAD_FAIL);
     		res.setErrReason("所属分组为空");
     		eMapper.insertUploadResult(res);
     		return;
     	}
     	if(StringUtil.isEmpty(equ.getuName())) {
     		res.setResIndex(index);
-    		res.setResStatus("失败");
+    		res.setResStatus(UPLOAD_FAIL);
     		res.setErrReason("所属用户为空");
     		eMapper.insertUploadResult(res);
     		return;
@@ -362,7 +372,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     	if("N".equals(equ.getTypeCd())) {
     		if(StringUtil.isEmpty(equ.getAppName())) {
     			res.setResIndex(index);
-    			res.setResStatus("失败");
+    			res.setResStatus(UPLOAD_FAIL);
     			res.setErrReason("所属应用为空");
     			eMapper.insertUploadResult(res);
     			return;
@@ -371,7 +381,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     		Integer appId = eMapper.getAppIdByName(equ.getAppName(), uid);
     		if(appId==null) {
         		res.setResIndex(index);
-        		res.setResStatus("失败");
+        		res.setResStatus(UPLOAD_FAIL);
         		res.setErrReason("此用户没有该所属应用");
         		eMapper.insertUploadResult(res);
         		return;
@@ -381,14 +391,14 @@ public class EquipmentServiceImpl implements EquipmentService {
     	Integer currId = eMapper.getUserIdByName(equ.getuName());
     	if(cmp==3 && uid!=currId) {
     		res.setResIndex(index);
-    		res.setResStatus("失败");
+    		res.setResStatus(UPLOAD_FAIL);
     		res.setErrReason("操作账户无法为该用户添加设备");
     		eMapper.insertUploadResult(res);
     		return;
     	}
     	if(eMapper.duplicatedEid(equ.getDevId(),currId)) {
     		res.setResIndex(index);
-    		res.setResStatus("失败");
+    		res.setResStatus(UPLOAD_FAIL);
     		res.setErrReason("设备编号重复");
     		eMapper.insertUploadResult(res);
     		return;
@@ -396,7 +406,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     	Integer modelId = eMapper.getModelIdByName(equ.getModelName(), currId);
     	if(modelId==null) {
     		res.setResIndex(index);
-    		res.setResStatus("失败");
+    		res.setResStatus(UPLOAD_FAIL);
     		res.setErrReason("此用户没有该数据模板");
     		eMapper.insertUploadResult(res);
     		return;
@@ -412,7 +422,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     	equ.setAddUid(uid);
     	equ.setValid("N");
     	res.setResIndex(index);
-		res.setResStatus("成功");
+		res.setResStatus(UPLOAD_SUCCESS);
     	eMapper.insertUploadResult(res);
     	eMapper.insertEquipment(equ);
     }

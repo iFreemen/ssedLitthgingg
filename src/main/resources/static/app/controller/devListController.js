@@ -1,7 +1,8 @@
-function devLstCtrl($scope, $http,$rootScope,$location,$timeout) {
+function devLstCtrl($scope, $http,$rootScope,$location,$timeout, $anchorScroll) {
 	var elem = document.createElement("script");
 	elem.src = 'assets/js/jquery.easyui.min.js';
 	document.body.appendChild(elem);
+	$anchorScroll.yOffset = 20;
    //为后台请求参数 带分页数据
      $scope.quereyData={
          page:1, //当前页码 初始化为1
@@ -58,6 +59,15 @@ function devLstCtrl($scope, $http,$rootScope,$location,$timeout) {
          $scope.quereyData.page=page;
          $scope.init();
      }
+     $scope.jumper = function(key){
+    	 if($location.hash()!==key){
+    		 $location.hash(key);
+    		 
+    	 }else{
+    		 $anchorScroll();
+    		 
+    	 }
+    	 }
    //获取上下线图片
      $scope.getStatusImg = function (status) {
          if(status == 0){

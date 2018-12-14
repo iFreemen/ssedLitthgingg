@@ -117,5 +117,9 @@ public class EquipmentController extends BaseController{
     	
     	return new ResponeResult(res);
     }
+    @RequestMapping(value = "/getUploadResult")
+    public ResponeResult getUploadResult() {
+    	return new ResponeResult(eService.getUploadResult());
+    }
 
 }

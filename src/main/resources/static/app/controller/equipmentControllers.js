@@ -1,9 +1,4 @@
 function equCtrl($scope, $http,$location, $rootScope) {
-	$scope.equStatus={
-	        "N":"在线", 
-	        "F":"故障", 
-	        "B":"离线", 
-	    };
 	//为后台请求参数 带分页数据
     $scope.quereyData={
         page:1, //当前页码 初始化为1
@@ -21,7 +16,6 @@ function equCtrl($scope, $http,$location, $rootScope) {
     $scope.init=function(){
     	$scope.loadCtl.search = true;
     	$http.post("service/getEquipments",$scope.quereyData).success(function(data) {
-    		console.log(data.resultObj.list);
     		$scope.equipments = data.resultObj.list;
     		$scope.pages=data.resultObj.pages;
     		$scope.total=data.resultObj.total;
@@ -107,7 +101,20 @@ function equCtrl($scope, $http,$location, $rootScope) {
     	$rootScope.downLoadFile("/service/exprNbiot" );
     };
     $scope.uploadSuccess=function (data) {
-    	console.log(data);
-        swal("导入成功", null, "success");
+    	$http.post("service/getUploadResult",{reskey:data.resultObj}).success(function(data) {
+    		console.log(data.resultObj);
+    		if(data.resultObj.length!=0){
+    			$scope.uploadRes = data.resultObj;
+    			$scope.resetSearch();
+    		}else{
+    			swal("无数据导入", null, "error");
+    		}
+    	});
+    }
+    $scope.closeUploadModal=function () {
+//		$scope.uploadRes = null;
+    }
+    $scope.clearUploadModal=function () {
+		$scope.uploadRes = null;
     }
 }

@@ -2,6 +2,7 @@ package com.heqichao.springBootDemo.base.service;
 
 import com.github.pagehelper.PageInfo;
 import com.heqichao.springBootDemo.base.entity.Equipment;
+import com.heqichao.springBootDemo.base.entity.UploadResultEntity;
 import com.heqichao.springBootDemo.base.param.ResponeResult;
 
 import java.util.Date;
@@ -21,6 +22,8 @@ public interface EquipmentService {
 
 	String ON_LINE="1";
 	String OFF_LINE="0";
+	Integer UPLOAD_SUCCESS=1;
+	Integer UPLOAD_FAIL=0;
 
 	String EQUIPMENT_LORA="L";
 	String EQUIPMENT_NB="N";
@@ -97,4 +100,6 @@ public interface EquipmentService {
 
 
 	String saveUploadImport(Map map, String[] typecode, String type);
+
+	List<UploadResultEntity> getUploadResult();
 }

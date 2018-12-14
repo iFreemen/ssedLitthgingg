@@ -33,10 +33,12 @@
 		                            </div>
 		                        </li>
 		                        <li ng-repeat="eqm in equipments" >
+		                        	<div class="pointer-div" ng-click="jumper(eqm.devId)">
 		                            <div class="monitor_line"><img ng-src="{{getStatusImg(eqm.online)}}"/></div>
 		                            <div class="monitor_didData">
-		                                <a title="{{eqm.name}}" href={{"#/module/devList#"+eqm.devId}}>{{eqm.name}}</a>
+		                                <a title="{{eqm.name}}" >{{eqm.name}}</a>
 		                                <em>{{eqm.devId}}</em>
+		                            </div>
 		                            </div>
 		                        </li>
 		                    </ul>

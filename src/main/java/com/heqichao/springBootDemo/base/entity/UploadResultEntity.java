@@ -9,7 +9,7 @@ public class UploadResultEntity extends BaseEntity {
 	
 	private String resKey;//所属上传号
 	private Integer resIndex;//行号
-	private String resStatus;//结果
+	private Integer resStatus;//结果
 	private String errReason;//错误原因
 	
 	
@@ -26,10 +26,11 @@ public class UploadResultEntity extends BaseEntity {
 	public void setResIndex(Integer resIndex) {
 		this.resIndex = resIndex;
 	}
-	public String getResStatus() {
+	
+	public Integer getResStatus() {
 		return resStatus;
 	}
-	public void setResStatus(String resStatus) {
+	public void setResStatus(Integer resStatus) {
 		this.resStatus = resStatus;
 	}
 	public String getErrReason() {
