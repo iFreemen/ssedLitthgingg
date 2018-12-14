@@ -44,7 +44,6 @@ function devLstCtrl($scope, $http,$rootScope,$location,$timeout, $anchorScroll) 
       		$scope.equipments = data.resultObj.list;
       		$scope.pages=data.resultObj.pages;
       		$scope.total=data.resultObj.total;
-//      		$scope.pageArr=data.resultObj.navigatepageNums;
       		$scope.quereyData.page=data.resultObj.pageNum;
       		$scope.loadCtl.search = false;
       	});
@@ -59,6 +58,7 @@ function devLstCtrl($scope, $http,$rootScope,$location,$timeout, $anchorScroll) 
          $scope.quereyData.page=page;
          $scope.init();
      }
+     //滚动条锚点
      $scope.jumper = function(key){
     	 if($location.hash()!==key){
     		 $location.hash(key);
