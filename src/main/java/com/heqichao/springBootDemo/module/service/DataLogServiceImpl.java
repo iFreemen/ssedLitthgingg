@@ -1,5 +1,7 @@
 package com.heqichao.springBootDemo.module.service;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.heqichao.springBootDemo.base.entity.Equipment;
 import com.heqichao.springBootDemo.base.entity.User;
 import com.heqichao.springBootDemo.base.exception.ResponeException;
@@ -162,16 +164,25 @@ public class DataLogServiceImpl implements DataLogService {
 
 
     @Override
-    public void saveDataLog(String devId, String srcData,String devType) {
+    public void saveDataLog(String devId, String mes,String devType) {
         //转译数据
-        if(StringUtil.isNotEmpty(devId) && StringUtil.isNotEmpty(srcData)){
+        if(StringUtil.isNotEmpty(devId) && StringUtil.isNotEmpty(mes)){
+            String srcData ="";
+            try{
+                JSONObject jsonObject = JSON.parseObject(mes);
+                //只解析data
+                srcData =jsonObject.getString("data");
+            }catch (Exception e){
+                srcData=mes;
+            }
+
             String[] transDatas = Base64Encrypt.decodeToHexStr(srcData);
             if(transDatas==null || transDatas.length<1){
                 return;
             }
             String data=StringUtil.getString(transDatas,"");
             DataLogService dataLogService= (DataLogService) ApplicationContextUtil.getApplicationContext().getBean("dataLogServiceImpl");
-            dataLogService.saveDataLog(devId,data,srcData,devType);
+            dataLogService.saveDataLog(devId,mes,srcData,devType);
         }
 
 
