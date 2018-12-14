@@ -191,7 +191,7 @@ public interface EquipmentMapper {
 	void updateOnlineStatus(@Param("online")String online , @Param("list") List<String> list, @Param("date")Date date);
 
 
-	@Update("update equipments set  update_time = sysdate(), udp_uid = #{udid}, valid = 'D' where id=#{id} and valid = 'N' ")
+	@Update("update equipments set  udp_date = sysdate(), udp_uid = #{udid}, valid = 'D' where id=#{id} and valid = 'N' ")
 	public int delEquById(@Param("id")Integer eid,@Param("udid")Integer udid);
 	
 	@Update("update equipments set  e_valid = #{status} where eid=#{eid} and valid = 'N' ")

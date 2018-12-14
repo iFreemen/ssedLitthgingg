@@ -25,10 +25,8 @@ function devLstCtrl($scope, $http,$rootScope,$location,$timeout, $anchorScroll) 
  	    		});
  	    		$('.easyui-combotree').combotree({
                     onChange:function(){
-//                        if($scope.devFlag===1) {
-                            $(".monitor_devGroup").css("display", "none");
-                            $scope.getDevList();
-//                        }
+                        $(".monitor_devGroup").css("display", "none");
+                        $scope.getDevList();
                     }
                 });
  	    		$('.easyui-combotree').combotree('setValue',1);
@@ -40,7 +38,7 @@ function devLstCtrl($scope, $http,$rootScope,$location,$timeout, $anchorScroll) 
     	 $scope.quereyData.page=!page ? page : 1;
     	 $scope.quereyData.gid=$('.easyui-combotree').combotree('getValue');
       	$http.post("service/getEquPage",$scope.quereyData).success(function(data) {
-      		console.log(data.resultObj);
+//      		console.log(data.resultObj);
       		$scope.equipments = data.resultObj.list;
       		$scope.pages=data.resultObj.pages;
       		$scope.total=data.resultObj.total;
