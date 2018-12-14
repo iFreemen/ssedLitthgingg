@@ -91,7 +91,7 @@ public class DataLogController extends BaseController{
         if(StringUtil.isNotEmpty(end)){
             end=end+" 23:59:59";
         }
-        map.putAll(dataLogService.querqueryEquAttrLog(devId,attrKey,start,end));
+        map.putAll(dataLogService.queryEquAttrLog(devId,attrKey,start,end));
 
         map.put("devId",devId);
         map.put("attrKey",attrKey);
