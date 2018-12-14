@@ -50,18 +50,17 @@ public class DataLogServiceImpl implements DataLogService {
     @Override
     public void saveDataLog(String devId,String data, String srcData,String devType){
         Date date =new Date();
-        if(StringUtil.isNotEmpty(devId) && StringUtil.isNotEmpty(data)){
-
-            //去除前后的主数据
-            String mainData="";
-            DataLog dataLog =new DataLog();
+        //去除前后的主数据
+        String mainData="";
+        DataLog dataLog =new DataLog();
+        List<DataDetail> dataDetails =new ArrayList<>();
+        try{
             dataLog.setSrcData(srcData);
             dataLog.setData(data);
             dataLog.setAddDate(date);
             dataLog.setUdpDate(date);
             dataLog.setDevId(devId);
             dataLog.setDevType(devType);
-            List<DataDetail> dataDetails =new ArrayList<>();
             //先查找该设备所绑定的模板属性
             Equipment equipment = equipmentService.getEquipmentInfo(devId);
             Integer modId=null;
@@ -75,13 +74,13 @@ public class DataLogServiceImpl implements DataLogService {
                 dataLog.setDataStatus(DataLogService.ERROR_STATUS);
                 return;
             }
+            if(StringUtil.isNotEmpty(devId) && StringUtil.isNotEmpty(data)){
+                //0.判断是否心跳 长度为7字节
+                if(data.length() == 14){
+                    dataLog.setDataStatus(DataLogService.ENABLE_STATUS);
+                    return;
+                }
 
-            //0.判断是否心跳 长度为7字节
-            if(data.length() == 14){
-                dataLog.setDataStatus(DataLogService.ENABLE_STATUS);
-                return;
-            }
-            try{
                 //默认去除前面没用3字节
                 int frontByte =3;
                 //去除后面没用2字节
@@ -108,7 +107,6 @@ public class DataLogServiceImpl implements DataLogService {
                         return;
                     }
                 }
-
                 //去除前后的主数据
                 mainData=data.substring(frontByte*2,data.length()-backByte*2);
                 dataLog.setMainData(mainData);
@@ -142,23 +140,21 @@ public class DataLogServiceImpl implements DataLogService {
                     dataDetail.setDataStatus(DataLogService.ENABLE_STATUS);
                     dataDetails.add(dataDetail);
                 }
-
-            }catch (Exception e){
-                dataLog.setDataStatus(DataLogService.ERROR_STATUS);
-            }finally {
-                //更新设备为在线
-                List<String> devIds=new ArrayList<>();
-                devIds.add(devId);
-                equipmentService.updateOnlineStatus(EquipmentService.ON_LINE,devIds,date);
-                dataLogMapper.save(dataLog);
-                if(dataDetails.size()>0){
-                    for(DataDetail dataDetail :dataDetails){
-                        dataDetail.setLogId(dataLog.getId());
-                    }
-                    dataDetailMapper.save(dataDetails);
-                }
             }
-
+        }catch (Exception e){
+            dataLog.setDataStatus(DataLogService.ERROR_STATUS);
+        }finally {
+            //更新设备为在线
+            List<String> devIds=new ArrayList<>();
+            devIds.add(devId);
+            equipmentService.updateOnlineStatus(EquipmentService.ON_LINE,devIds,date);
+            dataLogMapper.save(dataLog);
+            if(dataDetails.size()>0){
+                for(DataDetail dataDetail :dataDetails){
+                    dataDetail.setLogId(dataLog.getId());
+                }
+                dataDetailMapper.save(dataDetails);
+            }
         }
     }
 
@@ -175,14 +171,18 @@ public class DataLogServiceImpl implements DataLogService {
             }catch (Exception e){
                 srcData=mes;
             }
-
-            String[] transDatas = Base64Encrypt.decodeToHexStr(srcData);
-            if(transDatas==null || transDatas.length<1){
-                return;
+            String data="";
+            try{
+                String[] transDatas = Base64Encrypt.decodeToHexStr(srcData);
+                if(transDatas==null || transDatas.length<1){
+                    return;
+                }
+                data=StringUtil.getString(transDatas,"");
+            }catch (Exception e){
+                data="";
             }
-            String data=StringUtil.getString(transDatas,"");
             DataLogService dataLogService= (DataLogService) ApplicationContextUtil.getApplicationContext().getBean("dataLogServiceImpl");
-            dataLogService.saveDataLog(devId,mes,srcData,devType);
+            dataLogService.saveDataLog(devId,data,mes,devType);
         }
 
 
