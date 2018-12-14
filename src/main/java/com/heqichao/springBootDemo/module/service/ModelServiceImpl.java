@@ -291,7 +291,8 @@ public class ModelServiceImpl implements ModelService {
         }
 
         if(attrList!=null && attrList.size()>0){
-            for(Map map :attrList){
+            for(int i=0;i<attrList.size();i++){
+                Map map =attrList.get(i);
                 String name = (String) map.get("attrName");
                 if(StringUtil.isEmpty(name)){
                     throw new ResponeException("属性名称不允许为空");
@@ -313,6 +314,10 @@ public class ModelServiceImpl implements ModelService {
                     throw new ResponeException("无效的数据类型："+dataTypeName);
                 }else{
                     map.put("dataType",dataType);
+                }
+
+                if(AttrEnum.WAVE_TYPE.getType().equals(dataType) && i != attrList.size()-1){
+                    throw new ResponeException("波形只能设置在最后！"+dataTypeName);
                 }
 
                 String valueTypeName = (String) map.get("valueType");
