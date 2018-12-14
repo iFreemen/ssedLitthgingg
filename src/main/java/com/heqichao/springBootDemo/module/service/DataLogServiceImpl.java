@@ -196,7 +196,7 @@ public class DataLogServiceImpl implements DataLogService {
     }
 
     @Override
-    public Map querqueryEquAttrLog(String devId, String attrKey, String startTime, String endTime) {
+    public Map queryEquAttrLog(String devId, String attrKey, String startTime, String endTime) {
         Map map= new HashMap();
         if(StringUtil.isNotEmpty(devId) && StringUtil.isNotEmpty(attrKey)){
             map.put("log",queryDataDetail(devId, attrKey, startTime, endTime));

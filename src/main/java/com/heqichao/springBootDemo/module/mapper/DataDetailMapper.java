@@ -35,7 +35,7 @@ public interface DataDetailMapper {
     void updateStatus(@Param("status")String status , @Param("list") List<String> list, @Param("date")Date date);
 
     @Select("<script>"
-            +"select data_name,add_date,unit,data_value,data_type from data_detail  where dev_id = #{devId} and data_name = #{dataName} and data_status = #{status}"
+            +"select data_name,add_date,unit,data_value,data_type from data_detail  where data_value != '' and dev_id = #{devId} and data_name = #{dataName} and data_status = #{status}"
             + "<if test =\"start !=null  and start!=''\"> and add_date &gt;= #{start} </if>" //大于等于
             + "<if test =\"end !=null  and end!='' \"> and add_date &lt;= #{end} </if>"  // 小于等于
             +" order by add_date desc "

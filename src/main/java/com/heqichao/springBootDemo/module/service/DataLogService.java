@@ -38,7 +38,7 @@ public interface DataLogService {
 
     void deleteDataLog(String... devId);
 
-    Map querqueryEquAttrLog(String devId, String attrKey, String startTime, String endTime);
+    Map queryEquAttrLog(String devId, String attrKey, String startTime, String endTime);
 
     /**
      * 查找在线的lora设备中在date时间内没接收到的数据

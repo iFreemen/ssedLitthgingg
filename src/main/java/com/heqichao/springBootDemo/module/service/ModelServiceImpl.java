@@ -276,7 +276,7 @@ public class ModelServiceImpl implements ModelService {
                         attrList.add(rowMap);
                     }
                 }
-                checkAttr(modelName,attrs);
+                checkAttr(modelName,attrList);
                 modelService.saveOrUpdateModel(null,modelName,attrList);
             }
         }
