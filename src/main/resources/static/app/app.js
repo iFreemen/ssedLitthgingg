@@ -45,6 +45,7 @@ var demoApp =angular.module("demoApp", ["ngRoute"]);
 		templateUrl: "app/module/equMap.html",
 		controller: devMapCtrl
 	}).when("/module/devList", {
+		reloadOnSearch: false,
 		templateUrl: "app/module/devList.html",
 		controller: devLstCtrl
 	}).when("/module/devChart/:devId/:logId", {

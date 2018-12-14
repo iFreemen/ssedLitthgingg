@@ -2,6 +2,7 @@ package com.heqichao.springBootDemo.base.service;
 
 import com.github.pagehelper.PageInfo;
 import com.heqichao.springBootDemo.base.entity.Equipment;
+import com.heqichao.springBootDemo.base.entity.UploadResultEntity;
 import com.heqichao.springBootDemo.base.param.ResponeResult;
 
 import java.util.Date;
@@ -21,12 +22,20 @@ public interface EquipmentService {
 
 	String ON_LINE="1";
 	String OFF_LINE="0";
+	Integer UPLOAD_SUCCESS=1;
+	Integer UPLOAD_FAIL=0;
 
 	String EQUIPMENT_LORA="L";
 	String EQUIPMENT_NB="N";
 	String EQUIPMENT_GPRS="G";
 
 
+	 String[] titleLora = new String[]{"设备名称","设备编号","设备类型","数据模板","所属分组","所属用户","验证码","厂商ID","厂商名称","经纬度","备注"};
+     String[] codeLora = new String[]{"name","dev_id","typeName","model_name", "groupName","uName","verification","support_code","supporter","site","remark"};
+     String[] titleNbiot = new String[]{"设备名称","设备编号","设备类型","数据模板","所属分组","所属应用","所属用户","验证码","厂商ID","厂商名称","经纬度","备注"};
+ 	String[] codeNbiot = new String[]{"name","dev_id","typeName","model_name", "groupName","app_name","uName","verification","support_code","supporter","site","remark"};
+ 	String[] titleGPRS = new String[]{"设备名称","设备编号","设备类型","数据模板","所属分组","所属用户","验证码","厂商ID","厂商名称","经纬度","备注"};
+	String[] codeGPRS = new String[]{"name","dev_id","typeName","model_name", "groupName","uName","verification","support_code","supporter","site","remark"};
 	PageInfo queryEquipmentList();
 
 	List<Map<String, String>> getUserEquipmentIdList(Integer uid);
@@ -88,4 +97,9 @@ public interface EquipmentService {
 	void updateOnlineStatus(String online , List<String> list,Date date);
 
 	void exportEquipments(String typeName, String type, String[] header, String[] key);
+
+
+	String saveUploadImport(Map map, String[] typecode, String type);
+
+	List<UploadResultEntity> getUploadResult();
 }
