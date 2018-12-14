@@ -229,7 +229,7 @@
          <div class="modal-dialog"> 
              <div class="modal-content"> 
                  <div class="modal-header"> 
-                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="ajxUserInfo(user)" >×</button> 
+                     <button id="user-info-close" type="button" class="close" data-dismiss="modal" aria-hidden="true" >×</button> 
                      <h4 class="modal-title">用户信息</h4> 
                  </div> 
                  <form class="modal-body" ng-submit="userUpdate()" name="userUpdateForm" novalidate="novalidate"> 
@@ -259,7 +259,6 @@
                              <div class="form-group"> 
                                  <label  class="control-label">权限</label> 
                                  <select class="form-control" ng-disabled="userEditable" ng-change="seleCompetence == 4 && chkCmp == 2 ? seleCompetenceChg() : return"  ng-model="userInfo.competence" required>
-									<option ng-if="chkCmp == 2" value="2">管理员</option>
 									<option ng-if="chkCmp == 2" value="3">客户</option>
 									<option  value="4">普通用户</option>
 								</select>
@@ -272,6 +271,15 @@
                              </div> 
                          </div> 
                      </div> 
+                     <div class="row" ng-show="seleCompetence == 4 && chkCmp == 2"> 
+	                        <div class="col-md-12"> 
+	                            <div class="form-group "> 
+	                                 <label  class="control-label">请选择用户所属客户<span style="color : red">*</span></label>  
+	                                 <select ng-if="seleCompetence == 4 && chkCmp == 2" class="form-control"  ng-model="$parent.userInfo.parentId" ng-options="x for (x, y) in selCompanys" required>
+									</select>
+	                            </div> 
+	                        </div> 
+	                    </div>
                      <div class="row"> 
                          <div class="col-md-8"> 
                              <div class="form-group"> 

@@ -16,20 +16,20 @@ import com.heqichao.springBootDemo.base.entity.User;
  */
 public interface UserMapper {
 	
-	@Select("SELECT id,parent_uid,account,company,contact,phone,fax,email,site,remark,competence"
+	@Select("SELECT id,parent_uid parentId,account,company,contact,phone,fax,email,site,remark,competence"
 			+ " FROM users "
 			+ "where ACCOUNT = #{account}  "
 			+ "and PASSWORD = #{password} "
 			+ "and valid = 'N' ")
 	public User getUserInfo(@Param("account") String account,@Param("password") String password);
 
-	@Select("SELECT id,parent_uid,account,company,contact,phone,fax,email,site,remark,competence"
+	@Select("SELECT id,parent_uid parentId,account,company,contact,phone,fax,email,site,remark,competence"
 			+ " FROM users "
 			+ "where id = #{uid}  "
 			+ "and valid = 'N' ")
 	public User getUserInfoById(@Param("uid")Integer uid);
 	
-	@Select("<script>SELECT id,parent_uid,account,company,contact,phone,fax,email,site,remark,competence"
+	@Select("<script>SELECT id,parent_uid parentId,account,company,contact,phone,fax,email,site,remark,competence"
 			+ " FROM users "
 			+ "where valid = 'N'  "
 			+ "<if test=\"competence == 3 \"> and id = #{id} or parent_uid = #{id} </if>"
@@ -61,6 +61,9 @@ public interface UserMapper {
 	
 	@Update("update users set company=#{company}, contact=#{contact}, phone=#{phone}, fax=#{fax}, email=#{email}, site=#{site}, remark=#{remark}, udp_date = sysdate(), udp_uid = #{id} where id=#{id} and valid = 'N' ")
 	public int updateUserInfo(User user);
+	
+	@Update("update users set company=#{company},parent_uid=#{parentId},competence=#{competence}, contact=#{contact}, phone=#{phone}, fax=#{fax}, email=#{email}, site=#{site}, remark=#{remark}, udp_date = sysdate(), udp_uid = #{upadteUID} where id=#{id} and valid = 'N' ")
+	public int updateUserById(User user);
 	
 	@Update("update users set  udp_date = sysdate(), udp_uid = #{udid}, valid = 'N' where id=#{id} and valid = 'N' ")
 	public int delUserById(@Param("id")Integer uid,@Param("udid")Integer udid);

@@ -11,6 +11,7 @@ function userCtrl($scope, $http, $rootScope) {
     		upPWD:false	
     };
     $scope.userEditable = true;
+    $scope.userInfo={};
 	$scope.pages=0;
 	$scope.total=0;
 	$scope.chkCmp = $rootScope.user.competence;
@@ -119,24 +120,14 @@ function userCtrl($scope, $http, $rootScope) {
 	}
     
     $scope.userUpdate = function() {
-        $http.post("service/updateUserInfo",$scope.userInfo).success(function(data) {
+        $http.post("service/updateUserById",$scope.userInfo).success(function(data) {
 			    	if(data.resultObj == "errorMsg"){
-			    		$scope.closeUserInfoModal();
 			    		swal(data.message, null, "error");
 			        }else{
 			        	//修改成功后
+			        	$("#user-info-close").click();
 			        	swal("修改成功", null, "success");
-			        	$http.post("service/checkLogin").success(function(data) {
-							if(data.resultObj){
-								//保存全局的用户
-								$rootScope.user=data.resultObj;
-								$scope.closeUserInfoModal();
-							}else{
-								//未登录则跳回登录页
-								window.location.href="/login.html";
-							}
-
-						});
+			        	$scope.init();
 			        }
         });
 
@@ -187,8 +178,10 @@ function userCtrl($scope, $http, $rootScope) {
 		
 	}
 	$scope.setInfo = function(user){
-		$scope.userInfo=user;
 		
+		angular.copy(user,$scope.userInfo);
+		$scope.userInfo.competence=$scope.userInfo.competence+"";
+		console.log($scope.userInfo);
 	}
 	$scope.chgUserEdit = function(){
 		$scope.userEditable = !$scope.userEditable;
