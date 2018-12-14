@@ -43,4 +43,6 @@ public interface UserService {
 	 * @return
 	 */
 	User querById(Integer uid);
+
+	ResponeResult updateUserById(Map map);
 }

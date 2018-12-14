@@ -11,7 +11,7 @@ import com.heqichao.springBootDemo.base.util.StringUtil;
 /**
  * @author Muzzy Xu.
  */
-@Component("equipment")
+@Component("equipments")
 public class Equipment extends BaseEntity  {
 
 
@@ -56,6 +56,22 @@ public class Equipment extends BaseEntity  {
     	this.address = StringUtil.getStringByMap(map,"address");
     	this.remark = StringUtil.getStringByMap(map,"remark");
     	this.uid = StringUtil.getIntegerByMap(map,"uid");
+    }
+    
+    public Equipment(Map map,String type) {
+    	this.name = StringUtil.getStringByMap(map,"name");
+    	this.devId = StringUtil.getStringByMap(map,"devId");
+    	this.typeName =StringUtil.getStringByMap(map,"typeName");
+    	this.modelName = StringUtil.getStringByMap(map,"modelName");
+    	this.typeCd = type;
+    	this.groupName = StringUtil.getStringByMap(map,"groupName");
+    	this.verification = StringUtil.getStringByMap(map,"verification");
+    	this.supportCode = StringUtil.getStringByMap(map,"supportCode");
+    	this.supporter = StringUtil.getStringByMap(map,"supporter");
+    	this.site = StringUtil.getStringByMap(map,"site");
+    	this.appName = StringUtil.getStringByMap(map,"appName");
+    	this.remark = StringUtil.getStringByMap(map,"remark");
+    	this.uName = StringUtil.getStringByMap(map,"uName");
     }
     
 	public String getName() {

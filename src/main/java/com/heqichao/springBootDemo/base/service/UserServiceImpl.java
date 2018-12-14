@@ -105,6 +105,20 @@ public class UserServiceImpl implements UserService {
     	}
     	return  new ResponeResult(true,"Updated UserInfo fail","errorMsg");
     }
+    @Override
+    public ResponeResult updateUserById(Map map) {
+    	User user = new User(map);
+    	Integer uid = ServletUtil.getSessionUser().getId();
+    	if(user.getCompany() == null || user.getParentId() == null || user.getId() == null || uid == null) {
+    		return new ResponeResult(true,"UserInfo Input Error!","errorMsg");
+    	}else {
+    		user.setUpadteUID(uid);
+    		if(userMapper.updateUserInfo(user)>0) {
+    			return new ResponeResult();
+    		}
+    	}
+    	return  new ResponeResult(true,"Updated UserInfo fail","errorMsg");
+    }
 
 
 	@Override

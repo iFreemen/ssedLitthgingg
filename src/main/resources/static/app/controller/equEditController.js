@@ -7,6 +7,7 @@ function equEditCtrl($scope, $http,$rootScope,$location,$timeout,$routeParams) {
     };
 	$scope.addFrom = {};
 	$scope.dataOnReady=false;
+	$scope.typeChk='checked';
 	//初始化
 	$scope.getEquEditInfo = function(){
 		$http.post("service/getEquEditInfo",$scope.addFrom).success(function(data) {
@@ -15,6 +16,12 @@ function equEditCtrl($scope, $http,$rootScope,$location,$timeout,$routeParams) {
 				$location.path("/module/equView");
 			}else{
 				$scope.addFrom = data.resultObj;
+				if($scope.addFrom.typeCd=='L'){
+					$("#inlineRadio1").attr("checked","checked");
+				}else if($scope.addFrom.typeCd=='N'){
+					$("#inlineRadio2").attr("checked","checked");
+					
+				}
 				  $scope.init();
 			}
 		});
