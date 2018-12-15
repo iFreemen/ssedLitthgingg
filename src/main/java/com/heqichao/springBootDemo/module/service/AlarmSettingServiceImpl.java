@@ -46,8 +46,10 @@ public class AlarmSettingServiceImpl implements AlarmSettingService {
 
     @Override
     public PageInfo queryAlarmSettingAll() {
+    	Map map = RequestContext.getContext().getParamMap();
+    	String name = StringUtil.getStringByMap(map,"name");
     	PageUtil.setPage();
-        PageInfo pageInfo = new PageInfo(aMapper.queryAlarmSettingAll());
+        PageInfo pageInfo = new PageInfo(aMapper.queryAlarmSettingAll(name));
     	return pageInfo;
     }
     
@@ -57,7 +59,7 @@ public class AlarmSettingServiceImpl implements AlarmSettingService {
     	Integer udid = ServletUtil.getSessionUser().getId();
     	Integer cmp = ServletUtil.getSessionUser().getCompetence();
     	if(  as.getName() == null || udid == null || cmp == 4) {
-    		return new ResponeResult(true,"Delete fail!","errorMsg");
+    		return new ResponeResult(true,"输入有误或没有权限","errorMsg");
     	}else {
     		as.setAddUid(udid);
     		as.setDataStatus("N");
@@ -65,7 +67,22 @@ public class AlarmSettingServiceImpl implements AlarmSettingService {
     			return new ResponeResult();
     		}
     	}
-    	return  new ResponeResult(true,"Delete Equipment fail","errorMsg");
+    	return  new ResponeResult(true,"Add AlarmSetting fail","errorMsg");
+    }
+    @Override
+    public ResponeResult editAlarmSetting(Map map) {
+    	AlarmSetting as = new AlarmSetting(map);
+    	Integer udid = ServletUtil.getSessionUser().getId();
+    	Integer cmp = ServletUtil.getSessionUser().getCompetence();
+    	if(  as.getId() == null || as.getName() == null || udid == null || cmp == 4) {
+    		return new ResponeResult(true,"输入有误或没有权限","errorMsg");
+    	}else {
+    		as.setUdpUid(udid);
+    		if(aMapper.editAlarmSetting(as)>0) {
+    			return new ResponeResult();
+    		}
+    	}
+    	return  new ResponeResult(true,"Edit AlarmSetting fail","errorMsg");
     }
     @Override
     public ResponeResult delAlarmSetting(Map map) {

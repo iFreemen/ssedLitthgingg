@@ -18,7 +18,7 @@ public class AlarmSetting extends BaseEntity {
 	private String name;
 	private Integer modelId;
 	private String modelName;
-	private String attrId;
+	private Integer attrId;
 	private String attrName;
 	private String alramType;
 	private String alramTypeName;
@@ -35,10 +35,11 @@ public class AlarmSetting extends BaseEntity {
 		super.id = StringUtil.getIntegerByMap(map,"id");
 		this.name = StringUtil.getStringByMap(map,"name");
 		this.modelId = StringUtil.getIntegerByMap(map,"modelId");
-		this.attrId = StringUtil.getStringByMap(map,"attrId");
+		this.attrId = StringUtil.getIntegerByMap(map,"attrId");
 		this.alramType = StringUtil.getStringByMap(map,"alramType");
 		this.dataA = StringUtil.getIntegerByMap(map,"dataA");
 		this.dataB = StringUtil.getIntegerByMap(map,"dataB");
+		this.dataStatus = StringUtil.getStringByMap(map,"dataStatus");
 		
 	}
 	public String getName() {
@@ -53,10 +54,11 @@ public class AlarmSetting extends BaseEntity {
 	public void setModelId(Integer modelId) {
 		this.modelId = modelId;
 	}
-	public String getAttrId() {
+	
+	public Integer getAttrId() {
 		return attrId;
 	}
-	public void setAttrId(String attrId) {
+	public void setAttrId(Integer attrId) {
 		this.attrId = attrId;
 	}
 	public String getAlramType() {
