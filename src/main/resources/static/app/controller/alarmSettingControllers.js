@@ -1,4 +1,4 @@
-function equCtrl($scope, $http,$location, $rootScope) {
+function alarmSettingCtrl($scope, $http,$location, $rootScope) {
 	//为后台请求参数 带分页数据
     $scope.quereyData={
         page:1, //当前页码 初始化为1
@@ -15,15 +15,36 @@ function equCtrl($scope, $http,$location, $rootScope) {
 	$scope.edit_cmp=$rootScope.edit_cmp;
     $scope.init=function(){
     	$scope.loadCtl.search = true;
-    	$http.post("service/getEquipments",$scope.quereyData).success(function(data) {
-    		$scope.equipments = data.resultObj.list;
+    	$http.post("service/getAlarmSettings",$scope.quereyData).success(function(data) {
+    		$scope.alarmSettings = data.resultObj.list;
     		$scope.pages=data.resultObj.pages;
     		$scope.total=data.resultObj.total;
     		$scope.pageArr=data.resultObj.navigatepageNums;
     		$scope.quereyData.page=data.resultObj.pageNum;
+    		$scope.seleUserModelLst();
     		$scope.loadCtl.search = false;
     	});
     }
+    //模板列表
+    $scope.seleUserModelLst = function(){
+    	$http.get("service/queryUserModel").success(function(data) {
+    		if(data.resultObj == "errorMsg"){
+    			swal(data.message, null, "error");
+    		}else{
+    			$scope.selModels = data.resultObj;
+    		}
+    	});
+    };
+    //数据点列表
+    $scope.seleUserAttrLst = function(mid){
+    	$http.post("service/queryUserAttr",{mid:mid}).success(function(data) {
+    		if(data.resultObj == "errorMsg"){
+    			swal(data.message, null, "error");
+    		}else{
+    			$scope.selAttrs = data.resultObj;
+    		}
+    	});
+    };
   //初始化
     $scope.init();
 
@@ -48,10 +69,29 @@ function equCtrl($scope, $http,$location, $rootScope) {
     $scope.closeEquModal=function(){
     	$scope.seleItem={};
     }
+    //关闭添加框
+    $scope.clearAddModal=function(){
+    	$scope.addFrom={};
+    }
+    $scope.addAlarm = function() {
+    	$scope.loadCtl.addEnq = true;
+        $http.post("service/addAlarmSetting",$scope.addFrom).success(function(data) {
+			    	if(data.resultObj == "errorMsg"){
+			    		swal(data.message, null, "error");
+			        }else{
+			        	//修改成功后
+			        	swal("新增成功", null, "success");
+			        	$scope.init();
+			        }
+			    	$("#close-add-alarm-modal").click();
+			    	$scope.loadCtl.addEnq = false;
+        });
+		
+    };
     
     
-    $scope.gotoEdit=function(devId,id){
-    	$location.path("/module/equEdit/"+devId+"/"+id);
+    $scope.seledModel=function(mid){
+    	$scope.seleUserAttrLst(mid)
     }
     
 	$scope.delEqu = function(eid){
@@ -75,8 +115,8 @@ function equCtrl($scope, $http,$location, $rootScope) {
 		
 	}
 	 
-	$scope.delEquById = function(eid){
-		$http.post("service/delEqu",{eid:eid}).success(function(data) {
+	$scope.delEquById = function(aid){
+		$http.post("service/delAlarmSetting",{aid:aid}).success(function(data) {
 				if(data.resultObj == "errorMsg"){
 					swal(data.message, null, "error");
 				}else{
@@ -85,37 +125,4 @@ function equCtrl($scope, $http,$location, $rootScope) {
 				}
 			});
 	}
-	//获取上下线图片
-    $scope.getStatusImg = function (status) {
-        if(status == 0){
-            return "assets/img/offline.png";
-        } else if(status == 1){
-            return "assets/img/online.png";
-        }else if(status == 2){
-            return "assets/img/alarmline.png";
-        }
-    };
-    $scope.exportLora=function () {
-        $rootScope.downLoadFile("/service/exprLora" );
-    };
-    $scope.exportNbiot=function () {
-    	$rootScope.downLoadFile("/service/exprNbiot" );
-    };
-    $scope.uploadSuccess=function (data) {
-    	$http.post("service/getUploadResult",{reskey:data.resultObj}).success(function(data) {
-    		console.log(data.resultObj);
-    		if(data.resultObj.length!=0){
-    			$scope.uploadRes = data.resultObj;
-    			$scope.resetSearch();
-    		}else{
-    			swal("无数据导入", null, "error");
-    		}
-    	});
-    }
-    $scope.closeUploadModal=function () {
-//		$scope.uploadRes = null;
-    }
-    $scope.clearUploadModal=function () {
-		$scope.uploadRes = null;
-    }
 }

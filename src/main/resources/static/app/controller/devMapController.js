@@ -93,12 +93,7 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout) {
 ////                          devidManage='';
 //                      }
                         devidDataHistory='<a style="padding:5px 10px;margin:0 10px;background:#f60;color: #fff;line-height: 20px;border-radius:5px;" href="#/module/logShow/' + data.resultObj.devId + '">历史记录</a>';
-                      if($rootScope.ums_alarm_list){
-                          devidAlarmHistory='<a style="padding:5px 10px;margin:0 10px;background:#f60;color: #fff;line-height: 20px;border-radius:5px;" href="' + $scope.host + '/main.html#/trigger/alarmHistoryList/devId/' + devid + '/slaveIndex//dataId/">报警记录</a>';
-                      }else {
-                    	  devidAlarmHistory='<a style="padding:5px 10px;margin:0 10px;background:#f60;color: #fff;line-height: 20px;border-radius:5px;" href="' + $scope.host + '/main.html#/trigger/alarmHistoryList/devId/' + devid + '/slaveIndex//dataId/">报警记录</a>';
-//                          devidAlarmHistory='';
-                      }
+                    	devidAlarmHistory='<a style="padding:5px 10px;margin:0 10px;background:#f60;color: #fff;line-height: 20px;border-radius:5px;" href="' + $scope.host + '/main.html#/trigger/alarmHistoryList/devId/' + devid + '/slaveIndex//dataId/">报警记录</a>';
                       var devidContent = '<div style="margin:0;line-height:20px;padding:2px;position:relative;font-size:12px;">' +
                           '<div style="padding-left:40px;line-height: 24px;color:#333;">' +
                           '<b>设备状态 ：</b>' + devidState + '<br />' +
@@ -148,12 +143,7 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout) {
 //                      }
 
                       devidDataHistory='<a style="padding:5px 10px;margin:0 10px;background:#f60;color: #fff;line-height: 20px;border-radius:5px;" href="#/module/logShow/' + data.resultObj.devId + '">历史记录</a>';
-                      if($rootScope.ums_alarm_list){
-                          devidAlarmHistory='<a style="padding:5px 10px;margin:0 10px;background:#f60;color: #fff;line-height: 20px;border-radius:5px;" href="' + $scope.host + '/main.html#/trigger/alarmHistoryList/devId/' + content + '/slaveIndex//dataId/">报警记录</a>';
-                      }else {
-                    	  devidAlarmHistory='<a style="padding:5px 10px;margin:0 10px;background:#f60;color: #fff;line-height: 20px;border-radius:5px;" href="' + $scope.host + '/main.html#/trigger/alarmHistoryList/devId/' + content + '/slaveIndex//dataId/">报警记录</a>';
-//                          devidAlarmHistory='';
-                      }
+                      devidAlarmHistory='<a style="padding:5px 10px;margin:0 10px;background:#f60;color: #fff;line-height: 20px;border-radius:5px;" href="' + $scope.host + '/main.html#/trigger/alarmHistoryList/devId/' + content + '/slaveIndex//dataId/">报警记录</a>';
                       var devidContent = '<div style="margin:0;line-height:20px;padding:2px;position:relative;font-size:12px;">' +
                           '<div style="padding-left:40px;line-height: 24px;color:#333;">' +
                           '<b>设备状态 ：</b>' + devidState + '<br />' +

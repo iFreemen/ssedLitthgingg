@@ -132,7 +132,7 @@ public interface EquipmentMapper {
 			@Param("sStatus")String sStatus);
 	
 	@Select("<script>"
-    		+" select d.id,d.udp_date,d.dev_id,d.unit,d.data_name,d.data_value from data_detail d " + 
+    		+" select d.id,d.data_type,d.udp_date,d.dev_id,d.unit,d.data_name,d.data_value from data_detail d " + 
     		" where d.log_id = (select d2.log_id from data_detail d2  where d2.dev_id=#{devId} and d2.data_status='N' order by d2.add_date desc limit 1) " + 
     		" and d.data_status='N'"
     		+"</script>")
@@ -191,7 +191,7 @@ public interface EquipmentMapper {
 	void updateOnlineStatus(@Param("online")String online , @Param("list") List<String> list, @Param("date")Date date);
 
 
-	@Update("update equipments set  update_time = sysdate(), udp_uid = #{udid}, valid = 'D' where id=#{id} and valid = 'N' ")
+	@Update("update equipments set  udp_date = sysdate(), udp_uid = #{udid}, valid = 'D' where id=#{id} and valid = 'N' ")
 	public int delEquById(@Param("id")Integer eid,@Param("udid")Integer udid);
 	
 	@Update("update equipments set  e_valid = #{status} where eid=#{eid} and valid = 'N' ")

@@ -47,7 +47,7 @@ public interface ModelMapper {
 
 
     @Select("<script>"
-            +"select * from model  where 1=1  and addUid in "
+            +"select * from model  where 1=1  and add_uid in "
             + "<foreach  collection=\"list\" open=\"(\" close=\")\" separator=\",\" item=\"uid\" >"
             + "#{uid}"
             + "</foreach>"

@@ -119,6 +119,15 @@ public class ModelController extends BaseController{
     ResponeResult queryUserModel(){
         return new ResponeResult(modelService.queryUserModel());
     }
+    
+    /**
+     * 查找当前用户所拥有的数据点
+     * @return
+     */
+    @RequestMapping(value = "/queryUserAttr")
+    ResponeResult queryUserAttr(){
+    	return new ResponeResult(modelService.queryUserAttr());
+    }
 
 
 
