@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.heqichao.springBootDemo.base.entity.User;
 import com.heqichao.springBootDemo.base.exception.ResponeException;
 import com.heqichao.springBootDemo.base.param.ApplicationContextUtil;
+import com.heqichao.springBootDemo.base.param.RequestContext;
 import com.heqichao.springBootDemo.base.service.EquipmentService;
 import com.heqichao.springBootDemo.base.service.UserService;
 import com.heqichao.springBootDemo.base.util.*;
@@ -217,6 +218,22 @@ public class ModelServiceImpl implements ModelService {
         return res;
         // End Muzzy
     }
+    
+    @Override
+    public Map<String, Integer> queryUserAttr() {
+    	Map map = RequestContext.getContext().getParamMap();
+    	Integer mid = StringUtil.getIntegerByMap(map,"mid");
+    	List<ModelAttr> list =new ArrayList<>();
+    	list=modelAttrService.queryByModelId(mid);
+    	Map<String, Integer> res = new HashMap<>();
+    	if(list!=null && list.size()>0){
+    		res =  list.stream().collect(
+    				Collectors.toMap(ModelAttr::getAttrName,ModelAttr::getId, (k1,k2)->k1)
+    				);
+    	}
+    	return res;
+    }
+    // End Muzzy
 
     @Override
     public Map<String,List> queryExportInfo(Integer model) {
