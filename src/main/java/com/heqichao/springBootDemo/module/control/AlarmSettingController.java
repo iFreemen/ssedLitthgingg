@@ -49,4 +49,9 @@ public class AlarmSettingController extends BaseController{
     public ResponeResult addAlarmSetting(@RequestBody Map map) throws Exception {
     	return aService.addAlarmSetting(map);
     }
+    @RequestMapping(value = "/editAlarmSetting" )
+    @ResponseBody
+    public ResponeResult editAlarmSetting(@RequestBody Map map) throws Exception {
+    	return aService.editAlarmSetting(map);
+    }
 }

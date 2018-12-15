@@ -8,10 +8,12 @@ function alarmSettingCtrl($scope, $http,$location, $rootScope) {
 	$scope.total=0;
 	$scope.loadCtl={
     		search:false,	
+    		editEnq:false,	
     		addEnq:false
     };
 	$scope.data= null;
 	$scope.seleItem={};
+	$scope.editFrom={};
 	$scope.edit_cmp=$rootScope.edit_cmp;
     $scope.init=function(){
     	$scope.loadCtl.search = true;
@@ -62,8 +64,14 @@ function alarmSettingCtrl($scope, $http,$location, $rootScope) {
         $scope.init();
     }
     //选中行
-    $scope.selEquInfo=function(equ){
-    	$scope.seleItem=equ;
+    $scope.seleEdit=function(alarm){
+    	
+    	$scope.seledModel(alarm.modelId);
+    	angular.copy(alarm,$scope.editFrom);
+    }
+    //根据模板获取数据点列表
+    $scope.seledModel=function(mid){
+    	$scope.seleUserAttrLst(mid)
     }
     //关闭详情框
     $scope.closeEquModal=function(){
@@ -72,6 +80,10 @@ function alarmSettingCtrl($scope, $http,$location, $rootScope) {
     //关闭添加框
     $scope.clearAddModal=function(){
     	$scope.addFrom={};
+    }
+    //关闭编辑框
+    $scope.clearEditModal=function(){
+    	$scope.editFrom={};
     }
     $scope.addAlarm = function() {
     	$scope.loadCtl.addEnq = true;
@@ -88,11 +100,22 @@ function alarmSettingCtrl($scope, $http,$location, $rootScope) {
         });
 		
     };
+    $scope.editAlarm = function() {
+    	$scope.loadCtl.editEnq = true;
+    	$http.post("service/editAlarmSetting",$scope.editFrom).success(function(data) {
+    		if(data.resultObj == "errorMsg"){
+    			swal(data.message, null, "error");
+    		}else{
+    			//修改成功后
+    			swal("修改成功", null, "success");
+    			$scope.init();
+    		}
+    		$("#close-edit-alarm-modal").click();
+    		$scope.loadCtl.editEnq = false;
+    	});
+    	
+    };
     
-    
-    $scope.seledModel=function(mid){
-    	$scope.seleUserAttrLst(mid)
-    }
     
 	$scope.delEqu = function(eid){
 		console.log(eid)

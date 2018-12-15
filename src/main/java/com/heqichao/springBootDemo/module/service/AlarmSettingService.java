@@ -22,5 +22,7 @@ public interface AlarmSettingService {
 	ResponeResult delAlarmSetting(Map map);
 
 	ResponeResult addAlarmSetting(Map map);
+
+	ResponeResult editAlarmSetting(Map map);
 	
 }

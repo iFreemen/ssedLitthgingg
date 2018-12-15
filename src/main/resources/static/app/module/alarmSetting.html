@@ -15,23 +15,17 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-body">
-				<form role="form" class="form-horizontal" >
                         <div class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <label  class="col-sm-2 control-label">设备名称或编号：</label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control" ng-model="quereyData.eid" placeholder="模糊搜索">
-                                </div>
+                        <div class="col-md-8">
+                        	<button  ng-if="edit_cmp" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#add-alarm-modal">添加 <i class="fa fa-plus"></i></button>
+                        </div>
+                            <div class="input-group col-md-4">
+                                <span class="input-group-btn">
+                                <button type="button" class="btn waves-effect waves-light btn-primary" btn-loading="loadCtl.search" ng-click="init()" >查询<i class="fa fa-search"></i></button>
+                                </span>
+                                <input type="text" ng-model="quereyData.name"  class="form-control" placeholder="按名称查找" />
                             </div>
                         </div>
-                        <div class="form-group row-margin-top">
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-	                             <button  ng-if="edit_cmp" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#add-alarm-modal">添加<i class="fa fa-plus"></i></button>
-                                <button  class="btn btn-primary waves-effect waves-light" type="submit"  btn-loading="loadCtl.search" ng-click="init()">搜索</button>
-                                <button class="btn btn-default waves-effect" type="button" ng-click="resetSearch()">重置</button>
-                            </div>
-                        </div>
-                    </form>
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="table-responsive">
@@ -52,8 +46,8 @@
 									<td>{{ alarm.attrName }}</td>
 									<td>{{ alarm.alramTypeFmt }}</td>
 									<td ng-if="edit_cmp"> 
-										<a href="javascript:void(0)" class="operation" title="详情" data-toggle="modal" data-target="#equ-info-modal" ng-click="selEquInfo(eqm)"><i class="ion-information-circled"></i></a>
-										<a ng-click="gotoEdit(eqm.devId,eqm.id)" class="operation" title="编辑"><i class="fa fa-pencil"></i></a>
+										<a href="javascript:void(0)" ng-if="false" class="operation" title="详情" data-toggle="modal" data-target="#equ-info-modal" ng-click="selEquInfo(eqm)"><i class="ion-information-circled"></i></a>
+										<a href="javascript:void(0)" ng-click="seleEdit(alarm)" data-toggle="modal" data-target="#alarm-edit-modal" class="operation" title="编辑"><i class="fa fa-pencil"></i></a>
 										<a href="javascript:void(0)" class="operation" ng-click="delEqu(alarm.id)" title="删除"><i class="fa fa-trash-o"></i></a>
 								   </td>
 									</tr>
@@ -173,11 +167,11 @@
 								</select>
                               </div>
 							  <div class="col-md-2">
-	                                <input type="text" ng-if="addFrom.alramType=='LA' || addFrom.alramType=='BAB' || addFrom.alramType=='OAB' || addFrom.alramType=='EA'" 
+	                                <input type="number" ng-if="addFrom.alramType=='LA' || addFrom.alramType=='BAB' || addFrom.alramType=='OAB' || addFrom.alramType=='EA'" 
 	                                 class="form-control" placeholder="A" ng-model="$parent.addFrom.dataA" required >
                               </div>
 							  <div class="col-md-2">
-	                                <input type="text" ng-if="addFrom.alramType=='HB' || addFrom.alramType=='BAB'|| addFrom.alramType=='OAB'" 
+	                                <input type="number" ng-if="addFrom.alramType=='HB' || addFrom.alramType=='BAB'|| addFrom.alramType=='OAB'" 
 	                                class="form-control" placeholder="B" ng-model="$parent.addFrom.dataB" required >
                               </div>
                               
@@ -185,6 +179,67 @@
 						<div class="modal-footer">
 						<button id="close-add-alarm-modal" type="button" class="btn btn-default waves-effect" data-dismiss="modal" ng-click="clearAddModal()" >关闭</button> 
 	                     <button type="submit" class="btn btn-info waves-effect waves-light" ng-disabled="addAlarmForm.$invalid " btn-loading="loadCtl.addEnq">保存</button> 
+		                </div>
+                   </form>
+                 </div> 
+             </div> 
+         </div>
+     </div>
+	<div id="alarm-edit-modal" class="modal fade" tabindex="-1" role="dialog"  aria-hidden="true" style="display: none">
+         <div class="modal-dialog"> 
+             <div class="modal-content"> 
+                 <div class="modal-header"> 
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="clearEditModal()">×</button> 
+                     <h5 class="modal-title">修改</h5> 
+                 </div> 
+                 <div class="modal-body" >
+                 <form class="form-horizontal" ng-submit="editAlarm()" name="editAlarmForm" novalidate="novalidate">
+                         <div class="form-group "> 
+                              <label  class="col-md-4 control-label ">名称<span style="color : red">*</span></label>  
+							  <div class="col-md-6">
+	                                <input type="text" class="form-control" name="name" ng-model="editFrom.name" required >
+                              </div>
+                         </div>
+                         <div class="form-group "> 
+                              <label  class="col-md-4 control-label ">所属数据模板<span style="color : red">*</span></label>  
+							  <div class="col-md-6">
+	                               <select  class="form-control" name="modelId"  ng-model="editFrom.modelId" ng-change="seledModel(editFrom.modelId)" ng-options="x for (x, y) in selModels" required>
+									</select>
+                              </div>
+                         </div> 
+                         <div class="form-group "> 
+                              <label  class="col-md-4 control-label ">所属数据点<span style="color : red">*</span></label>  
+							  <div class="col-md-6">
+	                               <select  class="form-control" name="uid"  ng-model="editFrom.attrId"  ng-options="x for (x, y) in selAttrs" required>
+									</select>
+                              </div>
+                         </div> 
+                         <div class="form-group "> 
+                              <label  class="col-md-4 control-label ">报警条件<span style="color : red">*</span></label>  
+							  <div class="col-md-4">
+	                                <select class="form-control" name="alramType" ng-model="editFrom.alramType" required>
+									<option  value="SOFF">开关OFF</option>
+									<option  value="SON">开关ON</option>
+									<option  value="LA">数值低于A</option>
+									<option  value="HB">数值高于B</option>
+									<option  value="BAB">数值介于AB之间</option>
+									<option  value="OAB">数值高于B低于A</option>
+									<option  value="EA">数值等于A</option>
+								</select>
+                              </div>
+							  <div class="col-md-2">
+	                                <input type="number" ng-if="editFrom.alramType=='LA' || editFrom.alramType=='BAB' || editFrom.alramType=='OAB' || editFrom.alramType=='EA'" 
+	                                 class="form-control" placeholder="A" ng-model="$parent.editFrom.dataA" required >
+                              </div>
+							  <div class="col-md-2">
+	                                <input type="number" ng-if="editFrom.alramType=='HB' || editFrom.alramType=='BAB'|| editFrom.alramType=='OAB'" 
+	                                class="form-control" placeholder="B" ng-model="$parent.editFrom.dataB" required >
+                              </div>
+                              
+                         </div> 
+						<div class="modal-footer">
+						<button id="close-edit-alarm-modal" type="button" class="btn btn-default waves-effect" data-dismiss="modal" ng-click="clearEditModal()" >关闭</button> 
+	                     <button type="submit" class="btn btn-info waves-effect waves-light" ng-disabled="editAlarmForm.$invalid " btn-loading="loadCtl.editEnq">保存</button> 
 		                </div>
                    </form>
                  </div> 

@@ -23,19 +23,23 @@ public interface AlarmSettingMapper {
 			"  left join model m on e.model_id=m.id" + 
 			"  left join model_attr a on e.attr_id=a.id" + 
 			"  where e.data_status = 'N'  "
+			+ "<if test =\"name !=null  and name!='' \"> and e.name like CONCAT('%',#{name},'%')  </if>"
 //			+ "<if test=\"competence == 2 \"> and e.group_adm_id=g.id </if>"
 //			+ "<if test=\"competence == 3 \"> and e.group_id=g.id and e.uid = #{id} </if>"
 //			+ "<if test=\"competence == 4 \"> and e.group_id=g.id and e.uid = #{parentId} </if>"
 			+ " </script>")
-	public List<AlarmSetting> queryAlarmSettingAll();
+	public List<AlarmSetting> queryAlarmSettingAll(@Param("name")String name);
 	
 	@Insert("insert into alarm_setting (name,model_id,attr_id,alram_type,data_a,data_b,add_uid,udp_uid)"
 			+ " values(#{name},#{modelId},#{attrId},#{alramType},#{dataA},#{dataB},#{addUid},#{addUid}) ")
 	public int addAlarmSetting(AlarmSetting as);
 	
 	
+	@Update("update alarm_setting set  name = #{name},model_id=#{modelId},attr_id =#{attrId},alram_type =#{alramType},"
+			+ "data_a =#{dataA},data_b =#{dataB},udp_uid =#{udpUid},udp_date =sysdate()  where id=#{id} and data_status = 'N' ")
+	public int editAlarmSetting(AlarmSetting as);
+	
 	@Update("update alarm_setting set  data_status = 'D', udp_date=sysdate(),udp_uid =#{uid}  where id=#{aid} and data_status = 'N' ")
 	public int delAlarmSetting(@Param("aid")Integer aid,@Param("uid")Integer uid);
-	
 	
 }
