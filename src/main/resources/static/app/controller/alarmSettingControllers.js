@@ -86,11 +86,6 @@ function alarmSettingCtrl($scope, $http,$location, $rootScope) {
     }
     $scope.addAlarm = function() {
     	$scope.loadCtl.addEnq = true;
-    	if(($scope.addFrom.alramType=='BAB'||$scope.addFrom.alramType=='OAB')
-    			&&!$scope.addFrom.dataA < scope.addFrom.dataB){
-    		swal("A的值大于或等于B，请检查输入", null, "error");
-    		return;
-    	}
         $http.post("service/addAlarmSetting",$scope.addFrom).success(function(data) {
 			    	if(data.resultObj == "errorMsg"){
 			    		swal(data.message, null, "error");
