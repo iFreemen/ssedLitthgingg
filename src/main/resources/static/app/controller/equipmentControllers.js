@@ -50,7 +50,12 @@ function equCtrl($scope, $http,$location, $rootScope) {
     }
     
     
+    $scope.gotoEdit=function(devId,id){
+    	$location.path("/module/equEdit/"+devId+"/"+id);
+    }
+    
 	$scope.delEqu = function(eid){
+		console.log(eid)
 		swal({   
             title: "是否确定删除该设备？",   
             type: "warning",   
@@ -69,13 +74,9 @@ function equCtrl($scope, $http,$location, $rootScope) {
         });
 		
 	}
-	 $scope.gotoEdit=function(devId,id){
-         $location.path("/module/equEdit/"+devId+"/"+id);
-     }
+	 
 	$scope.delEquById = function(eid){
-		$scope.currDel = eid;
-		$http.post("service/delEqu",
-				{eid:$scope.currDel,}).success(function(data) {
+		$http.post("service/delEqu",{eid:eid}).success(function(data) {
 				if(data.resultObj == "errorMsg"){
 					swal(data.message, null, "error");
 				}else{

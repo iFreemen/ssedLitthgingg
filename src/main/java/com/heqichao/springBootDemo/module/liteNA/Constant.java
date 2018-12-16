@@ -28,7 +28,7 @@ public class Constant {
      *IP and port of callback url.
      *please replace the IP and Port of your Application deployment environment address, when you use the demo.
      */
-    public static final String CALLBACK_BASE_URL = "http://120.78.181.134:8888";
+    public static final String CALLBACK_BASE_URL = "http://120.78.181.134:8082";
 
     /*
      * complete callback url：
@@ -52,7 +52,7 @@ public class Constant {
      *
      * please replace uri, when you use the demo.
      */
-    public static final String REPORT_CMD_EXEC_RESULT_CALLBACK_URL = "http://120.78.181.134:8888/service/liteNaCallback2";
+    public static final String REPORT_CMD_EXEC_RESULT_CALLBACK_URL = "http://120.78.181.134:8082/service/liteNaCallback2";
 
 
     //Paths of certificates.

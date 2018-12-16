@@ -48,4 +48,5 @@ public interface ModelService {
     Map<String,List> queryExportInfo(Integer modelId);
 
     void saveImport(Map map);
+	Map<String, Integer> queryUserAttr();
 }

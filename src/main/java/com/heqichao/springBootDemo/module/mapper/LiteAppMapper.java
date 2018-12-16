@@ -32,11 +32,11 @@ public interface LiteAppMapper {
 	
 	@Update("update  applications set app=#{appId},app_name=#{appName},"
 			+ "platform_ip=#{platformIp},app_auth=#{appAuth},callback_url=#{callbackUrl},post_asyn_cmd=#{postAsynCmd},subscribe_notifycation=#{subscribeNotifycation},"
-			+ "remark=#{remark},uid=#{ownId},update_time=sysdate(),udp_uid=#{updateUid}"
+			+ "remark=#{remark},uid=#{ownId},udp_date=sysdate(),udp_uid=#{updateUid}"
 			+ " where id=#{id} and valid = 'N' ")
 	public int updateLiteEquipment(LiteApplication app);
 	
-	@Update("update  applications set secret=#{secret},update_time=sysdate(),udp_uid=#{updateUid}"
+	@Update("update  applications set secret=#{secret},udp_date=sysdate(),udp_uid=#{updateUid}"
 			+ " where id=#{id} and valid = 'N' ")
 	public int resetAppSecret(LiteApplication app);
 
@@ -47,7 +47,7 @@ public interface LiteAppMapper {
 	public boolean duplicatedEidByUpd(@Param("appId")String appId,@Param("id")Integer id);
 
 
-    @Delete("update applications set valid = 'D',update_time=sysdate(),udp_uid=#{uid} where valid = 'N' and id= #{id}   ")
+    @Delete("update applications set valid = 'D',udp_date=sysdate(),udp_uid=#{uid} where valid = 'N' and id= #{id}   ")
     int deleteById(@Param("id")Integer id,@Param("uid")Integer uid);
     
     @Delete("<script>"

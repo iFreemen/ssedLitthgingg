@@ -147,6 +147,7 @@
                                     </li>
                                 </ul>
                             </li> 
+							 
 							<li class="has_sub">
                                 <a href="javascript:void(0);" class="waves-effect waves-light"><i class="md ion-android-storage"></i><span>数据管理</span><span class="pull-right"><i class="md md-add"></i></span></a>
                                 <ul>
@@ -176,6 +177,19 @@
 									
                                 </ul>
                             </li>
+                            <li class="has_sub">
+                                <a href="#" class="waves-effect waves-light"><i class="md md-poll"></i><span>报警管理</span><span class="pull-right"><i class="md md-add"></i></span></a>
+                                <ul class="list-unstyled">
+                                
+                                	<li>
+                                        <a href="#/module/alarmSetting"><span>报警设置</span></a>
+                                    </li>
+                                    
+                                    <li>
+                                        <a href="#/module/devList"><span>报警记录</span></a>
+                                    </li>
+                                </ul>
+                            </li> 
 							<li class="has_sub" ng-show="user.competence != 4">
                                 <a href="javascript:void(0);" class="waves-effect waves-light"><i class="ion-ios7-gear"></i><span>系统管理 </span><span class="pull-right"><i class="md md-add"></i></span></a>
                                 <ul>
@@ -330,6 +344,7 @@
 		<script src="app/controller/logShowController.js"></script>
 		<script src="app/controller/devMapController.js"></script>
 		<script src="app/controller/devListController.js"></script>
+		<script src="app/controller/alarmSettingControllers.js"></script>
 		<script type="text/javascript">
 			jQuery(document).ready(function($) {
 				$('.counter').counterUp({

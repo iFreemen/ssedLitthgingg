@@ -181,7 +181,6 @@ function userCtrl($scope, $http, $rootScope) {
 		
 		angular.copy(user,$scope.userInfo);
 		$scope.userInfo.competence=$scope.userInfo.competence+"";
-		console.log($scope.userInfo);
 	}
 	$scope.chgUserEdit = function(){
 		$scope.userEditable = !$scope.userEditable;

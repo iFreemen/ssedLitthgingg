@@ -105,12 +105,12 @@ public interface EquipmentMapper {
 	@Select("<script>SELECT e.id,e.name,e.dev_id,e.type_cd,e.model_id,e.group_id,e.group_adm_id,e.app_id," + 
 			" e.verification,e.support_code,e.supporter,e.site,e.address,e.remark,e.online,e.uid,e.udp_date," + 
 			" u.company uName,m.model_name,a.app_name,g.name groupName," + 
+			"(SELECT max(d.add_date) FROM data_detail d WHERE d.data_status = 'N' and d.dev_id= e.dev_id ) mx_date,"+
 			" case e.type_cd when 'L' then 'Lora' when 'N' then 'Nbiot' when 'G' then '2G' else null end as typeName " + 
 			"  FROM group_equ g,equipments e" + 
 			"  left join users u on e.uid=u.id" + 
 			"  left join model m on e.model_id=m.id" + 
 			"  left join applications a on e.app_id=a.id" + 
-			"  left join ( select d.dev_id from data_detail d where d.data_status = 'N' group by d.dev_id  ) del ON e.dev_id=del.dev_id" + 
 			"  where e.valid = 'N'  "
 			+ "<if test=\"competence == 2 \"> and e.group_adm_id=g.id"
 			+ "<if test=\"gid !=null \"> and e.group_adm_id = #{gid}  </if> </if>"
@@ -121,7 +121,7 @@ public interface EquipmentMapper {
 			+ "<if test =\"sEid !=null  and sEid!='' \"> and (e.dev_id like CONCAT('%',#{sEid},'%') or e.name like CONCAT('%',#{sEid},'%'))  </if>"
 			+ "<if test =\"sType !=null  and sType!='' \"> and e.type_cd like CONCAT(CONCAT('%',#{sType}),'%')  </if>"
 			+ "<if test =\"sStatus !=null  and sStatus!='' \"> and e.online = #{sStatus}  </if>"
-			+ " order by del.dev_id DESC </script>")
+			+ " order by mx_date desc </script>")
 	public List<Equipment> getEquipmentsForDevLstOrderBy(
 			@Param("competence")Integer competence,
 			@Param("id")Integer id,
@@ -132,7 +132,7 @@ public interface EquipmentMapper {
 			@Param("sStatus")String sStatus);
 	
 	@Select("<script>"
-    		+" select d.id,d.udp_date,d.dev_id,d.unit,d.data_name,d.data_value from data_detail d " + 
+    		+" select d.id,d.data_type,d.udp_date,d.dev_id,d.unit,d.data_name,d.data_value from data_detail d " + 
     		" where d.log_id = (select d2.log_id from data_detail d2  where d2.dev_id=#{devId} and d2.data_status='N' order by d2.add_date desc limit 1) " + 
     		" and d.data_status='N'"
     		+"</script>")
@@ -191,7 +191,7 @@ public interface EquipmentMapper {
 	void updateOnlineStatus(@Param("online")String online , @Param("list") List<String> list, @Param("date")Date date);
 
 
-	@Update("update equipments set  update_time = sysdate(), udp_uid = #{udid}, valid = 'D' where id=#{id} and valid = 'N' ")
+	@Update("update equipments set  udp_date = sysdate(), udp_uid = #{udid}, valid = 'D' where id=#{id} and valid = 'N' ")
 	public int delEquById(@Param("id")Integer eid,@Param("udid")Integer udid);
 	
 	@Update("update equipments set  e_valid = #{status} where eid=#{eid} and valid = 'N' ")
