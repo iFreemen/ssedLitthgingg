@@ -23,7 +23,18 @@ public class ModelAttrServiceImpl implements ModelAttrService {
 
     @Override
     public void saveModelAttr(List<ModelAttr> list) {
-        modelAttrMapper.saveModelAttr(list);
+        if(list!=null && list.size()>0) {
+            modelAttrMapper.saveModelAttr(list);
+        }
+    }
+
+    @Override
+    public void updateModelAttr(List<ModelAttr> list) {
+        if(list!=null && list.size()>0){
+            for(ModelAttr attr:list){
+                modelAttrMapper.updateModelById(attr);
+            }
+        }
     }
 
     @Override
@@ -40,10 +51,13 @@ public class ModelAttrServiceImpl implements ModelAttrService {
     }
 
     @Override
-    public void deleteByAttrId(Integer id) {
+    public void deleteByAttrId(List<Integer> ids) {
         if(!UserUtil.hasCRDPermission()){
             throw new ResponeException("没有该权限操作！");
         }
-        modelAttrMapper.deleteById(id);
+        if(ids!=null && ids.size()>0){
+            modelAttrMapper.deleteById(ids);
+        }
+
     }
 }

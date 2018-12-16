@@ -19,9 +19,12 @@ public interface ModelAttrMapper {
     int deleteByModelId( @Param("modelID") Integer modelID);
 
     @Delete("<script>"
-            +"delete from model_attr where id = #{id} "
+            +"delete from model_attr where id in "
+            + "<foreach  collection=\"list\" open=\"(\" close=\")\" separator=\",\" item=\"uid\" >"
+            + "#{uid}"
+            + "</foreach>"
             +"</script>")
-    int deleteById(@Param("id") Integer id);
+    int deleteById(@Param("list") List<Integer> ids);
 
     @Select("<script>"
             +"select * from model_attr  where model_id = #{modelID}  order by order_no"
@@ -35,6 +38,12 @@ public interface ModelAttrMapper {
             + "</foreach>"
             +"</script>")
     int saveModelAttr(@Param("list") List<ModelAttr> list);
+
+    @Update("update model_attr set  add_date = #{addDate},udp_date=#{udpDate},add_uid =#{addUid},udp_uid =#{udpUid},"
+            + "model_id =#{modelId},attr_name =#{attrName},data_type =#{dataType},value_type =#{valueType}, "
+            +"number_format =#{numberFormat},unit =#{unit},expression =#{expression},memo =#{memo},order_no=#{orderNo}"
+            +" where id=#{id}")
+    void updateModelById(ModelAttr attr);
 
 
 }

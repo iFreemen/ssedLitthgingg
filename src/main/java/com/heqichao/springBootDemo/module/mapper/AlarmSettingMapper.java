@@ -41,5 +41,10 @@ public interface AlarmSettingMapper {
 	
 	@Update("update alarm_setting set  data_status = 'D', udp_date=sysdate(),udp_uid =#{uid}  where id=#{aid} and data_status = 'N' ")
 	public int delAlarmSetting(@Param("aid")Integer aid,@Param("uid")Integer uid);
+
+	@Select("<script>"
+			+" select * from alarm_setting  where model_id = #{modelId}  and data_status= #{status}"
+			+"</script>")
+	List<AlarmSetting> queryByModelIdAndStatus(@Param("modelId")Integer modelId,@Param("status")String status);
 	
 }

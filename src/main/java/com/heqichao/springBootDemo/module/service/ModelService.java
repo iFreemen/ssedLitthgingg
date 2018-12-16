@@ -15,7 +15,7 @@ public interface ModelService {
     String[] code = new String[]{"attr_name","data_type","value_type","number_format", "unit","expression","memo"};
 
 
-    Integer saveOrUpdateModel(Integer modelId,String modelName,List<Map> attrs);
+    Integer saveOrUpdateModel(Integer modelId,String modelName,List<Map> attrs,String deleteIds);
     Map queryModelAndAttrsByModelId(Integer modelId);
     void deleteByModelId(Integer modelId);
 

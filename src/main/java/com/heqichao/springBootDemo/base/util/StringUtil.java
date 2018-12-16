@@ -32,7 +32,7 @@ public class StringUtil {
     }
     
     public static Integer getIntegerByMap(Map map,String key) {
-    	if(map.size() == 0) {
+    	if(map == null || map.size() == 0) {
     		return null;
     	}
     	try {
@@ -42,6 +42,18 @@ public class StringUtil {
     		return null;
     	}
     }
+
+	public static Float getFloatByMap(Map map,String key) {
+		if(map == null || map.size() == 0) {
+			return null;
+		}
+		try {
+			return Float.valueOf(map.get(key).toString());
+		} catch (Exception e) {
+//			e.printStackTrace();
+			return null;
+		}
+	}
     
     public static String getStringByMap(Map map,String key) {
     	if(map.size() == 0) {

@@ -26,7 +26,10 @@ var demoApp =angular.module("demoApp", ["ngRoute"]);
 	}).when("/module/alarmSetting", {
 		templateUrl: "app/module/alarmSetting.html",
 		controller: alarmSettingCtrl
-	}).when("/module/lightLog", {
+	}).when("/module/alarmLogList", {
+			templateUrl: "app/module/alarmLogList.html",
+			controller: alarmLogListCtrl
+		}).when("/module/lightLog", {
 			templateUrl: "app/module/lightLog.html",
 			controller: lightLogCtrl
 	}).when("/module/nbLightLog", {

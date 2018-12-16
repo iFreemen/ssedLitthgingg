@@ -12,12 +12,10 @@ import com.heqichao.springBootDemo.base.util.Base64Encrypt;
 import com.heqichao.springBootDemo.base.util.MathUtil;
 import com.heqichao.springBootDemo.base.util.StringUtil;
 import com.heqichao.springBootDemo.base.util.UserUtil;
-import com.heqichao.springBootDemo.module.entity.DataDetail;
-import com.heqichao.springBootDemo.module.entity.DataLog;
-import com.heqichao.springBootDemo.module.entity.Model;
-import com.heqichao.springBootDemo.module.entity.ModelAttr;
+import com.heqichao.springBootDemo.module.entity.*;
 import com.heqichao.springBootDemo.module.mapper.DataDetailMapper;
 import com.heqichao.springBootDemo.module.mapper.DataLogMapper;
+import com.heqichao.springBootDemo.module.model.AlarmEnum;
 import com.heqichao.springBootDemo.module.model.AttrEnum;
 import com.heqichao.springBootDemo.module.model.ModelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +41,11 @@ public class DataLogServiceImpl implements DataLogService {
     @Autowired
     private EquipmentService equipmentService;
 
+    @Autowired
+    private AlarmLogServiceImpl alarmLogService;
+
+    @Autowired
+    private AlarmSettingService alarmSettingService;
 
     @Autowired
     private UserService userService;
@@ -54,6 +57,9 @@ public class DataLogServiceImpl implements DataLogService {
         String mainData="";
         DataLog dataLog =new DataLog();
         List<DataDetail> dataDetails =new ArrayList<>();
+        List<AlarmLog> alarmLogs =new ArrayList<>();
+        //要解除报警的属性ID
+        List<Integer> normalAttrId =new ArrayList<>();
         try{
             dataLog.setSrcData(srcData);
             dataLog.setData(data);
@@ -69,7 +75,7 @@ public class DataLogServiceImpl implements DataLogService {
                 modId= equipment.getModelId();
                 attrList = modelAttrService.queryByModelId(modId);
             }
-            if(equipment==null || equipment.getModelId() ==null || attrList == null || attrList.size() < 1) {
+            if(equipment==null || modId ==null || attrList == null || attrList.size() < 1) {
                 //没有数据或模板则返回
                 dataLog.setDataStatus(DataLogService.ERROR_STATUS);
                 return;
@@ -112,6 +118,9 @@ public class DataLogServiceImpl implements DataLogService {
                 dataLog.setMainData(mainData);
                 dataLog.setDataStatus(DataLogService.ENABLE_STATUS);
                 String content="";
+
+                //查找报警设置
+                Map<Integer,AlarmSetting>  settingMap =alarmSettingService.queryEnableByModelId(equipment.getModelId());
                 for(int i=0;i<attrList.size();i++){
                     ModelAttr attr=attrList.get(i);
                     AttrEnum attrEnum =AttrEnum.getAttrByType(attr.getDataType(),attr.getValueType());
@@ -139,15 +148,44 @@ public class DataLogServiceImpl implements DataLogService {
                     dataDetail.setUnit(attr.getUnit());
                     dataDetail.setDataStatus(DataLogService.ENABLE_STATUS);
                     dataDetails.add(dataDetail);
+
+                    //检查报警
+                    AlarmSetting setting =settingMap.get(attr.getId());
+                    if(setting!=null){
+                        AlarmEnum alarmEnum =AlarmEnum.getEnumByCode(setting.getAlramType());
+                        if(alarmEnum!=null){
+                            if(alarmEnum.execute(setting,res)){
+                                //保存报警
+                                AlarmLog log =new AlarmLog();
+                                log.setDevId(devId);
+                                log.setDevType(devType);
+                                log.setAlramType(setting.getAlramType());
+                                log.setSettingId(setting.getId());
+                                log.setAttrId(attr.getId());
+                                log.setUnit(attr.getUnit());
+                                log.setDataValue(res);
+                                log.setModelId(modId);
+                                log.setAddDate(date);
+                                log.setDataStatus(AlarmLogService.ALARM_STATUS);
+                                alarmLogs.add(log);
+                            }else{
+                                //解除报警
+                                normalAttrId.add(attr.getId());
+                            }
+                        }
+                    }
                 }
             }
         }catch (Exception e){
             dataLog.setDataStatus(DataLogService.ERROR_STATUS);
+            //有其中一条解析出错就忽略所有？
+            dataDetails=new ArrayList<>();
         }finally {
             //更新设备为在线
             List<String> devIds=new ArrayList<>();
             devIds.add(devId);
             equipmentService.updateOnlineStatus(EquipmentService.ON_LINE,devIds,date);
+            //保存解析数据
             dataLogMapper.save(dataLog);
             if(dataDetails.size()>0){
                 for(DataDetail dataDetail :dataDetails){
@@ -155,6 +193,10 @@ public class DataLogServiceImpl implements DataLogService {
                 }
                 dataDetailMapper.save(dataDetails);
             }
+            //保存报警数据
+            alarmLogService.save(alarmLogs);
+            //解除报警数据
+            alarmLogService.updateNormalStatus(devId,normalAttrId,date);
         }
     }
 

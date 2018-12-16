@@ -46,7 +46,7 @@ public class ModelController extends BaseController{
         return new ResponeResult(modelService.queryType());
     }
 
-    @RequestMapping(value = "/deleteModelAttr")
+  /*  @RequestMapping(value = "/deleteModelAttr")
     ResponeResult deleteModelAttr() {
         ResponeResult responeResult =new ResponeResult();
         Integer id = getIntegerParam("id");
@@ -57,13 +57,14 @@ public class ModelController extends BaseController{
             responeResult.setMessage("删除数据异常，请稍后重试");
         }
         return responeResult;
-    }
+    }*/
 
     @RequestMapping(value = "/saveOrUpdateModel")
     ResponeResult saveOrUpdateModel(){
         Map map = getParamMap();
         Integer modelId =getIntegerParam("id");
         String modelName = (String) map.get("modelName");
+        String deleteIds = (String) map.get("deleteIds");
         List<Map> list =new ArrayList<>();
         String listJson =(String) map.get("list");
         try{
@@ -71,7 +72,7 @@ public class ModelController extends BaseController{
         }catch (Exception e){
             e.printStackTrace();
         }
-        return new ResponeResult(modelService.saveOrUpdateModel(modelId,modelName,list));
+        return new ResponeResult(modelService.saveOrUpdateModel(modelId,modelName,list,deleteIds));
     }
 
     @RequestMapping(value = "/queryAllByModelId")
