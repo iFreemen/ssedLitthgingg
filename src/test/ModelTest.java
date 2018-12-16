@@ -21,6 +21,6 @@ public class ModelTest {
     @Test
     public void  saveDataLog(){
        // dataLogService.saveDataLog("1","AQMAGQABGAUkFhYj+xkE5gAQDwIO/lgFAAEAAgADAAQABWQf","TEST");
-        dataLogService.saveDataLog("1807238000000188","{\"devEUI\":\"1807238000000188\",\"time\":\"2018-12-14T03:56:30.249285Z\",\"fPort\":8,\"gatewayCount\":2,\"rssi\":-41,\"fCnt\":125,\"loRaSNR\":10.5,\"data\":\"AQMUAHQYEhQSGCYAcQAtACEAtgOdEEJazQ==\"}","TEST");
+        dataLogService.saveDataLog("1807238000000188","{\"devEUI\":\"1807238000000188\",\"time\":\"2018-12-14T06:40:54.888519Z\",\"fPort\":8,\"gatewayCount\":2,\"rssi\":-39,\"fCnt\":566,\"loRaSNR\":12.5,\"data\":\"AQMUAfoYEhQVAlIAcwAsACEAtgPFEJZO4w==\"}","TEST");
     }
 }
