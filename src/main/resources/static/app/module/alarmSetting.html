@@ -227,13 +227,11 @@
 									<option  value="EA">数值等于A</option>
 								</select>
                               </div>
-							  <div class="col-md-2">
-	                                <input type="number" ng-if="editFrom.alramType=='LA' || editFrom.alramType=='BAB' || editFrom.alramType=='OAB' || editFrom.alramType=='EA'" 
-	                                 class="form-control" placeholder="A" ng-model="$parent.editFrom.dataA" required >
+							  <div class="col-md-2" ng-if="editFrom.alramType=='LA' || editFrom.alramType=='BAB' || editFrom.alramType=='OAB' || editFrom.alramType=='EA'" >
+	                                <input type="text"  class="form-control" placeholder="A" ng-model="$parent.editFrom.dataA" required >
                               </div>
-							  <div class="col-md-2">
-	                                <input type="number" ng-if="editFrom.alramType=='HB' || editFrom.alramType=='BAB'|| editFrom.alramType=='OAB'" 
-	                                class="form-control" placeholder="B" ng-model="$parent.editFrom.dataB" required >
+							  <div class="col-md-2" ng-if="editFrom.alramType=='HB' || editFrom.alramType=='BAB'|| editFrom.alramType=='OAB'" >
+	                                <input type="text" class="form-control" placeholder="B" ng-model="$parent.editFrom.dataB" required >
                               </div>
                               
                          </div> 

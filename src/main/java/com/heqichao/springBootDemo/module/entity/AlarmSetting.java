@@ -1,5 +1,6 @@
 package com.heqichao.springBootDemo.module.entity;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
@@ -24,8 +25,8 @@ public class AlarmSetting extends BaseEntity {
 	private String alramTypeName;
 	private String dataType;
 	private String dataValue;
-	private Integer dataA;
-	private Integer dataB;
+	private String dataA;
+	private String dataB;
 	private String dataStatus;
 	
 	public AlarmSetting() {
@@ -37,8 +38,8 @@ public class AlarmSetting extends BaseEntity {
 		this.modelId = StringUtil.getIntegerByMap(map,"modelId");
 		this.attrId = StringUtil.getIntegerByMap(map,"attrId");
 		this.alramType = StringUtil.getStringByMap(map,"alramType");
-		this.dataA = StringUtil.getIntegerByMap(map,"dataA");
-		this.dataB = StringUtil.getIntegerByMap(map,"dataB");
+		this.dataA = StringUtil.getStringByMap(map,"dataA");
+		this.dataB = StringUtil.getStringByMap(map,"dataB");
 		this.dataStatus = StringUtil.getStringByMap(map,"dataStatus");
 		
 	}
@@ -97,16 +98,18 @@ public class AlarmSetting extends BaseEntity {
 	public void setModelName(String modelName) {
 		this.modelName = modelName;
 	}
-	public Integer getDataA() {
+
+	
+	public String getDataA() {
 		return dataA;
 	}
-	public void setDataA(Integer dataA) {
+	public void setDataA(String dataA) {
 		this.dataA = dataA;
 	}
-	public Integer getDataB() {
+	public String getDataB() {
 		return dataB;
 	}
-	public void setDataB(Integer dataB) {
+	public void setDataB(String dataB) {
 		this.dataB = dataB;
 	}
 	public String getAlramTypeName() {
@@ -118,12 +121,12 @@ public class AlarmSetting extends BaseEntity {
 			newName=this.alramTypeName;
 			if("BAB".equals(this.alramType)) {
 				
-				newName=newName.replaceAll("B", "，"+this.dataB);
+				newName=newName.replaceAll("B", ", "+this.dataB);
 			}else {
-				newName=newName.replaceAll("B", ""+this.dataB);
+				newName=newName.replaceAll("B", " "+this.dataB);
 				
 			}
-			newName=newName.replaceAll("A", this.dataA+"");
+			newName=newName.replaceAll("A", " "+this.dataA);
 			
 		}
 		return newName;

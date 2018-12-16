@@ -1,5 +1,6 @@
 package com.heqichao.springBootDemo.base.util;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 /**
@@ -37,6 +38,17 @@ public class StringUtil {
     	}
     	try {
     		return Integer.valueOf(map.get(key).toString());
+    	} catch (Exception e) {
+//			e.printStackTrace();
+    		return null;
+    	}
+    }
+    public static BigDecimal getBigDecimalByMap(Map map,String key) {
+    	if(map.size() == 0) {
+    		return null;
+    	}
+    	try {
+    		return new BigDecimal(map.get(key).toString());
     	} catch (Exception e) {
 //			e.printStackTrace();
     		return null;
@@ -147,4 +159,5 @@ public class StringUtil {
 			return s.toLowerCase();
 		}
 	}
+	
 }

@@ -219,12 +219,13 @@ public class ModelServiceImpl implements ModelService {
         // End Muzzy
     }
     
+    // Muzzy
     @Override
     public Map<String, Integer> queryUserAttr() {
     	Map map = RequestContext.getContext().getParamMap();
     	Integer mid = StringUtil.getIntegerByMap(map,"mid");
     	List<ModelAttr> list =new ArrayList<>();
-    	list=modelAttrService.queryByModelId(mid);
+    	list=modelAttrService.queryAttrByModelId(mid);
     	Map<String, Integer> res = new HashMap<>();
     	if(list!=null && list.size()>0){
     		res =  list.stream().collect(
