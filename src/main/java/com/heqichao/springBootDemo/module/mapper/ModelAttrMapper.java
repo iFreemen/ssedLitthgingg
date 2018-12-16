@@ -30,6 +30,13 @@ public interface ModelAttrMapper {
             +"select * from model_attr  where model_id = #{modelID}  order by order_no"
             +"</script>")
     List<ModelAttr> queryByModelId(@Param("modelID") Integer modelID);
+    
+    // Muzzy
+    @Select("<script>"
+    		+"select * from model_attr  where model_id = #{modelID} and data_type in ('INT_TYPE','SWITCH_TYPE','ALARM_TYPE')  order by order_no"
+    		+"</script>")
+    List<ModelAttr> queryAttrByModelId(@Param("modelID") Integer modelID);
+    // End Muzzy
 
     @Insert("<script>"
             +"insert into model_attr (add_date,udp_date,add_uid,udp_uid,model_id,attr_name,data_type,value_type,number_format,unit,expression,memo,order_no) values "

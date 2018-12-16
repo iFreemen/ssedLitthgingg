@@ -65,7 +65,6 @@ function alarmSettingCtrl($scope, $http,$location, $rootScope) {
     }
     //选中行
     $scope.seleEdit=function(alarm){
-    	
     	$scope.seledModel(alarm.modelId);
     	angular.copy(alarm,$scope.editFrom);
     }

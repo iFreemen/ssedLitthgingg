@@ -66,7 +66,7 @@ var demoApp =angular.module("demoApp", ["ngRoute"]);
 	}).when("/module/logShow/", {
 			templateUrl: "app/module/logShow.html",
 			controller: logShowCtrl
-		}).when("/module/logShow/:devId/:dataName", {
+		}).when("/module/logShow/:devId/:attrId", {
 			templateUrl: "app/module/logShow.html",
 			controller: logShowCtrl
 		}).when("/module/logShow/:devId", {

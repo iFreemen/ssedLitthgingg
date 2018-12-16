@@ -221,21 +221,4 @@ public interface EquipmentMapper {
 	@Select("select u.id from applications u where u.app_name=#{appName} and uid=#{uid} and u.valid = 'N' limit 1")
 	Integer getAppIdByName(@Param("appName")String appName,@Param("uid")Integer uid);
 	
-	@Select({ "call p_equ_enq_page("
-			+ "#{crrNum,mode=IN,jdbcType=INTEGER},"
-			+ "#{pagSize,mode=IN,jdbcType=INTEGER},"
-			+ "#{numUid,mode=IN,jdbcType=INTEGER},"
-			+ "#{gid,mode=IN,jdbcType=INTEGER},"
-			+ "#{devName,mode=IN,jdbcType=VARCHAR}"
-			+ ")" })
-	@Options(statementType=StatementType.CALLABLE)
-	public List<Equipment> getEquPage(
-			@Param("crrNum") Integer crrNum,
-			@Param("pagSize")Integer pagSize,
-			@Param("numUid")Integer uid,
-			@Param("gid")Integer gid,
-			@Param("devName")String devName
-//			@Param("equipments")ResultSet equipments
-//			@Param("res")Integer res
-			);
 }

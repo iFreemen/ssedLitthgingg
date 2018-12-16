@@ -15,5 +15,9 @@ public interface ModelAttrService {
     List<ModelAttr> queryByModelId(Integer modelId);
     void deleteByModelId(Integer modelId);
 
+
     void deleteByAttrId(List<Integer> ids);
+
+	List<ModelAttr> queryAttrByModelId(Integer modelId);
+
 }

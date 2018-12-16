@@ -42,6 +42,16 @@ public class AlarmLogController extends BaseController{
     @Autowired
     private AlarmLogService alarmLogService;
 
+    @RequestMapping(value = "/updateAlarm")
+    ResponeResult updateAlarm() {
+        alarmLogService.updateAlarm(getParamMap());
+        return new ResponeResult();
+    }
+
+    @RequestMapping(value = "/queryAlarm")
+    ResponeResult queryAlarm() {
+        return new ResponeResult(alarmLogService.queryAlarm(getParamMap()));
+    }
 
     @RequestMapping(value = "/queryAlarmLog")
     ResponeResult queryAlarmLog() {
@@ -49,7 +59,12 @@ public class AlarmLogController extends BaseController{
         Map param =getParamMap();
         String devId =(String) param.get("devId");
         Integer attrId=getIntegerParam("attrId");
-
+        String start= (String) param.get("start");
+        String status= (String) param.get("status");
+        String end= (String) param.get("end");
+        if(StringUtil.isNotEmpty(end)){
+            end=end+" 23:59:59";
+        }
         //初始化
         //设备列表 初始化设备id为第一个
         if(StringUtil.isEmpty(devId) ){
@@ -68,7 +83,7 @@ public class AlarmLogController extends BaseController{
             List<ModelAttr> attrList =new ArrayList<>();
             Equipment equipment  =equipmentService.getEquipmentInfo(devId);
             if(equipment!=null && equipment.getModelId() !=null){
-                attrList =modelAttrService.queryByModelId(equipment.getModelId());
+                attrList =modelAttrService.queryAttrByModelId(equipment.getModelId());
                 if(attrList!=null && attrList.size()>0){
                     attrId=attrList.get(0).getId();
                     map.put("attrId",attrId);
@@ -77,7 +92,7 @@ public class AlarmLogController extends BaseController{
             map.put("attrList",attrList);
         }
 
-        map.put("data",alarmLogService.queryAlarmLog(devId,attrId));
+        map.put("data",alarmLogService.queryAlarmLog(devId,attrId,status,start,end));
         return new ResponeResult(map);
     }
 

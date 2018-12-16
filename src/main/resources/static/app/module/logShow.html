@@ -21,8 +21,8 @@
 
                                         <label  class="col-sm-1 control-label">属性</label>
                                         <div class="col-sm-2">
-                                            <select name="$index_valueType"class="form-control input-sm" ng-model="param.attrKey"
-                                                    ng-options="val.attrName as val.attrName for val in attrList"   ng-change="changeAttr()">
+                                            <select name="$index_valueType"class="form-control input-sm" ng-model="param.attrId"
+                                                    ng-options="val.id as val.attrName for val in attrList"   ng-change="changeAttr()">
                                              <!--   <option value="{{val.attrName}}"  ng-repeat="(key, val) in attrList" >{{val.attrName}}</option>-->
                                             </select>
                                         </div>
@@ -62,7 +62,7 @@
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title" ng-bind="param.attrKey"></h3>
+                            <h3 class="panel-title" ng-bind="attrKey"></h3>
                         </div>
 
                         <div class="panel-body">

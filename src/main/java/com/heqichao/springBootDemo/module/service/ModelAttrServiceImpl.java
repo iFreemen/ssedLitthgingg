@@ -41,6 +41,12 @@ public class ModelAttrServiceImpl implements ModelAttrService {
     public List<ModelAttr> queryByModelId(Integer modelId) {
         return modelAttrMapper.queryByModelId(modelId);
     }
+    // Muzzy
+    @Override
+    public List<ModelAttr> queryAttrByModelId(Integer modelId) {
+    	return modelAttrMapper.queryAttrByModelId(modelId);
+    }
+    // End Muzzy 
 
     @Override
     public void deleteByModelId(Integer modelId) {

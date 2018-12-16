@@ -11,6 +11,11 @@
 
 	 <title>圣斯尔监控系统</title>
 
+		<!-- notify -->
+		<link href="assets/plugins/notifications/notification.css" rel="stylesheet">
+		<![endif]-->
+
+
 		<!-- DataTables -->
 		<link href="assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
 		<link href="assets/plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -88,7 +93,7 @@
 													<div class="media-heading">设备报警</div>
 													<p class="m-0">
 														<small>您有
-															<span class="text-primary" ng-bind="$root.faultCount"></span>个设备故障问题待处理</small>
+															<span class="text-primary" ng-bind="$root.faultCount"></span>个故障问题待处理</small>
 													</p>
 												</div>
 											</div>
@@ -317,8 +322,13 @@
 		<script src="assets/plugins/flot-chart/jquery.flot.selection.js"></script>
 		<script src="assets/plugins/flot-chart/jquery.flot.stack.js"></script>
 		<script src="assets/plugins/flot-chart/jquery.flot.crosshair.js"></script>
-		
-		
+
+		<!-- notify -->
+		<script src="assets/plugins/notifications/notify.min.js"></script>
+		<script src="assets/plugins/notifications/notify-metro.js"></script>
+		<script src="assets/plugins/notifications/notifications.js"></script>
+
+
 
 		<!-- md5 -->
 		<script src="assets/js/md5.js"></script>
@@ -360,7 +370,7 @@
 			var defaultSize=15;
 			demoApp.controller("indexCtrl", function($scope, $http, $rootScope, $timeout,$interval,$location) {
 
-				//报警数
+				//报警
 				$rootScope.faultCount=0;
 				$scope.newPwd ="";
 				$scope.checkPwd ="";
@@ -383,30 +393,58 @@
 				});
 				//查询报警数
 				$scope.queryFaultCount=function(isFirst ){
-					/*
-					$http.post("service/queryFaultCount").success(function(data) {
+
+					$http.post("service/queryAlarm",{"queryChange":isFirst}).success(function(data) {
 						if(data.success){
-							var cou =data.resultObj;
-							if(isFirst){
-								$rootScope.faultCount =cou;
-							}else{
-								if(cou > $rootScope.faultCount){
-									swal("收到"+(cou - $rootScope.faultCount)+"条新的通知！请及时处理");
+
+							$rootScope.faultCount =data.resultObj.alarmCount;
+							if(data.resultObj.chaneList){
+								for(var i=0;i<data.resultObj.chaneList.length;i++){
+									var mes =data.resultObj.chaneList[i];
+									var value="";
+									if(mes.data_type != 'ALARM_TYPE' && mes.data_type != 'SWITCH_TYPE'){
+										value =mes.data_value;
+										if(mes.unit){
+											value=value+mes.unit;
+										}
+									}else if(mes.data_type == 'SWITCH_TYPE'){
+										if(mes.data_value == '0000'){
+											value="开";
+										}else if(mes.data_value == '0001'){
+											value="关";
+										}else  if(mes.data_value == 'ERR'){
+											value="异常数据";
+										}
+									}else if(mes.data_type == 'ALARM_TYPE'){
+										if(mes.data_value == '0000'){
+											value="正常";
+										}else if(mes.data_value == '0001'){
+											value="报警";
+										}else  if(mes.data_value == 'ERR'){
+											value="异常数据";
+										}
+									}
+									if("A"==mes.data_status){
+										$.Notification.notify('warning', 'top right', '设备数据点故障', mes.name+"的"+mes.attr_name+"报警,当前值为："+value);
+									}else if("N" == mes.data_status){
+										$.Notification.notify('info', 'top right', '设备数据点恢复', mes.name+"的"+mes.attr_name+"恢复正常,当前值为："+value);
+									}
 								}
-								$rootScope.faultCount =cou;
 							}
+
+
 						}
-					});*/
+					});
 				}
 
-				$scope.queryFaultCount(true);
+				$scope.queryFaultCount("FALSE");
 				//每30s刷新一次
 				$interval(function() {
-					$scope.queryFaultCount(false);
+					$scope.queryFaultCount("TRUE");
 				}, 30*1000);
 
                 $scope.gotoWarningLog =function () {
-                    $location.path("/module/warningLog");
+                    $location.path("/module/alarmLogList");
                 }
 
 				$scope.logout=function(){

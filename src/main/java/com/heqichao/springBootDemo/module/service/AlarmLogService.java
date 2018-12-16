@@ -5,6 +5,7 @@ import com.heqichao.springBootDemo.module.entity.AlarmLog;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by heqichao on 2018-12-16.
@@ -25,12 +26,12 @@ public interface AlarmLogService {
      */
     void updateNormalStatus(String devId,List<Integer> attrId,Date date);
 
-    PageInfo queryAlarmLog(String devId,Integer attrId);
+    PageInfo queryAlarmLog(String devId,Integer attrId,String status, String startTime, String endTime);
 
+    void updateAlarm(Map map);
     /**
-     * 查找最新 的报警记录
-     * @param devId
+     * 首页 查找最新 的报警记录
      * @return
      */
-    List<AlarmLog> queryAlarmByDevId(String devId);
+    Map queryAlarm(Map map);
 }

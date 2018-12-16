@@ -144,6 +144,7 @@ public class DataLogServiceImpl implements DataLogService {
                     dataDetail.setDataName(attr.getAttrName());
                     dataDetail.setDataType(attrEnum.getType());
                     dataDetail.setDataValue(res);
+                    dataDetail.setAttrId(attr.getId());
                     dataDetail.setDevId(devId);
                     dataDetail.setUnit(attr.getUnit());
                     dataDetail.setDataStatus(DataLogService.ENABLE_STATUS);
@@ -166,6 +167,7 @@ public class DataLogServiceImpl implements DataLogService {
                                 log.setDataValue(res);
                                 log.setModelId(modId);
                                 log.setAddDate(date);
+                                log.setUdpDate(date);
                                 log.setDataStatus(AlarmLogService.ALARM_STATUS);
                                 alarmLogs.add(log);
                             }else{
@@ -231,8 +233,8 @@ public class DataLogServiceImpl implements DataLogService {
     }
 
     @Override
-    public List<DataDetail> queryDataDetail(String devId, String key, String startTime, String endTime) {
-        return dataDetailMapper.queryDetail(devId,key,ENABLE_STATUS,startTime,endTime);
+    public List<DataDetail> queryDataDetail(String devId, Integer attrId, String startTime, String endTime) {
+        return dataDetailMapper.queryDetail(devId,attrId,ENABLE_STATUS,startTime,endTime);
     }
 
     @Override
@@ -249,10 +251,10 @@ public class DataLogServiceImpl implements DataLogService {
     }
 
     @Override
-    public Map queryEquAttrLog(String devId, String attrKey, String startTime, String endTime) {
+    public Map queryEquAttrLog(String devId, Integer attrId, String startTime, String endTime) {
         Map map= new HashMap();
-        if(StringUtil.isNotEmpty(devId) && StringUtil.isNotEmpty(attrKey)){
-            map.put("log",queryDataDetail(devId, attrKey, startTime, endTime));
+        if(StringUtil.isNotEmpty(devId) && attrId!=null){
+            map.put("log",queryDataDetail(devId, attrId, startTime, endTime));
             Equipment equipment =equipmentService.getEquipmentInfo(devId);
             if(equipment.getUid()!=null){
                 User user = userService.querById(equipment.getUid());

@@ -5,10 +5,11 @@
 function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.pages=0;
     $scope.param={};
     $scope.param.devId="";
-    $scope.param.attrKey="";
+    $scope.param.attrId="";
+    $scope.attrKey="";
     if($routeParams){
         $scope.param.devId=$routeParams.devId;
-        $scope.param.attrKey=$routeParams.dataName;
+        $scope.param.attrId=$routeParams.attrId;
         //初始化选择
         //只有第一次从列表跳入时初始化
         $scope.param.initOption='TRUE';
@@ -69,7 +70,11 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.
                 $scope.unit=data.resultObj.unit;
             }
             $scope.param.devId=data.resultObj.devId;
-            $scope.param.attrKey=data.resultObj.attrKey;
+            $scope.param.attrId=data.resultObj.attrId;
+            if(data.resultObj.attrKey){
+                $scope.attrKey=data.resultObj.attrKey;
+            }
+
 
             if(data.resultObj.log){
                 $scope.log=data.resultObj.log;
@@ -90,15 +95,16 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.
     $scope.init();
 
     $scope.changeDevId=function () {
-        $scope.param.attrKey="";
+        $scope.param.attrId="";
         $scope.init();
     }
 
     $scope.changeAttr=function(){
         for(var i=0;i<$scope.attrList.length;i++){
-            if($scope.param.attrKey == $scope.attrList[i].attrName){
+            if($scope.param.attrId == $scope.attrList[i].id){
                 $scope.attrType=$scope.attrList[i].dataType;
                 $scope.unit=$scope.attrList[i].unit;
+                $scope.attrKey=$scope.attrList[i].attrName;
                 $scope.init();
                 break;
             }
