@@ -21,8 +21,8 @@
 
                                         <label  class="col-sm-1 control-label">属性</label>
                                         <div class="col-sm-2">
-                                            <select name="$index_valueType"class="form-control input-sm" ng-model="param.attrId"
-                                                    ng-options="val.id as val.attrName for val in attrList"   ng-change="changeAttr()">
+                                            <select name="$index_valueType"class="form-control input-sm" ng-model="param.attrId"  ng-change="changeAttr()">
+                                                <option value="{{vall.id}}"  ng-repeat="(key, vall) in attrList" >{{vall.attrName}}</option>
                                              <!--   <option value="{{val.attrName}}"  ng-repeat="(key, val) in attrList" >{{val.attrName}}</option>-->
                                             </select>
                                         </div>
