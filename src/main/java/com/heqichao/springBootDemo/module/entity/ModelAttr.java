@@ -8,7 +8,11 @@ import org.springframework.stereotype.Component;
  */
 @Component("model_attr")
 public class ModelAttr extends BaseEntity {
-    //模板ID
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3452535801781802193L;
+	//模板ID
     private Integer modelId;
     //属性名
     private String attrName;

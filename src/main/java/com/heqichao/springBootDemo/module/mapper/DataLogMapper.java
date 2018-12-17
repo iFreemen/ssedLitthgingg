@@ -1,7 +1,6 @@
 package com.heqichao.springBootDemo.module.mapper;
 
 import com.heqichao.springBootDemo.module.entity.DataLog;
-import com.heqichao.springBootDemo.module.entity.LightningLog;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;

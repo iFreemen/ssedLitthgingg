@@ -3,7 +3,6 @@ package com.heqichao.springBootDemo.module.service;
 import com.heqichao.springBootDemo.module.entity.ModelAttr;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by heqichao on 2018-11-19.

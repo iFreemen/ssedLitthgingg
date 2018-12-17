@@ -10,7 +10,11 @@ import java.util.Date;
  */
 @Component("model")
 public class Model extends BaseEntity{
-    //模板名字
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6900356724930931191L;
+	//模板名字
     private String modelName;
 
     public String getModelName() {

@@ -1,11 +1,9 @@
 package com.heqichao.springBootDemo.base.entity;
 
-import java.util.Date;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.heqichao.springBootDemo.base.util.StringUtil;
 
 /**

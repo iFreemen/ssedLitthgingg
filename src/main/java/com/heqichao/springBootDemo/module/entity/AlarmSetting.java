@@ -1,6 +1,5 @@
 package com.heqichao.springBootDemo.module.entity;
 
-import java.math.BigDecimal;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;

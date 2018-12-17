@@ -1,11 +1,7 @@
 package com.heqichao.springBootDemo.module.service;
 
 import com.github.pagehelper.PageInfo;
-import com.heqichao.springBootDemo.base.param.RequestContext;
 import com.heqichao.springBootDemo.base.service.EquipmentService;
-import com.heqichao.springBootDemo.base.service.UserService;
-import com.heqichao.springBootDemo.base.util.PageUtil;
-import com.heqichao.springBootDemo.base.util.ServletUtil;
 import com.heqichao.springBootDemo.module.entity.WarningLog;
 import com.heqichao.springBootDemo.module.mapper.WarningLogMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by heqichao on 2018-8-13.
