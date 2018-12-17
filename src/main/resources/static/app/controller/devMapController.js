@@ -2,6 +2,38 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout) {
 	var elem = document.createElement("script");
 	elem.src = 'assets/js/jquery.easyui.min.js';
 	document.body.appendChild(elem);
+	//计算窗口高度
+    var map_height = $(window).height()- $(".container").height()-10;
+    // var test_height = $(window).height()- $(".page-top").height()- $("#data_body").find("table").height()-92;
+    var test_height = $(window).height()- $(".container").height()-112;
+    $("#map_box").css("height",map_height);
+    $("#map").css("height",map_height);
+    $("#test_content").css("max-height",test_height);
+	//End 计算窗口高度
+	
+    // 显示隐藏下方列表
+    var trs;
+    $("#device_content").on("DOMNodeInserted",function(){
+        trs=$("#device_content").find("tr");
+        for (var i=2; i<trs.length;i++){
+            $(trs[i]).hide();
+            $(trs[i]).attr("index","true")
+        }
+    });
+    $("#display_block").click(function(){
+        for (var i=2; i<trs.length;i++){
+            if(typeof($(trs[i]).attr("index"))==='undefined' || $(trs[i]).attr("index")==='true'){
+                $(trs[i]).show();
+                $(trs[i]).attr("index","false");
+                $("#display_block").removeClass("ion-chevron-up").addClass("ion-chevron-down");
+            }else {
+                $(trs[i]).attr("index","true");
+                $(trs[i]).hide();
+                $("#display_block").removeClass("ion-chevron-down").addClass("ion-chevron-up");
+            }
+        }
+    });
+	// End 显示隐藏下方列表
 	//为后台请求参数 带分页数据
     $scope.quereyData={
         page:1, //当前页码 初始化为1
@@ -182,38 +214,7 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout) {
                 $(this).text($translate.instant(900141));
             }
         });
-		//计算窗口高度
-        var map_height = $(window).height()- $(".page-top").height();
-        // var test_height = $(window).height()- $(".page-top").height()- $("#data_body").find("table").height()-92;
-        var test_height = $(window).height()- $(".page-top").height()-112;
-        $("#map_box").css("height",map_height);
-        $("#map").css("height",map_height);
-        $("#test_content").css("max-height",test_height);
-		//End 计算窗口高度
 		
-        // 显示隐藏下方列表
-        var trs;
-        $("#device_content").on("DOMNodeInserted",function(){
-            trs=$("#device_content").find("tr");
-            for (var i=2; i<trs.length;i++){
-                $(trs[i]).hide();
-                $(trs[i]).attr("index","true")
-            }
-        });
-        $("#display_block").click(function(){
-            for (var i=2; i<trs.length;i++){
-                if(typeof($(trs[i]).attr("index"))==='undefined' || $(trs[i]).attr("index")==='true'){
-                    $(trs[i]).show();
-                    $(trs[i]).attr("index","false");
-                    $("#display_block").removeClass("ion-chevron-up").addClass("ion-chevron-down");
-                }else {
-                    $(trs[i]).attr("index","true");
-                    $(trs[i]).hide();
-                    $("#display_block").removeClass("ion-chevron-down").addClass("ion-chevron-up");
-                }
-            }
-        });
-		// End 显示隐藏下方列表
     }
   //初始化
     $scope.getDevGroupsList();
