@@ -43,8 +43,19 @@ public class AlarmLogServiceImpl implements AlarmLogService {
 
     @Override
     public PageInfo queryAlarmLog(String devId, Integer attrId,String status, String startTime, String endTime) {
-        PageUtil.setPage();
-        return new PageInfo(alarmLogMapper.queryAlarmLogByDevIdAttrId(devId,attrId, status,  startTime,  endTime));
+
+        List<Map<String, String>> devList = equipmentService.getUserEquipmentIdList(ServletUtil.getSessionUser().getId());
+        if(devList!=null && devList.size()>0){
+            List<String> devIdList =new ArrayList<>();
+            for(Map m:devList){
+                devIdList.add((String) m.get("dev_id"));
+            }
+            PageUtil.setPage();
+            return new PageInfo(alarmLogMapper.queryAlarmLogByDevIdAttrId(devIdList,devId,attrId, status,  startTime,  endTime));
+        }else{
+            return new PageInfo(new ArrayList());
+        }
+
     }
 
     @Override

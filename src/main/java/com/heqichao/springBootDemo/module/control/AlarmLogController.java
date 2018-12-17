@@ -72,8 +72,8 @@ public class AlarmLogController extends BaseController{
             if(devList!=null && devList.size()>0){
                 Map<String, String> devMap =devList.get(0);
                 if(StringUtil.isEmpty(devId)){
-                    devId=devMap.get("dev_id");
-                    map.put("devId",devId);
+                   // devId=devMap.get("dev_id");
+                  //  map.put("devId",devId);
                 }
             }
             map.put("devList",devList);
@@ -85,8 +85,8 @@ public class AlarmLogController extends BaseController{
             if(equipment!=null && equipment.getModelId() !=null){
                 attrList =modelAttrService.queryAttrByModelId(equipment.getModelId());
                 if(attrList!=null && attrList.size()>0){
-                    attrId=attrList.get(0).getId();
-                    map.put("attrId",attrId);
+                  //  attrId=attrList.get(0).getId();
+                  //  map.put("attrId",attrId);
                 }
             }
             map.put("attrList",attrList);

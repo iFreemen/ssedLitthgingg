@@ -15,16 +15,16 @@ function alarmLogListCtrl($scope, $http, $rootScope,$filter,$location,fileUpload
         size:defaultSize, //每页数据量 defaultSize全局变量
         devId:"",
         attrId:"",
-        status:""
+        status:"A"  //默认查报警
     };
     $scope.pageArr=[1];//页码数组
     $scope.pages= $scope.pageArr.length; //总页数
     $scope.total=0;
 
-    $scope.quereyData.end =$scope.fmtDate(new Date());
+    /*$scope.quereyData.end =$scope.fmtDate(new Date());
     var date = new Date();//获取当前时间
     date.setDate(date.getDate()-30);//设置天数 -30天
-    $scope.quereyData.start=$scope.fmtDate(date);
+    $scope.quereyData.start=$scope.fmtDate(date);*/
 
     //时间组件
     $("#datepickerStrat"). datepicker().on('changeDate', function () {

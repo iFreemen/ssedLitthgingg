@@ -13,6 +13,7 @@
                                 <label  class="col-sm-1 control-label">设备</label>
                                 <div class="col-sm-2">
                                     <select name="$index_valueType"class="form-control input-sm" ng-model="quereyData.devId" ng-change="changeDevId()">
+                                        <option value="">全部</option>
                                         <option value="{{val.dev_id}}"  ng-repeat="(key, val) in devList" >{{val.name}}</option>
                                     </select>
                                 </div>
