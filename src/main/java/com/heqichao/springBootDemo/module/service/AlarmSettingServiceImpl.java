@@ -110,7 +110,8 @@ public class AlarmSettingServiceImpl implements AlarmSettingService {
 	    }
     	return  new ResponeResult(true,"Edit AlarmSetting fail","errorMsg");
     }
-    @Override
+
+	@Override
     public ResponeResult delAlarmSetting(Map map) {
     	Integer aid = StringUtil.getIntegerByMap(map,"aid");
     	Integer udid = ServletUtil.getSessionUser().getId();
@@ -125,4 +126,17 @@ public class AlarmSettingServiceImpl implements AlarmSettingService {
     	return  new ResponeResult(true,"Delete Equipment fail","errorMsg");
     }
 
+	@Override
+	public Map<Integer,AlarmSetting>  queryEnableByModelId(Integer modelId) {
+		Map<Integer,AlarmSetting>  map =new HashMap();
+		if(modelId!=null){
+			List<AlarmSetting> list =aMapper.queryByModelIdAndStatus(modelId,ENABLE_STATUS);
+			if(list!=null && list.size()>0){
+				for(AlarmSetting setting :list){
+					map.put(setting.getAttrId(),setting);
+				}
+			}
+		}
+		return map;
+	}
 }

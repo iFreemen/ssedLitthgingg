@@ -4,6 +4,7 @@ function modelEditCtrl($scope, $http, $rootScope,$routeParams,$location) {
     if("add"==$scope.modelId){
         $scope.modelId="";
     }
+    $scope.deleteIds="";
     $scope.list=new Array();
     $scope.list.push({"isEdit":true});
     $scope.types=new Array();
@@ -33,6 +34,7 @@ function modelEditCtrl($scope, $http, $rootScope,$routeParams,$location) {
     
     $scope.deleteItem=function (entity) {
         $scope.list.splice($scope.list.indexOf(entity), 1);
+        $scope.deleteIds= $scope.deleteIds+entity.id+",";
         entity.isEdit = false;
       /*  swal({
             title: "是否确定删除该模板属性？",
@@ -114,7 +116,7 @@ function modelEditCtrl($scope, $http, $rootScope,$routeParams,$location) {
             }
         }
         $scope.loading=true;
-        $http.post("service/saveOrUpdateModel",{"id":$scope.modelId,"modelName":$scope.modelName,"list":JSON.stringify($scope.list)}).success(function(data) {
+        $http.post("service/saveOrUpdateModel",{"id":$scope.modelId,"modelName":$scope.modelName,"list":JSON.stringify($scope.list),"deleteIds":$scope.deleteIds}).success(function(data) {
             if(data.success ){
                 $scope.loading=false;
                 $scope.modelId =data.resultObj;

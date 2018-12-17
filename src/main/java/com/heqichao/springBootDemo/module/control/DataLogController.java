@@ -42,7 +42,7 @@ public class DataLogController extends BaseController{
         Map map =new HashMap();
         Map param =getParamMap();
         String devId =(String) param.get("devId");
-        String  attrKey=(String) param.get("attrKey");
+       Integer  attrId =StringUtil.getIntegerByMap(param,"attrId");
         String  initOption=(String) param.get("initOption");
 
         //初始化
@@ -58,23 +58,25 @@ public class DataLogController extends BaseController{
             map.put("devList",devList);
         }
         //属性列表 初始化属性key为第一个
-        if(StringUtil.isEmpty(attrKey) || (StringUtil.isNotEmpty(initOption) && "TRUE".equals(initOption.toUpperCase()))){
+        if(attrId==null || (StringUtil.isNotEmpty(initOption) && "TRUE".equals(initOption.toUpperCase()))){
             List<ModelAttr> attrList =new ArrayList<>();
             Equipment equipment  =equipmentService.getEquipmentInfo(devId);
             if(equipment!=null && equipment.getModelId() !=null){
                 attrList =modelAttrService.queryByModelId(equipment.getModelId());
                 if(attrList!=null && attrList.size()>0){
 
-                    if(StringUtil.isEmpty(attrKey)){
+                    if(attrId==null){
                         ModelAttr attr =attrList.get(0);
-                        attrKey=attr.getAttrName();
+                        attrId=attr.getId();
                         map.put("unit",attr.getUnit());
                         map.put("dataType",attr.getDataType());
+                        map.put("attrKey",attr.getAttrName());
                     }else{
                         for(ModelAttr modelAttr : attrList){
-                            if(attrKey.equals(modelAttr.getAttrName())){
+                            if(attrId.equals( modelAttr.getId())){
                                 map.put("unit",modelAttr.getUnit());
                                 map.put("dataType",modelAttr.getDataType());
+                                map.put("attrKey",modelAttr.getAttrName());
                                 break;
                             }
                         }
@@ -91,10 +93,10 @@ public class DataLogController extends BaseController{
         if(StringUtil.isNotEmpty(end)){
             end=end+" 23:59:59";
         }
-        map.putAll(dataLogService.queryEquAttrLog(devId,attrKey,start,end));
+        map.putAll(dataLogService.queryEquAttrLog(devId,attrId,start,end));
 
         map.put("devId",devId);
-        map.put("attrKey",attrKey);
+        map.put("attrId",attrId);
 
         return new ResponeResult(map);
     }

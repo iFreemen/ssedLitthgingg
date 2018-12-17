@@ -26,7 +26,10 @@ var demoApp =angular.module("demoApp", ["ngRoute"]);
 	}).when("/module/alarmSetting", {
 		templateUrl: "app/module/alarmSetting.html",
 		controller: alarmSettingCtrl
-	}).when("/module/lightLog", {
+	}).when("/module/alarmLogList", {
+			templateUrl: "app/module/alarmLogList.html",
+			controller: alarmLogListCtrl
+		}).when("/module/lightLog", {
 			templateUrl: "app/module/lightLog.html",
 			controller: lightLogCtrl
 	}).when("/module/nbLightLog", {
@@ -63,7 +66,7 @@ var demoApp =angular.module("demoApp", ["ngRoute"]);
 	}).when("/module/logShow/", {
 			templateUrl: "app/module/logShow.html",
 			controller: logShowCtrl
-		}).when("/module/logShow/:devId/:dataName", {
+		}).when("/module/logShow/:devId/:attrId", {
 			templateUrl: "app/module/logShow.html",
 			controller: logShowCtrl
 		}).when("/module/logShow/:devId", {

@@ -232,10 +232,44 @@ public enum AttrEnum implements AttrAnalyze{
                 if(!check(context)){
                     result=DATA_ERROR;
                 }else{
-                    if("0000".equals(context)){
+                  /*  if("0000".equals(context)){
                         result="正常";
                     }else if("0001".equals(context)){
                         result="报警";
+                    }else{
+                        result=DATA_ERROR;
+                    }*/
+                    if("0000".equals(context) || "0001".equals(context)){
+                        result=context;
+                    }else{
+                        result=DATA_ERROR;
+                    }
+                }
+            }catch (Exception e){
+                result=DATA_ERROR;
+            }
+
+            return result;
+        }
+    },
+
+    SWITCH_TYPE("SWITCH_TYPE","开关型",2){
+        @Override
+        public String execute(ModelAttr modelAttr, String context) {
+            String result="";
+            try{
+                if(!check(context)){
+                    result=DATA_ERROR;
+                }else{
+                    /*if("0000".equals(context)){
+                        result="开";
+                    }else if("0001".equals(context)){
+                        result="关";
+                    }else{
+                        result=DATA_ERROR;
+                    }*/
+                    if("0000".equals(context) || "0001".equals(context)){
+                        result=context;
                     }else{
                         result=DATA_ERROR;
                     }
@@ -267,29 +301,7 @@ public enum AttrEnum implements AttrAnalyze{
         }
     },
 
-    SWITCH_TYPE("SWITCH_TYPE","开关型",2){
-        @Override
-        public String execute(ModelAttr modelAttr, String context) {
-            String result="";
-            try{
-                if(!check(context)){
-                    result=DATA_ERROR;
-                }else{
-                    if("0000".equals(context)){
-                        result="开";
-                    }else if("0001".equals(context)){
-                        result="关";
-                    }else{
-                        result=DATA_ERROR;
-                    }
-                }
-            }catch (Exception e){
-                result=DATA_ERROR;
-            }
 
-            return result;
-        }
-    },
 
     WAVE_TYPE("WAVE_TYPE","波形",null){
         @Override
@@ -368,7 +380,7 @@ public enum AttrEnum implements AttrAnalyze{
     }
 
     //异常数据
-    private static final String DATA_ERROR="DATA_ERROR";
+    private static final String DATA_ERROR="ERR";
     private static Map<String,AttrEnum> typeEnumMap=new HashMap<String,AttrEnum>();
 
     static Logger logger = LoggerFactory.getLogger(AttrEnum.class);

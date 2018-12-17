@@ -129,7 +129,7 @@ function devLstCtrl($scope, $http,$rootScope,$location,$timeout, $anchorScroll) 
          })
      }
 
-     $scope.gotoLog=function(devId,dataName){
-         $location.path("/module/logShow/"+devId+"/"+dataName);
+     $scope.gotoLog=function(devId,attrId){
+         $location.path("/module/logShow/"+devId+"/"+attrId);
      }
 }
