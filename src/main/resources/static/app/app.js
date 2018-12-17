@@ -27,7 +27,7 @@ var demoApp =angular.module("demoApp", ["ngRoute"]);
 		templateUrl: "app/module/alarmSetting.html",
 		controller: alarmSettingCtrl
 	}).when("/module/alarmLogList", {
-			templateUrl: "app/module/alarmLogList.html",
+			templateUrl: "app/module/alarmlogList.html",
 			controller: alarmLogListCtrl
 		}).when("/module/lightLog", {
 			templateUrl: "app/module/lightLog.html",

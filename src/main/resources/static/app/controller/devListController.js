@@ -8,6 +8,7 @@ function devLstCtrl($scope, $http,$rootScope,$location,$timeout, $anchorScroll,$
          page:1, //当前页码 初始化为1
          size:defaultSize, //每页数据量 defaultSize全局变量
      };
+     $scope.initInterval=true;
  	$scope.pages=0;
  	$scope.total=0;
  	$scope.loadCtl={
@@ -78,7 +79,9 @@ function devLstCtrl($scope, $http,$rootScope,$location,$timeout, $anchorScroll,$
      };
    //每30s刷新一次
 	$interval(function() {
-		$scope.getDevList($scope.quereyData.page);
+		if($scope.initInterval){
+			$scope.getDevList($scope.quereyData.page);
+		}
 	}, 30*1000);
 	
      $("#monitor_toggle").click(function () {
