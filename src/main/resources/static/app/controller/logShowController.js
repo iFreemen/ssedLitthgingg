@@ -60,6 +60,8 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.
             if(data.resultObj.devList){
                 $scope.devList = data.resultObj.devList;
             }
+            $scope.param.devId=data.resultObj.devId;
+            $scope.param.attrId=""+data.resultObj.attrId.toString();
            if(data.resultObj.attrList){
                $scope.attrList= data.resultObj.attrList;
            }
@@ -69,12 +71,10 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.
             if(data.resultObj.unit){
                 $scope.unit=data.resultObj.unit;
             }
-            $scope.param.devId=data.resultObj.devId;
-            $scope.param.attrId=data.resultObj.attrId;
+
             if(data.resultObj.attrKey){
                 $scope.attrKey=data.resultObj.attrKey;
             }
-
 
             if(data.resultObj.log){
                 $scope.log=data.resultObj.log;
@@ -126,7 +126,6 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.
             //默认显示第一个波形
             $scope.showWave($scope.log[0]);
         }
-
         $.Dashboard.init();
     }
 

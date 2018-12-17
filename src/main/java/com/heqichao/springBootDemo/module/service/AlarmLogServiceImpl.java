@@ -43,8 +43,19 @@ public class AlarmLogServiceImpl implements AlarmLogService {
 
     @Override
     public PageInfo queryAlarmLog(String devId, Integer attrId,String status, String startTime, String endTime) {
-        PageUtil.setPage();
-        return new PageInfo(alarmLogMapper.queryAlarmLogByDevIdAttrId(devId,attrId, status,  startTime,  endTime));
+
+        List<Map<String, String>> devList = equipmentService.getUserEquipmentIdList(ServletUtil.getSessionUser().getId());
+        if(devList!=null && devList.size()>0){
+            List<String> devIdList =new ArrayList<>();
+            for(Map m:devList){
+                devIdList.add((String) m.get("dev_id"));
+            }
+            PageUtil.setPage();
+            return new PageInfo(alarmLogMapper.queryAlarmLogByDevIdAttrId(devIdList,devId,attrId, status,  startTime,  endTime));
+        }else{
+            return new PageInfo(new ArrayList());
+        }
+
     }
 
     @Override
@@ -73,7 +84,7 @@ public class AlarmLogServiceImpl implements AlarmLogService {
           }
           //查找系统的报警总数
             int alarmCount =0;
-            List<Map> list = alarmLogMapper.queryAlarm(devIds,ALARM_STATUS,null);
+            List<Map> list = alarmLogMapper.queryAlarm(devIds,ALARM_STATUS,null,false);
             if(list!=null){
                 alarmCount=list.size();
             }
@@ -82,7 +93,8 @@ public class AlarmLogServiceImpl implements AlarmLogService {
             //查找30秒内的变化数据
             String queryChange =  StringUtil.getStringByMap(param,"queryChange");
             if(StringUtil.isNotEmpty(queryChange) && "TRUE".equals(queryChange)){
-                list = alarmLogMapper.queryAlarm(devIds,null, DateUtil.addSecond(new Date(),-30));
+                //忽略手动修改的状态数据
+                list = alarmLogMapper.queryAlarm(devIds,null, DateUtil.addSecond(new Date(),-30),true);
                 if(list!=null && list.size()>0){
                     map.put("chaneList",list);
                 }
