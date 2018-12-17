@@ -19,8 +19,9 @@
 
                                 <label  class="col-sm-1 control-label">属性</label>
                                 <div class="col-sm-2">
-                                    <select name="$index_valueType"class="form-control input-sm" ng-model="quereyData.attrId"
-                                            ng-options="val.id as val.attrName for val in attrList"   ng-change="changeAttr()">
+                                    <select name="$index_valueType"class="form-control input-sm" ng-model="quereyData.attrId"  ng-change="changeAttr()">
+                                        <option value="">全部</option>
+                                        <option value="{{val.id}}"  ng-repeat="(key, val) in attrList" >{{val.attrName}}</option>
                                     </select>
                                 </div>
 
