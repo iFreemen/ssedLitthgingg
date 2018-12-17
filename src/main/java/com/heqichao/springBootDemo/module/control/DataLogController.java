@@ -4,7 +4,6 @@ import com.heqichao.springBootDemo.base.control.BaseController;
 import com.heqichao.springBootDemo.base.entity.Equipment;
 import com.heqichao.springBootDemo.base.param.ResponeResult;
 import com.heqichao.springBootDemo.base.service.EquipmentService;
-import com.heqichao.springBootDemo.base.service.UserService;
 import com.heqichao.springBootDemo.base.util.ServletUtil;
 import com.heqichao.springBootDemo.base.util.StringUtil;
 import com.heqichao.springBootDemo.module.entity.ModelAttr;

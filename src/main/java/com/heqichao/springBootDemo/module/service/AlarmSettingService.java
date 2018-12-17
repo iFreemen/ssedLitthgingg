@@ -1,13 +1,9 @@
 package com.heqichao.springBootDemo.module.service;
 
 import com.github.pagehelper.PageInfo;
-import com.heqichao.springBootDemo.base.entity.Equipment;
-import com.heqichao.springBootDemo.base.entity.UploadResultEntity;
 import com.heqichao.springBootDemo.base.param.ResponeResult;
 import com.heqichao.springBootDemo.module.entity.AlarmSetting;
 
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 /**

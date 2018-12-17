@@ -1,7 +1,6 @@
 package com.heqichao.springBootDemo.module.service;
 
 import com.github.pagehelper.PageInfo;
-import com.heqichao.springBootDemo.base.entity.User;
 import com.heqichao.springBootDemo.base.exception.ResponeException;
 import com.heqichao.springBootDemo.base.param.ApplicationContextUtil;
 import com.heqichao.springBootDemo.base.param.RequestContext;

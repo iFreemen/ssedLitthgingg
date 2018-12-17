@@ -1,7 +1,6 @@
 package com.heqichao.springBootDemo.module.model;
 
 import com.heqichao.springBootDemo.base.util.StringUtil;
-import com.heqichao.springBootDemo.module.entity.Model;
 import com.heqichao.springBootDemo.module.entity.ModelAttr;
 
 import java.util.*;

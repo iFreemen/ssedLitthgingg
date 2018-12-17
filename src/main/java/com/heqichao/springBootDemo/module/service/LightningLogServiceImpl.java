@@ -3,7 +3,6 @@ package com.heqichao.springBootDemo.module.service;
 import com.github.pagehelper.PageInfo;
 import com.heqichao.springBootDemo.base.param.RequestContext;
 import com.heqichao.springBootDemo.base.service.EquipmentService;
-import com.heqichao.springBootDemo.base.service.UserService;
 import com.heqichao.springBootDemo.base.util.*;
 import com.heqichao.springBootDemo.module.entity.LightningLog;
 import com.heqichao.springBootDemo.module.mapper.LightningLogMapper;
