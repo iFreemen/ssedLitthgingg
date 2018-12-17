@@ -59,5 +59,31 @@ public interface AlarmLogMapper {
             +") order by a.udp_date desc"
             +"</script>")
     List<Map> queryAlarm(@Param("list") List<String> list ,@Param("status")String status,@Param("udpDate")Date udpDate);
+    
+    // Muzzy 
+    @Select("<script>"
+    		+" select a.model_id,a.dev_id,a.attr_id,a.setting_id,a.alram_type,ot.param_value,a.add_date," + 
+    		" case a.data_status when 'A' then '报警' when 'N' then '已处理' end as status_name, " + 
+    		" m.model_name,ma.attr_name,al.data_a,al.data_b,a.data_status " + 
+    		" from alarm_log a" + 
+    		" left join model m on a.model_id=m.id " + 
+    		" left join model_attr ma on a.attr_id=ma.id " + 
+    		" left join alarm_setting al on a.setting_id=al.id and al.data_status='N'"+
+    		" left join option_tree ot on a.alram_type=ot.param_key and ot.code='AlarmSettingCode'" + 
+    		" where 1=1 " + 
+    		" and a.dev_id in (select e.dev_id from equipments e where e.valid = 'N'"
+    		+ "<if test=\"competence == 3 \"> and e.uid= #{id} </if>"
+			+ "<if test=\"competence == 4 \"> and e.uid= #{parentId} </if>"
+    		+ ")" + 
+    		" order by a.add_date desc" + 
+    		" limit 5"
+    		+"</script>")
+    List<AlarmLog> queryAlarmNewestFive(
+    		@Param("id")Integer id,
+			@Param("parentId")Integer pid,
+			@Param("competence")Integer cmp
+    		);
+    // End Muzzy
+    
 
 }

@@ -38,7 +38,8 @@
                 <table class="table row map_table">
                     <thead>
                     <tr class="ng-scope">
-                        <th>设备名称</th>
+                        <th>设备编号</th>
+                        <th>设备模板</th>
                         <th>数据点名称</th>
                         <th>报警内容</th>
                         <th>报警时间</th>
@@ -48,7 +49,12 @@
                     </thead>
                     <tbody id="device_content">
                     <tr ng-repeat="alarmItem in alarmItems">
-                        <td>{{alarmItem.}}</td>
+                        <td>{{alarmItem.devId}}</td>
+                        <td>{{alarmItem.modelName}}</td>
+                        <td>{{alarmItem.attrName}}</td>
+                        <td>{{alarmItem.alramTypeFmt}}</td>
+                        <td>{{alarmItem.addDate}}</td>
+                        <td style="color:{{alarmItem.dataStatus == 'N'?'blue':'red'}}">{{alarmItem.statusName}}</td>
                         <td></td>
                     </tr>
                     </tbody>

@@ -34,6 +34,15 @@ public class AlarmLog extends BaseEntity {
     private String dataStatus;
 
     //手动处理时的记录
+    
+    // Muzzy 
+    private String modelName;
+    private String attrName;
+    private String paramValue;
+    private String statusName;
+    private String dataA;
+	private String dataB;
+    // End Muzzy
 
     public String getAlramType() {
         return alramType;
@@ -116,4 +125,68 @@ public class AlarmLog extends BaseEntity {
     public void setUnit(String unit) {
         this.unit = unit;
     }
+
+    // Muzzy
+	public String getModelName() {
+		return modelName;
+	}
+
+	public void setModelName(String modelName) {
+		this.modelName = modelName;
+	}
+
+	public String getParamValue() {
+		return paramValue;
+	}
+
+	public void setParamValue(String paramValue) {
+		this.paramValue = paramValue;
+	}
+
+	public String getStatusName() {
+		return statusName;
+	}
+
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
+	}
+	public String getDataA() {
+		return dataA;
+	}
+
+	public void setDataA(String dataA) {
+		this.dataA = dataA;
+	}
+
+	public String getDataB() {
+		return dataB;
+	}
+
+	public void setDataB(String dataB) {
+		this.dataB = dataB;
+	}
+	public String getAttrName() {
+		return attrName;
+	}
+
+	public void setAttrName(String attrName) {
+		this.attrName = attrName;
+	}
+	public String getAlramTypeFmt() {
+		String newName=null;
+		if(this.paramValue !=null) {
+			newName=this.paramValue;
+			if("BAB".equals(this.alramType)) {
+				
+				newName=newName.replaceAll("B", ", "+this.dataB);
+			}else {
+				newName=newName.replaceAll("B", " "+this.dataB);
+				
+			}
+			newName=newName.replaceAll("A", " "+this.dataA);
+			
+		}
+		return newName;
+	}
+    // End Muzzy
 }
