@@ -1,7 +1,7 @@
 <div  class="container" >
     <div id="map_box" class="row" style="overflow: hidden">
     <div class="close_btn hidden-sm  hidden-md hidden-lg" id="close_btn">显示</div>
-       <div id="map" style="height:1080px;"></div>
+       <div id="map" ></div>
        
         <div class="list_content" id="test_content" >
             <ul class="monitor_ul2">
@@ -48,11 +48,7 @@
                     </thead>
                     <tbody id="device_content">
                     <tr ng-repeat="alarmItem in alarmItems">
-                        <td><a ui-sref="device.deviceDatail({'devId':alarmItem.deviceId})">{{alarmItem.deviceName}}</a></td>
-                        <td><a ui-sref="trigger.alarmHistoryList({'devId':alarmItem.deviceId,'slaveIndex':alarmItem.slaveIndex,'dataId':alarmItem.dataPointId})">{{alarmItem.dataPointName}}</a></td>
-                        <td>{{alarmItem.content}}</td>
-                        <td>{{alarmItem.alarmTime*1000|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                        <td>{{getAlarmStatus(alarmItem.status)}}</td>
+                        <td>{{alarmItem.}}</td>
                         <td></td>
                     </tr>
                     </tbody>
