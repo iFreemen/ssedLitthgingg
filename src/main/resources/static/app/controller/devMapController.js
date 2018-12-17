@@ -70,7 +70,8 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout) {
     
     $scope.getDevList=function(page){
    	 $scope.loadCtl.search = true;
-   	 $scope.init();
+//   	 $scope.init();
+   	 $scope.getAlarmNewest();
    	 $scope.quereyData.page=!page ? page : 1;
    	 $scope.quereyData.gid=$('.easyui-combotree').combotree('getValue');
    	$scope.map = new BMap.Map("map", {enableMapClick: false});//关闭地图点击事件
@@ -201,7 +202,13 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout) {
      	});
     }
     
-    
+  //获取设备分组列表
+    $scope.getAlarmNewest = function () {
+    	$http.get("service/queryAlarmNewestFive").success(function(data) {
+    		console.log(data);
+    		$scope.alarmItems=data.resultObj;
+    	});
+    }
     $scope.init=function(){
     	var display_flag=true;
         $("#close_btn").on("click",function(){

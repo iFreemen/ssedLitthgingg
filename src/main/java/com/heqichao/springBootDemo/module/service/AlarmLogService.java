@@ -1,6 +1,7 @@
 package com.heqichao.springBootDemo.module.service;
 
 import com.github.pagehelper.PageInfo;
+import com.heqichao.springBootDemo.base.param.ResponeResult;
 import com.heqichao.springBootDemo.module.entity.AlarmLog;
 
 import java.util.Date;
@@ -34,4 +35,6 @@ public interface AlarmLogService {
      * @return
      */
     Map queryAlarm(Map map);
+
+	List<AlarmLog> queryAlarmNewestFive();
 }

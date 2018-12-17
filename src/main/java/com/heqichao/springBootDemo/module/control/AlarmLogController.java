@@ -95,5 +95,10 @@ public class AlarmLogController extends BaseController{
         map.put("data",alarmLogService.queryAlarmLog(devId,attrId,status,start,end));
         return new ResponeResult(map);
     }
+    
+    @RequestMapping(value = "/queryAlarmNewestFive")
+    ResponeResult queryAlarmNewestFive() {
+        return new ResponeResult(alarmLogService.queryAlarmNewestFive());
+    }
 
 }

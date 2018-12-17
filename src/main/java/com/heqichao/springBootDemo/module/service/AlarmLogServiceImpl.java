@@ -1,6 +1,7 @@
 package com.heqichao.springBootDemo.module.service;
 
 import com.github.pagehelper.PageInfo;
+import com.heqichao.springBootDemo.base.param.ResponeResult;
 import com.heqichao.springBootDemo.base.service.EquipmentService;
 import com.heqichao.springBootDemo.base.util.DateUtil;
 import com.heqichao.springBootDemo.base.util.PageUtil;
@@ -103,4 +104,14 @@ public class AlarmLogServiceImpl implements AlarmLogService {
         }
         return map;
     }
+    
+    // Muzzy 获取报警最新5条记录
+    @Override
+    public List<AlarmLog>  queryAlarmNewestFive() {
+    	Integer udid = ServletUtil.getSessionUser().getId();
+    	Integer pid = ServletUtil.getSessionUser().getParentId();
+    	Integer cmp = ServletUtil.getSessionUser().getCompetence();
+        return alarmLogMapper.queryAlarmNewestFive(udid,pid,cmp);
+    }
+    // End Muzzy
 }
