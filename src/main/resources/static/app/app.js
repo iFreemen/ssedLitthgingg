@@ -29,6 +29,9 @@ var demoApp =angular.module("demoApp", ["ngRoute"]);
 	}).when("/module/alarmLogList", {
 			templateUrl: "app/module/alarmlogList.html",
 			controller: alarmLogListCtrl
+		}).when("/module/alarmLogList/:devId", {
+			templateUrl: "app/module/alarmlogList.html",
+			controller: alarmLogListCtrl
 		}).when("/module/lightLog", {
 			templateUrl: "app/module/lightLog.html",
 			controller: lightLogCtrl
