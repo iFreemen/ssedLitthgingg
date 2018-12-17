@@ -9,7 +9,6 @@ import com.heqichao.springBootDemo.base.param.ApplicationContextUtil;
 import com.heqichao.springBootDemo.base.service.EquipmentService;
 import com.heqichao.springBootDemo.base.service.UserService;
 import com.heqichao.springBootDemo.base.util.Base64Encrypt;
-import com.heqichao.springBootDemo.base.util.MathUtil;
 import com.heqichao.springBootDemo.base.util.StringUtil;
 import com.heqichao.springBootDemo.base.util.UserUtil;
 import com.heqichao.springBootDemo.module.entity.*;

@@ -3,8 +3,6 @@ package com.heqichao.springBootDemo.base.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.heqichao.springBootDemo.base.entity.GroupsEntity;
 
 public class TreeUtil {

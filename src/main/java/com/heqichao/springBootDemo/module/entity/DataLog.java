@@ -9,7 +9,12 @@ import org.springframework.stereotype.Component;
 @Component("data_log")
 public class DataLog extends BaseEntity {
 
-    //设备ID
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1988924524280495317L;
+
+	//设备ID
     private String devId;
 
     //接收到的主数据内容（原文）

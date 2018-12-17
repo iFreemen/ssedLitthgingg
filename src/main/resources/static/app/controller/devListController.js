@@ -1,4 +1,4 @@
-function devLstCtrl($scope, $http,$rootScope,$location,$timeout, $anchorScroll) {
+function devLstCtrl($scope, $http,$rootScope,$location,$timeout, $anchorScroll,$interval) {
 	var elem = document.createElement("script");
 	elem.src = 'assets/js/jquery.easyui.min.js';
 	document.body.appendChild(elem);
@@ -76,6 +76,11 @@ function devLstCtrl($scope, $http,$rootScope,$location,$timeout, $anchorScroll) 
              return "assets/img/alarmline.png";
          }
      };
+   //每30s刷新一次
+	$interval(function() {
+		$scope.getDevList($scope.quereyData.page);
+	}, 30*1000);
+	
      $("#monitor_toggle").click(function () {
          if ($(this).is('.monitor_show')) {
              $(this).removeClass("monitor_show");

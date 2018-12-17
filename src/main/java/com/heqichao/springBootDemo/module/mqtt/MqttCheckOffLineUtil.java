@@ -5,7 +5,6 @@ import com.heqichao.springBootDemo.base.service.EquipmentService;
 import com.heqichao.springBootDemo.module.service.LightningLogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

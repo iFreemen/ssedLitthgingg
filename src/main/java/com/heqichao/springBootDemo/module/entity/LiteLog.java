@@ -10,7 +10,11 @@ import org.springframework.stereotype.Component;
  */
 @Component("lite_log")
 public class LiteLog extends BaseEntity {
-    private String deviceId;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6819883273688164511L;
+	private String deviceId;
     private String message;
     private String currenState;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")

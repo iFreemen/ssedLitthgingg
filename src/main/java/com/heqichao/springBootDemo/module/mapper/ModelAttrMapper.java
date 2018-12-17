@@ -1,12 +1,9 @@
 package com.heqichao.springBootDemo.module.mapper;
 
-import com.heqichao.springBootDemo.module.entity.Model;
 import com.heqichao.springBootDemo.module.entity.ModelAttr;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by heqichao on 2018-7-15.

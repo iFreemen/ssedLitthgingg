@@ -8,7 +8,11 @@ import org.springframework.stereotype.Component;
  */
 @Component("alarm_log")
 public class AlarmLog extends BaseEntity {
-    //设备ID
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1031545717859719314L;
+	//设备ID
     private String devId;
     //模板id
     private Integer modelId;

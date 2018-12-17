@@ -9,7 +9,12 @@ import org.springframework.stereotype.Component;
 @Component("data_detail")
 public class DataDetail extends BaseEntity{
 
-    private Integer logId;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1626600116580263L;
+
+	private Integer logId;
 
     private String devId;
     private Integer attrId;
