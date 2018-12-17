@@ -21,8 +21,8 @@
 
                                         <label  class="col-sm-1 control-label">属性</label>
                                         <div class="col-sm-2">
-                                            <select name="$index_valueType"class="form-control input-sm" ng-model="param.attrKey"
-                                                    ng-options="val.attrName as val.attrName for val in attrList"   ng-change="changeAttr()">
+                                            <select name="$index_valueType"class="form-control input-sm" ng-model="param.attrId"
+                                                    ng-options="val.id as val.attrName for val in attrList"   ng-change="changeAttr()">
                                              <!--   <option value="{{val.attrName}}"  ng-repeat="(key, val) in attrList" >{{val.attrName}}</option>-->
                                             </select>
                                         </div>
@@ -62,7 +62,7 @@
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title" ng-bind="param.attrKey"></h3>
+                            <h3 class="panel-title" ng-bind="attrKey"></h3>
                         </div>
 
                         <div class="panel-body">
@@ -79,9 +79,21 @@
                                             </thead>
                                             <tbody>
                                             <tr ng-repeat="entity in log" ng-click="showWave(entity)">
-                                                <td  ng-if="attrType != 'WAVE_TYPE'">{{entity.dataValue}}{{entity.unit}}</td>
-                                                <td ng-bind="entity.addDate" ></td>
-                                                <td  ng-if="attrType == 'WAVE_TYPE'">{{log.length - $index}}</td>
+                                                <td  ng-if="attrType != 'WAVE_TYPE'">
+                                                    <span ng-if="attrType != 'ALARM_TYPE' && attrType != 'SWITCH_TYPE'">{{entity.dataValue}}{{entity.unit}}</span>
+                                                    <span  ng-if="attrType == 'ALARM_TYPE'">
+                                                        <span ng-if="entity.dataValue == '0000'">正常</span>
+                                                        <span ng-if="entity.dataValue == '0001'">报警</span>
+                                                        <span ng-if="entity.dataValue == 'ERR'">异常数据</span>
+                                                    </span>
+                                                    <span  ng-if="attrType == 'SWITCH_TYPE'">
+                                                        <span ng-if="entity.dataValue == '0000'">开</span>
+                                                        <span ng-if="entity.dataValue == '0001'">关</span>
+                                                        <span ng-if="entity.dataValue == 'ERR'">异常数据</span>
+                                                    </span>
+                                                </td>
+                                                <td  ><span ng-bind="entity.addDate"></span></td>
+                                                <td  ng-if="attrType == 'WAVE_TYPE'"><span ng-bind="log.length - $index"></span></td>
                                             </tr>
                                             </tbody>
                                         </table>

@@ -20,7 +20,7 @@
         }else if(style == "success"){
             icon = "fa fa-check";
         }else if(style == "info"){
-            icon = "fa fa-question";
+            icon = "fa fa-check";
         }else{
             icon = "fa fa-adjust";
         }
@@ -50,7 +50,7 @@
         }else if(style == "success"){
             icon = "fa fa-check";
         }else if(style == "info"){
-            icon = "fa fa-question";
+            icon = "fa fa-check";
         }else{
             icon = "fa fa-adjust";
         }   
@@ -80,7 +80,7 @@
         }else if(style == "success"){
             icon = "fa fa-check";
         }else if(style == "info"){
-            icon = "fa fa-question";
+            icon = "fa fa-check";
         }else{
             icon = "fa fa-adjust";
         }   

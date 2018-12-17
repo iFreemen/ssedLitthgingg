@@ -11,9 +11,13 @@ import java.util.Set;
 public interface ModelAttrService {
 
     void saveModelAttr(List<ModelAttr> list);
+    void updateModelAttr(List<ModelAttr> list);
     List<ModelAttr> queryByModelId(Integer modelId);
     void deleteByModelId(Integer modelId);
 
-    void deleteByAttrId(Integer id);
+
+    void deleteByAttrId(List<Integer> ids);
+
 	List<ModelAttr> queryAttrByModelId(Integer modelId);
+
 }

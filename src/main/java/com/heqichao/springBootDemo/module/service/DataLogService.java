@@ -34,11 +34,11 @@ public interface DataLogService {
      */
     void saveDataLog(String devId,String data, String srcData,String devType);
 
-    List<DataDetail> queryDataDetail(String devId, String key, String startTime, String endTime);
+    List<DataDetail> queryDataDetail(String devId, Integer attrId, String startTime, String endTime);
 
     void deleteDataLog(String... devId);
 
-    Map queryEquAttrLog(String devId, String attrKey, String startTime, String endTime);
+    Map queryEquAttrLog(String devId, Integer attrId, String startTime, String endTime);
 
     /**
      * 查找在线的lora设备中在date时间内没接收到的数据

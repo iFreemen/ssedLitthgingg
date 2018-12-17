@@ -12,6 +12,7 @@ public class DataDetail extends BaseEntity{
     private Integer logId;
 
     private String devId;
+    private Integer attrId;
 
     private String dataName;
 
@@ -28,6 +29,14 @@ public class DataDetail extends BaseEntity{
     private String unit;
 
     private String dataStatus;
+
+    public Integer getAttrId() {
+        return attrId;
+    }
+
+    public void setAttrId(Integer attrId) {
+        this.attrId = attrId;
+    }
 
     public Integer getLogId() {
         return logId;

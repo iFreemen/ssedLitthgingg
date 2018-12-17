@@ -37,7 +37,7 @@ public class ModelServiceImpl implements ModelService {
     private EquipmentService equipmentService;
 
     @Override
-    public Integer saveOrUpdateModel(Integer modelId,String modelName,List<Map> attrs) {
+    public Integer saveOrUpdateModel(Integer modelId,String modelName,List<Map> attrs,String deleteIds) {
         Date date = new Date();
         if(!UserUtil.hasCRDPermission() ){
             throw new ResponeException("没有该权限操作！");
@@ -60,25 +60,43 @@ public class ModelServiceImpl implements ModelService {
             //已存在更新名称
             modelMapper.updateModelName(modelId,modelName,userId,date);
         }
-        //删除所有的属性重新保存
-        modelAttrService.deleteByModelId(modelId);
         if(attrs!=null && attrs.size()>0){
             checkHeartBeatProxy(attrs);
-            List<ModelAttr> list =new ArrayList<>();
+            List<ModelAttr> saveList =new ArrayList<>();
+            List<ModelAttr> updateList =new ArrayList<>();
             for(int i=0;i< attrs.size();i++){
                 Map map=attrs.get(i);
                 ModelAttr modelAttr =new ModelAttr();
                 BeanUtil.copyProperties(modelAttr,map);
-                String dataType =modelAttr.getDataType();
                 modelAttr.setOrderNo(i+1);
                 modelAttr.setModelId(modelId);
                 modelAttr.setAddDate(date);
                 modelAttr.setAddUid(userId);
                 modelAttr.setUdpDate(date);
                 modelAttr.setUdpUid(userId);
-                list.add(modelAttr);
+                if(modelAttr.getId()==null){
+                    saveList.add(modelAttr);
+                }else{
+                    updateList.add(modelAttr);
+                }
             }
-            modelAttrService.saveModelAttr(list);
+            modelAttrService.saveModelAttr(saveList);
+            modelAttrService.updateModelAttr(updateList);
+
+        }
+        if(StringUtil.isNotEmpty(deleteIds)){
+            String[] ids =deleteIds.split(",");
+            List<Integer> intIds =new ArrayList<>();
+            try{
+                if(ids!=null && ids.length>0){
+                    for(String id :ids){
+                        Integer i =Integer.parseInt(id);
+                        intIds.add(i);
+                    }
+                }
+                modelAttrService.deleteByAttrId(intIds);
+            }catch (Exception e){}
+
         }
         return modelId;
     }
@@ -295,7 +313,7 @@ public class ModelServiceImpl implements ModelService {
                     }
                 }
                 checkAttr(modelName,attrList);
-                modelService.saveOrUpdateModel(null,modelName,attrList);
+                modelService.saveOrUpdateModel(null,modelName,attrList,null);
             }
         }
     }
