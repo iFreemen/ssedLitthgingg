@@ -58,10 +58,11 @@ public interface AlarmLogMapper {
             + "#{uid}"
             + "</foreach>"
              + "<if test =\" status !=null and status != ''\">  and  data_status = #{status} </if>"
-            + "<if test =\"udpDate !=null \"> and  a.udp_date &gt; #{udpDate} </if>"
+            + "<if test =\"udpDate !=null \"> and  udp_date &gt; #{udpDate} </if>"
+            + "<if test =\"recordIsNull \"> and  record is null </if>"
             +" GROUP BY dev_id,attr_id "
             +") order by a.udp_date desc"
             +"</script>")
-    List<Map> queryAlarm(@Param("list") List<String> list ,@Param("status")String status,@Param("udpDate")Date udpDate);
+    List<Map> queryAlarm(@Param("list") List<String> list ,@Param("status")String status,@Param("udpDate")Date udpDate,@Param("recordIsNull")boolean recordIsNull);
 
 }

@@ -113,9 +113,19 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label  class="control-label">状态<span style="color: red">*</span></label>
-                                            <!--<input type="text" class="form-control" required ng-model="alarmStatus" name="alarmStatus">-->
-                                            <input type="radio" name="a" value="A" ng-model="alarmStatus" ng-checked="true">报警
-                                            <input type="radio" name="n" value="N" ng-model="alarmStatus">已处理
+                                           <!-- <input type="radio" name="a" value="A" ng-model="alarmStatus" ng-checked="true">报警
+                                            <input type="radio" name="n" value="N" ng-model="alarmStatus">已处理-->
+                                            <div>
+                                                <div class="radio radio-info radio-inline">
+                                                    <input id="inlineRadio1" type="radio" name="a" value="A" ng-model="alarmStatus" >
+                                                    <label for="inlineRadio1"> 报警 </label>
+                                                </div>
+
+                                                <div class="radio radio-info radio-inline">
+                                                    <input id="inlineRadio2"  type="radio" name="n" value="N" ng-model="alarmStatus" >
+                                                    <label for="inlineRadio2"> 已处理 </label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-12">

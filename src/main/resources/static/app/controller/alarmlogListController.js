@@ -47,8 +47,8 @@ function alarmLogListCtrl($scope, $http, $rootScope,$filter,$location,fileUpload
     }
     $scope.selectAlarm=function (entity) {
         $scope.select=entity;
-        $scope.alarmStatus='A';
-        $scope.record='';
+        $scope.alarmStatus=entity.data_status;
+        $scope.record=entity.record;
     }
     $scope.updateAlarm=function () {
         $http.post("/service/updateAlarm",{"status":$scope.alarmStatus,"record":$scope.record,"id":$scope.select.id}).success(function(data) {
