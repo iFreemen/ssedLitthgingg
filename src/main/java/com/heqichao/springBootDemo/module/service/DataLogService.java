@@ -1,6 +1,7 @@
 package com.heqichao.springBootDemo.module.service;
 
 import com.heqichao.springBootDemo.module.entity.DataDetail;
+import com.heqichao.springBootDemo.module.entity.DataLog;
 
 import java.util.Date;
 import java.util.List;
@@ -56,4 +57,6 @@ public interface DataLogService {
      * @return
      */
     List<String> checkOnLineDev(String type,  Date date);
+
+	List<DataLog> queryDataLog();
 }
