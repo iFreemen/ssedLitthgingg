@@ -4,6 +4,7 @@ import com.heqichao.springBootDemo.module.entity.DataLog;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.Date;
@@ -31,4 +32,9 @@ public interface DataLogMapper {
             + "</foreach>"
             + "</script>")
     void updateStatus( @Param("status")String status ,@Param("list") List<String> list, @Param("date")Date date);
+    
+    // Muzzy 
+    @Select("select * from data_log d order by add_date desc limit 100")
+    public List<DataLog> queryDataLog();
+    // End Muaay
 }
