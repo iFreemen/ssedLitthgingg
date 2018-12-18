@@ -1,25 +1,42 @@
 
-function alarmLogListCtrl($scope, $http, $rootScope,$filter,$location,fileUpload) { $scope.pages=0;
+function alarmLogListCtrl($scope, $http, $routeParams) { $scope.pages=0;
     $scope.fmtDate = function(date){
         var y = 1900+date.getYear();
         var m = "0"+(date.getMonth()+1);
         var d = "0"+date.getDate();
         return y+"-"+m.substring(m.length-2,m.length)+"-"+d.substring(d.length-2,d.length);
     }
-    $scope.alarmStatus='A';
-    $scope.record='';
-    $scope.select={};
+
+
     //为后台请求参数 带分页数据
     $scope.quereyData={
         page:1, //当前页码 初始化为1
         size:defaultSize, //每页数据量 defaultSize全局变量
         devId:"",
         attrId:"",
-        status:"A"  //默认查报警
+        status:""  //默认查全部
     };
     $scope.pageArr=[1];//页码数组
     $scope.pages= $scope.pageArr.length; //总页数
     $scope.total=0;
+
+    if($routeParams){
+        //只有第一次从列表跳入时初始化
+        $scope.quereyData.initOption='TRUE';
+        if($routeParams.devId){
+            $scope.quereyData.devId=$routeParams.devId;
+        }
+        if($routeParams.attrId){
+            $scope.quereyData.attrId=$routeParams.attrId;
+        }
+        if($routeParams.status){
+            $scope.quereyData.status=$routeParams.status;
+        }
+    }
+
+    $scope.alarmStatus='';
+    $scope.record='';
+    $scope.select={};
 
     /*$scope.quereyData.end =$scope.fmtDate(new Date());
     var date = new Date();//获取当前时间
@@ -61,6 +78,7 @@ function alarmLogListCtrl($scope, $http, $rootScope,$filter,$location,fileUpload
     //初始化数据
     $scope.init=function(){
         $http.post("/service/queryAlarmLog",$scope.quereyData).success(function(data) {
+            $scope.quereyData.initOption='FALSE';
             $scope.data = data.resultObj.data.list;
             $scope.pages=data.resultObj.data.pages;
             $scope.total=data.resultObj.data.total;

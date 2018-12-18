@@ -62,12 +62,13 @@ public class AlarmLogController extends BaseController{
         String start= (String) param.get("start");
         String status= (String) param.get("status");
         String end= (String) param.get("end");
+        String initOption= (String) param.get("initOption");
         if(StringUtil.isNotEmpty(end)){
             end=end+" 23:59:59";
         }
         //初始化
         //设备列表 初始化设备id为第一个
-        if(StringUtil.isEmpty(devId) ){
+        if(StringUtil.isEmpty(devId) || "TRUE".equals(initOption)){
             List<Map<String, String>> devList = equipmentService.getUserEquipmentIdList(ServletUtil.getSessionUser().getId());
             if(devList!=null && devList.size()>0){
                 Map<String, String> devMap =devList.get(0);
@@ -79,7 +80,7 @@ public class AlarmLogController extends BaseController{
             map.put("devList",devList);
         }
         //属性列表 初始化属性key为第一个
-        if(attrId == null ){
+        if(attrId == null || "TRUE".equals(initOption)){
             List<ModelAttr> attrList =new ArrayList<>();
             Equipment equipment  =equipmentService.getEquipmentInfo(devId);
             if(equipment!=null && equipment.getModelId() !=null){
