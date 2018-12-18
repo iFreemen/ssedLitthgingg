@@ -202,20 +202,22 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.
                 yaxis: {
                     //min: 0,
                     //max: $scope.max,
-                    autoscaleMargin:'1',
-                   // tickDecimals:'2',
+                    ticks:6,
+                    autoscaleMargin:1,
+                 //   tickDecimals:1,
                     color: 'rgba(0,0,0,0)',
+                    show:true,
+                   // mode:number,
                     tickFormatter: function (val, axis) {
-                        if($scope.unit){
+                       if($scope.unit){
                             return val+$scope.unit ; //单位
                         }else{
                             return val;
                         }
-
                     },
                 },
                 xaxis: {
-                    //autoscaleMargin:'1',
+                  //  autoscaleMargin:'1',
                     color: 'rgba(0,0,0,0)',
                     tickFormatter: function (val, axis) {
                         //非波形
