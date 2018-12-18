@@ -9,6 +9,7 @@ import com.heqichao.springBootDemo.base.param.ApplicationContextUtil;
 import com.heqichao.springBootDemo.base.service.EquipmentService;
 import com.heqichao.springBootDemo.base.service.UserService;
 import com.heqichao.springBootDemo.base.util.Base64Encrypt;
+import com.heqichao.springBootDemo.base.util.ServletUtil;
 import com.heqichao.springBootDemo.base.util.StringUtil;
 import com.heqichao.springBootDemo.base.util.UserUtil;
 import com.heqichao.springBootDemo.module.entity.*;
@@ -49,6 +50,16 @@ public class DataLogServiceImpl implements DataLogService {
     @Autowired
     private UserService userService;
 
+    @Override
+    public List<DataLog> queryDataLog(){
+    	Integer cmp = ServletUtil.getSessionUser().getCompetence();
+    	if(cmp==2) {
+    		return dataLogMapper.queryDataLog();
+    		
+    	}
+    	return null;
+    }
+    
     @Override
     public void saveDataLog(String devId,String data, String srcData,String devType){
         Date date =new Date();

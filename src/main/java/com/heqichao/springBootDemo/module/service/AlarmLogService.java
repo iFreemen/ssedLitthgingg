@@ -38,7 +38,7 @@ public interface AlarmLogService {
 
 	List<AlarmLog> queryAlarmNewestFive();
 
-    List<Map> queryCountByTimeType( String timeType);
+    List<Map> queryCountByTimeType( String start,String end);
 
     //查找某个时间段内的统计
     List<Map> queryCountByDay( Date start,Date end);

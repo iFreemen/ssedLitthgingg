@@ -116,4 +116,12 @@ public class DataLogController extends BaseController{
 
         return new ResponeResult();
     }
+    
+    @RequestMapping(value = "/queryDataLog")
+    ResponeResult queryDataLog() {
+    	
+    	return new ResponeResult(dataLogService.queryDataLog());
+    }
+    
+    
 }

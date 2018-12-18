@@ -146,7 +146,8 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.
         this.$realData = []
     };
     $scope.sum=0;
-    $scope.max=1;
+
+
 
     var pcolors = '#2b9ac9';
     var borderColor = '#fff';
@@ -209,7 +210,10 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.
                     show:true,
                    // mode:number,
                     tickFormatter: function (val, axis) {
-                       if($scope.unit){
+                    	if(String(val).indexOf('.') != -1){
+                    		val=val.toFixed(2);
+                    	}
+                        if($scope.unit){
                             return val+$scope.unit ; //单位
                         }else{
                             return val;
@@ -245,7 +249,9 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.
 
         //initializing various charts and componentszuo
         Dashboard.prototype.init = function() {
-            this.createPlotGraph("#website-stats2",  $scope.plotDownloads,  $scope.param.attrKey, pcolors, borderColor, bgColor);
+    	    var points=angular.fromJson(angular.toJson($scope.plotDownloads));
+    	    var keys=angular.fromJson(angular.toJson($scope.param.attrKey));
+            this.createPlotGraph("#website-stats2", points , keys , pcolors, borderColor, bgColor);
         },
 
         $.Dashboard = new Dashboard, $.Dashboard.Constructor = Dashboard;

@@ -53,6 +53,17 @@ public class AlarmLogController extends BaseController{
         return new ResponeResult(alarmLogService.queryAlarm(getParamMap()));
     }
 
+    @RequestMapping(value = "/queryAlarmByTimeType")
+    ResponeResult queryAlarmByTimeType() {
+        Map param =getParamMap();
+        String start= (String) param.get("start");
+        String end= (String) param.get("end");
+        if(StringUtil.isNotEmpty(end)){
+            end=end+" 23:59:59";
+        }
+        return new ResponeResult(alarmLogService.queryCountByTimeType(start,end));
+    }
+
     @RequestMapping(value = "/queryAlarmLog")
     ResponeResult queryAlarmLog() {
         Map map =new HashMap();

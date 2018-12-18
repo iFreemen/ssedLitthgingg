@@ -2,7 +2,6 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout,$interval) {
 	var elem = document.createElement("script");
 	elem.src = 'assets/js/jquery.easyui.min.js';
 	document.body.appendChild(elem);
-	$scope.initInterval=true;
 	//计算窗口高度
     var map_height = $(window).height()- $(".container").height()-10;
     // var test_height = $(window).height()- $(".page-top").height()- $("#data_body").find("table").height()-92;
@@ -232,10 +231,11 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout,$interval) {
         $scope.init();
     }
   //每30s刷新一次
-	$interval(function() {
-		if($scope.initInterval){
+    $scope.$on('$destroy',function(){
+   	 $interval.cancel(timeout_upd);
+    })
+	var timeout_upd = $interval(function() {
 			$scope.getDevList($scope.quereyData.page);
-		}
 	}, 30*1000);
   //获取上下线图片
     $scope.getStatusImg = function (status) {

@@ -792,16 +792,6 @@ body.fixed-left .side-menu.left {
     line-height: 24px;
     font-style: normal;
 }
-.clearfix:after {
-    content:".";
-    display:block;
-    height:0;
-    clear:both;
-    visibility:hidden;
-}
-.clearfix {
-    display:block;
-}
 .clear {
     clear:both;
 }
