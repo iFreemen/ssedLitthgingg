@@ -79,7 +79,7 @@ public interface AlarmLogMapper {
 
 	//查找某个时间段内的统计
 	@Select("<script>"
-			+"select DATE_FORMAT(add_date,'%j') times,count(id) count from alarm_log where  add_date  &gt;= #{start}) and  add_date &lt;= #{end} "
+			+"select DATE_FORMAT(add_date,'%j') times,count(id) count from alarm_log where  add_date  &gt; #{start}) and  add_date &lt;= #{end} "
 			+" and dev_id in "
 			+ "<foreach  collection=\"list\" open=\"(\" close=\")\" separator=\",\" item=\"uid\" >"
 			+ "#{uid}"

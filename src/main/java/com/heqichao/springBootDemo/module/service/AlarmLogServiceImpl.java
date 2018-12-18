@@ -108,13 +108,13 @@ public class AlarmLogServiceImpl implements AlarmLogService {
 
     @Override
     public List<Map> queryCountByTimeType( String timeType) {
-
         List<String> devIdList =getUserDevIds();
         if(devIdList!=null && devIdList.size()>0){
             String type ="";
             if("servenDay".equals(timeType)){
                 Date endDate =DateUtil.getEndTime(new Date());
                 Date startDate =DateUtil.addDay(endDate,-7);//1号的23:59:59 到8号的23:59:59
+                return alarmLogMapper.queryCountByDay(devIdList,startDate,endDate);
             }
            else  if("year".equals(timeType)){
                 type="%Y";
@@ -126,7 +126,6 @@ public class AlarmLogServiceImpl implements AlarmLogService {
             if(StringUtil.isNotEmpty(type)){
                 return alarmLogMapper.queryCountByTimeType(devIdList,type);
             }
-
         }
         return new ArrayList();
     }
