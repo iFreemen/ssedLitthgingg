@@ -80,7 +80,7 @@ public class AlarmLogController extends BaseController{
             map.put("devList",devList);
         }
         //属性列表 初始化属性key为第一个
-        if(attrId == null ){
+        if(attrId == null || "TRUE".equals(initOption)){
             List<ModelAttr> attrList =new ArrayList<>();
             Equipment equipment  =equipmentService.getEquipmentInfo(devId);
             if(equipment!=null && equipment.getModelId() !=null){

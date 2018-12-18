@@ -89,11 +89,17 @@
 												<div class="pull-left">
 													<em class="fa fa-bell-o fa-2x text-danger"></em>
 												</div>
-												<div class="media-body clearfix" ng-click="gotoWarningLog()">
+												<div class="media-body clearfix"  style="display: table-cell;">
 													<div class="media-heading">设备报警</div>
-													<p class="m-0">
-														<small>您有
-															<span class="text-primary" ng-bind="$root.faultCount"></span>个故障问题待处理</small>
+													<p class="m-0"  ng-repeat="entity in $root.faultAlarmList" ng-if="$root.faultAlarmList && $root.faultAlarmList.length >0" ng-click="gotoWarningLog(entity)" >
+														<small>
+															<span class="text-primary" >{{entity.name}}的{{entity.attr_name}}发生报警</span>
+														</small>
+													</p>
+													<p class="m-0"   ng-if="!$root.faultAlarmList || $root.faultAlarmList.length <=0" >
+														<small>
+															暂无故障问题
+														</small>
 													</p>
 												</div>
 											</div>
@@ -372,6 +378,7 @@
 
 				//报警
 				$rootScope.faultCount=0;
+				$rootScope.faultAlarmList=new Array();
 				$scope.newPwd ="";
 				$scope.checkPwd ="";
 				$scope.encordSrcPwd="";
@@ -398,6 +405,7 @@
 						if(data.success){
 
 							$rootScope.faultCount =data.resultObj.alarmCount;
+							$rootScope.faultAlarmList =data.resultObj.alarmList;
 							if(data.resultObj.chaneList){
 								for(var i=0;i<data.resultObj.chaneList.length;i++){
 									var mes =data.resultObj.chaneList[i];
@@ -443,8 +451,8 @@
 					$scope.queryFaultCount("TRUE");
 				}, 30*1000);
 
-                $scope.gotoWarningLog =function () {
-                    $location.path("/module/alarmLogList");
+                $scope.gotoWarningLog =function (entity) {
+                    $location.path("/module/alarmLogList/"+entity.dev_id+"/"+entity.attr_id+"/A");
                 }
 
 				$scope.logout=function(){
