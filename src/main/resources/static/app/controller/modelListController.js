@@ -1,5 +1,5 @@
 
-function modelListCtrl($scope, $http, $rootScope,$filter,$location,fileUpload) { $scope.pages=0;
+function modelListCtrl($scope, $http, $rootScope,$filter,$location) { $scope.pages=0;
     $scope.clear=function(){
         $scope.quereyData.modelName="";
     }
