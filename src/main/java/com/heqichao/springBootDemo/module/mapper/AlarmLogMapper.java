@@ -52,7 +52,7 @@ public interface AlarmLogMapper {
     List<Map> queryAlarmLogByDevIdAttrId(@Param("list") List<String> list ,@Param("devId") String devId, @Param("attrId")Integer attrId, @Param("status")String status, @Param("start") String start, @Param("end") String end);
 
     @Select("<script>"
-            +"select a.id,a.data_status,a.udp_date,a.alram_type,a.data_value,a.unit,e.name,m.attr_name,m.data_type from (alarm_log a LEFT JOIN equipments e on a.dev_id = e.dev_id) LEFT JOIN model_attr m on a.attr_id = m.id where a.id in ("
+            +"select a.id,a.dev_id,a.attr_id,a.data_status,a.udp_date,a.alram_type,a.data_value,a.unit,e.name,m.attr_name,m.data_type from (alarm_log a LEFT JOIN equipments e on a.dev_id = e.dev_id) LEFT JOIN model_attr m on a.attr_id = m.id where a.id in ("
             +"select MAX(id) from alarm_log  where 1=1  and dev_id in "
             + "<foreach  collection=\"list\" open=\"(\" close=\")\" separator=\",\" item=\"uid\" >"
             + "#{uid}"

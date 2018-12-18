@@ -88,8 +88,11 @@ public class AlarmLogServiceImpl implements AlarmLogService {
             List<Map> list = alarmLogMapper.queryAlarm(devIds,ALARM_STATUS,null,false);
             if(list!=null){
                 alarmCount=list.size();
+            }else{
+                list =new ArrayList<>();
             }
             map.put("alarmCount",alarmCount);
+            map.put("alarmList",list);
 
             //查找30秒内的变化数据
             String queryChange =  StringUtil.getStringByMap(param,"queryChange");
