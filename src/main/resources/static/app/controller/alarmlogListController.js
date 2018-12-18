@@ -9,7 +9,7 @@ function alarmLogListCtrl($scope, $http, $routeParams) { $scope.pages=0;
 
 
 
-    $scope.alarmStatus='A';
+    $scope.alarmStatus='';
     $scope.record='';
     $scope.select={};
     //为后台请求参数 带分页数据
@@ -18,7 +18,7 @@ function alarmLogListCtrl($scope, $http, $routeParams) { $scope.pages=0;
         size:defaultSize, //每页数据量 defaultSize全局变量
         devId:"",
         attrId:"",
-        status:"A"  //默认查报警
+        status:""  //默认查报警
     };
     $scope.pageArr=[1];//页码数组
     $scope.pages= $scope.pageArr.length; //总页数
