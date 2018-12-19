@@ -45,12 +45,8 @@ public class AlarmLogServiceImpl implements AlarmLogService {
     @Override
     public PageInfo queryAlarmLog(String devId, Integer attrId,String status, String startTime, String endTime) {
 
-        List<Map<String, String>> devList = equipmentService.getUserEquipmentIdList(ServletUtil.getSessionUser().getId());
-        if(devList!=null && devList.size()>0){
-            List<String> devIdList =new ArrayList<>();
-            for(Map m:devList){
-                devIdList.add((String) m.get("dev_id"));
-            }
+        List<String> devIdList =getUserDevIds();
+        if(devIdList!=null && devIdList.size()>0){
             PageUtil.setPage();
             return new PageInfo(alarmLogMapper.queryAlarmLogByDevIdAttrId(devIdList,devId,attrId, status,  startTime,  endTime));
         }else{
@@ -74,18 +70,11 @@ public class AlarmLogServiceImpl implements AlarmLogService {
     @Override
     public Map queryAlarm(Map param) {
         Map map=new HashMap();
-        List<Map<String, String>> devList = equipmentService.getUserEquipmentIdList(ServletUtil.getSessionUser().getId());
-        List<String> devIds =new ArrayList<>();
-        if(devList!=null && devList.size()>0){
-          for(Map m:devList){
-              String devId= (String) m.get("dev_id");
-              if(StringUtil.isNotEmpty(devId)){
-                  devIds.add(devId);
-              }
-          }
+        List<String> devIdList =getUserDevIds();
+        if(devIdList!=null && devIdList.size()>0){
           //查找系统的报警总数
             int alarmCount =0;
-            List<Map> list = alarmLogMapper.queryAlarm(devIds,ALARM_STATUS,null,false);
+            List<Map> list = alarmLogMapper.queryAlarm(devIdList,ALARM_STATUS,null,false);
             if(list!=null){
                 alarmCount=list.size();
             }else{
@@ -98,7 +87,7 @@ public class AlarmLogServiceImpl implements AlarmLogService {
             String queryChange =  StringUtil.getStringByMap(param,"queryChange");
             if(StringUtil.isNotEmpty(queryChange) && "TRUE".equals(queryChange)){
                 //忽略手动修改的状态数据
-                list = alarmLogMapper.queryAlarm(devIds,null, DateUtil.addSecond(new Date(),-30),true);
+                list = alarmLogMapper.queryAlarm(devIdList,null, DateUtil.addSecond(new Date(),-30),true);
                 if(list!=null && list.size()>0){
                     map.put("chaneList",list);
                 }
@@ -116,5 +105,53 @@ public class AlarmLogServiceImpl implements AlarmLogService {
     	Integer cmp = ServletUtil.getSessionUser().getCompetence();
         return alarmLogMapper.queryAlarmNewestFive(udid,pid,cmp);
     }
+
+    @Override
+    public List<Map> queryCountByTimeType( String start,String end) {
+        List<String> devIdList =getUserDevIds();
+        if(devIdList!=null && devIdList.size()>0){
+
+            return alarmLogMapper.queryCountByDay(devIdList,start,end);
+
+
+            /*String type ="";
+            //查询7天内
+            if("servenDay".equals(timeType)){
+                Date endDate =DateUtil.getEndTime(new Date());
+                Date startDate =DateUtil.addDay(endDate,-7);//1号的23:59:59 到8号的23:59:59
+                return alarmLogMapper.queryCountByDay(devIdList,startDate,endDate);
+            }
+           else  if("year".equals(timeType)){
+                type="%Y";
+            }else if("month".equals(timeType)){
+                type="%m";
+            }else if("day".equals(timeType)){
+                type="%j";
+            }
+            if(StringUtil.isNotEmpty(type)){
+                return alarmLogMapper.queryCountByTimeType(devIdList,type);
+            }*/
+        }
+        return new ArrayList();
+    }
+
+    @Override
+    public List<Map> queryCountByDay( Date start, Date end) {
+        return null;
+    }
     // End Muzzy
+
+    private List<String> getUserDevIds(){
+        List<Map<String, String>> devList = equipmentService.getUserEquipmentIdList(ServletUtil.getSessionUser().getId());
+        List<String> devIds =new ArrayList<>();
+        if(devList!=null && devList.size()>0) {
+            for (Map m : devList) {
+                String devId = (String) m.get("dev_id");
+                if (StringUtil.isNotEmpty(devId)) {
+                    devIds.add(devId);
+                }
+            }
+        }
+        return  devIds;
+    }
 }

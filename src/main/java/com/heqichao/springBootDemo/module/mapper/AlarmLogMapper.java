@@ -64,8 +64,36 @@ public interface AlarmLogMapper {
             +") order by a.udp_date desc"
             +"</script>")
     List<Map> queryAlarm(@Param("list") List<String> list ,@Param("status")String status,@Param("udpDate")Date udpDate,@Param("recordIsNull")boolean recordIsNull);
-    
-    // Muzzy 
+
+	//查找今年的按年按月按日统计
+	@Select("<script>"
+			+"select DATE_FORMAT(add_date,#{timeType}) times,count(id) count from alarm_log where  add_date &gt; year(SYSDATE()) "
+			+" and dev_id in "
+			+ "<foreach  collection=\"list\" open=\"(\" close=\")\" separator=\",\" item=\"uid\" >"
+			+ "#{uid}"
+			+ "</foreach>"
+			+" group by times order by times asc"
+			+"</script>"
+		)
+	List<Map> queryCountByTimeType(@Param("list") List<String> list,@Param("timeType")String timeType);
+
+
+	//查找某个时间段内的统计
+	@Select("<script>"
+			+"select DATE_FORMAT(add_date,'%j') times,count(id) count from alarm_log where 1=1  "
+			+" and dev_id in "
+			+ "<foreach  collection=\"list\" open=\"(\" close=\")\" separator=\",\" item=\"uid\" >"
+			+ "#{uid}"
+			+ "</foreach>"
+			+ "<if test =\"start !=null  and start!=''\"> and add_date &gt;= #{start} </if>" //大于等于
+			+ "<if test =\"end !=null  and end!='' \"> and add_date &lt;= #{end} </if>"  // 小于等于
+			+" group by times order by times asc"
+			+"</script>"
+	)
+	List<Map> queryCountByDay(@Param("list") List<String> list,@Param("start")String start,@Param("end")String end);
+
+
+	// Muzzy
     @Select("<script>"
     		+" select a.model_id,a.dev_id,a.attr_id,a.setting_id,a.alram_type,ot.param_value,a.add_date," + 
     		" case a.data_status when 'A' then '报警' when 'N' then '已处理' end as status_name, " + 
