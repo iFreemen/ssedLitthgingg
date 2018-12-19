@@ -1,6 +1,7 @@
 
 function queryDataLogCtrl($scope, $http, $rootScope) {
-
+    //滚动置顶
+    window.scrollTo(0, 0);
 
     //初始化数据
     $scope.init=function(){
@@ -8,9 +9,6 @@ function queryDataLogCtrl($scope, $http, $rootScope) {
             $scope.data = data.resultObj;
         });
     }
-
-
-
 
     //初始化
     $scope.init();

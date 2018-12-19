@@ -1,4 +1,7 @@
 function liteEquCtrl($scope, $http, $rootScope) {
+	//滚动置顶
+	window.scrollTo(0, 0);
+
 	$scope.equStatus={
 	        "N":"在线", 
 	        "F":"故障", 

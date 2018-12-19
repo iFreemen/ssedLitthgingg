@@ -171,9 +171,7 @@
                                     <li>
                                         <a href="#/module/logShow/"><span>历史数据</span></a>
                                     </li>
-									<li>
-                                        <a ng-click="clearData()" style=" color: #e5e5e5; cursor: pointer;"><span>清空数据</span></a>
-                                    </li>
+
 									
                                 </ul>
                             </li>
@@ -210,7 +208,9 @@
                                     <li ng-if="user.competence != 4">
                                         <a href="#/module/userList"><span>用户管理</span></a>
                                     </li>
-									
+									<li  ng-if="user.competence != 4">
+										<a ng-click="clearData()" style=" cursor: pointer;"><span>清空数据</span></a>
+									</li>
                                 </ul>
                             </li>
                         </ul>
@@ -548,15 +548,15 @@
 						confirmButtonColor: "#aaa",
 						cancelButtonColor: "#aaa",
 			            confirmButtonText: "确定清空",
-			            cancelButtonText: "取消", 
-			            closeOnConfirm: false,   
+			            cancelButtonText: "取消",
+			            closeOnConfirm: false,
 			            closeOnCancel: false 
 			        }, function(isConfirm){
+			        	console.info(isConfirm);
 			            if (isConfirm) {
 			            	$scope.delLiteAll();
 			            }  else {
-							console.info("bbb");
-			                swal("操作取消", null, "error");   
+			                swal("操作取消", null, "error");
 			            } 
 			        });
 					
@@ -566,6 +566,8 @@
 					$http.post("service/deleteAllDataLog").success(function(data) {
 							if(data.success){
 								swal("删除成功", null, "success");
+							}else{
+								swal("删除失败", null, "success");
 							}
 						});
 				}

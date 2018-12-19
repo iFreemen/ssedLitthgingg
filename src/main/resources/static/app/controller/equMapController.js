@@ -1,5 +1,6 @@
 function equMapCtrl($scope, $http, $rootScope) {
-
+    //滚动置顶
+    window.scrollTo(0, 0);
 //	var dom = document.getElementById("mapcontainer");
 //	var myChart = echarts.init(dom);
 //	var app = {};

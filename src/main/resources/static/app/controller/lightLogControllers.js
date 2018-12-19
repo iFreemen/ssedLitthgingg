@@ -2,6 +2,9 @@
  * Created by heqichao on 2018-7-22.
  */
 function lightLogCtrl($scope, $http, $rootScope, $location) {
+    //滚动置顶
+    window.scrollTo(0, 0);
+
     $scope.pages=0;
 
     $scope.clear=function(){
