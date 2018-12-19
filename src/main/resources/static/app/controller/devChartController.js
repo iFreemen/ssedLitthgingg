@@ -1,4 +1,7 @@
 function devChartCtrl($scope, $http, $rootScope,$routeParams) {
+    //滚动置顶
+    window.scrollTo(0, 0);
+
 // $scope.cmp = !$rootScope.user ? true : ($rootScope.user.competence == 2 ? false : true) ;
     $scope.devId=$routeParams.devId;
     $scope.logId=$routeParams.logId;

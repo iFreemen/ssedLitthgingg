@@ -1,5 +1,9 @@
 
-function alarmLogListCtrl($scope, $http, $routeParams) { $scope.pages=0;
+function alarmLogListCtrl($scope, $http, $routeParams) {
+    //滚动置顶
+    window.scrollTo(0, 0);
+
+    $scope.pages=0;
     $scope.fmtDate = function(date){
         var y = 1900+date.getYear();
         var m = "0"+(date.getMonth()+1);

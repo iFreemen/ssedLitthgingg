@@ -1,4 +1,7 @@
 function devLstCtrl($scope, $http,$rootScope,$location,$timeout, $anchorScroll,$interval) {
+    //滚动置顶
+    window.scrollTo(0, 0);
+
 	var elem = document.createElement("script");
 	elem.src = 'assets/js/jquery.easyui.min.js';
 	document.body.appendChild(elem);

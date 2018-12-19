@@ -1,4 +1,7 @@
 function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout,$interval) {
+    //滚动置顶
+    window.scrollTo(0, 0);
+
 	var elem = document.createElement("script");
 	elem.src = 'assets/js/jquery.easyui.min.js';
 	document.body.appendChild(elem);

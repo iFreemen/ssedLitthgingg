@@ -1,5 +1,8 @@
 function equEditCtrl($scope, $http,$rootScope,$location,$timeout,$routeParams) {
-	var elem = document.createElement("script");
+    //滚动置顶
+    window.scrollTo(0, 0);
+
+    var elem = document.createElement("script");
 	elem.src = 'assets/js/jquery.easyui.min.js';
 	document.body.appendChild(elem);
 	$scope.loadCtl={
