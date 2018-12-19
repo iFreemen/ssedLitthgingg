@@ -2,7 +2,11 @@
  * Created by heqichao on 2018-11-29.
  */
 
-function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.pages=0;
+function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) {
+    //滚动置顶
+    window.scrollTo(0, 0);
+
+    $scope.pages=0;
     $scope.param={};
     $scope.param.devId="";
     $scope.param.attrId="";

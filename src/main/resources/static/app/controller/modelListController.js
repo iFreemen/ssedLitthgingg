@@ -1,5 +1,9 @@
 
-function modelListCtrl($scope, $http, $rootScope,$filter,$location) { $scope.pages=0;
+function modelListCtrl($scope, $http, $rootScope,$filter,$location) {
+    //滚动置顶
+    window.scrollTo(0, 0);
+
+    $scope.pages=0;
     $scope.clear=function(){
         $scope.quereyData.modelName="";
     }

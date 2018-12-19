@@ -1,4 +1,7 @@
 function homeCtrl($scope, $http, $rootScope,$timeout) {
+    //滚动置顶
+    window.scrollTo(0, 0);
+
 	$scope.cmp = !$rootScope.user ? true : ($rootScope.user.competence == 2 ? false : true) ;
 	var Dashboard = function() {
         this.$body = $("body")

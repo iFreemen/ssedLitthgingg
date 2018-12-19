@@ -1,4 +1,7 @@
 function alarmSettingCtrl($scope, $http,$location, $rootScope) {
+	//滚动置顶
+	window.scrollTo(0, 0);
+
 	//为后台请求参数 带分页数据
     $scope.quereyData={
         page:1, //当前页码 初始化为1
@@ -119,12 +122,12 @@ function alarmSettingCtrl($scope, $http,$location, $rootScope) {
 	$scope.delEqu = function(eid){
 		console.log(eid)
 		swal({   
-            title: "是否确定删除该设备？",   
+            title: "是否确定删除该报警设置？",
             type: "warning",   
             showCancelButton: true,   
             confirmButtonColor: "#DD6B55",   
             confirmButtonText: "确定删除",   
-            cancelButtonText: "取消", 
+            cancelButtonText: "取消",
             closeOnConfirm: false,   
             closeOnCancel: false 
         }, function(isConfirm){   

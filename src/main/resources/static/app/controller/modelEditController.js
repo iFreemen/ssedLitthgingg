@@ -1,5 +1,8 @@
 
 function modelEditCtrl($scope, $http, $rootScope,$routeParams,$location) {
+    //滚动置顶
+    window.scrollTo(0, 0);
+
     $scope.modelId=$routeParams.modelId;
     if("add"==$scope.modelId){
         $scope.modelId="";

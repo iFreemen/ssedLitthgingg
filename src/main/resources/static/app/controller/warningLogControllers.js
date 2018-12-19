@@ -2,6 +2,8 @@
  * Created by heqichao on 2018-7-22.
  */
 function warningLogCtrl($scope, $http, $rootScope) {
+    //滚动置顶
+    window.scrollTo(0, 0);
 
     //为后台请求参数 带分页数据
     $scope.showEntity={};

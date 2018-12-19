@@ -1,4 +1,7 @@
 function equCtrl($scope, $http,$location, $rootScope) {
+    //滚动置顶
+    window.scrollTo(0, 0);
+
 	//为后台请求参数 带分页数据
     $scope.quereyData={
         page:1, //当前页码 初始化为1
