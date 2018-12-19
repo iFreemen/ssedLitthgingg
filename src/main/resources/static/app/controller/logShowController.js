@@ -146,7 +146,8 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.
         this.$realData = []
     };
     $scope.sum=0;
-    $scope.max=1;
+
+
 
     var pcolors = '#2b9ac9';
     var borderColor = '#fff';
@@ -202,9 +203,12 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.
                 yaxis: {
                     //min: 0,
                     //max: $scope.max,
-                    autoscaleMargin:'1',
-                   // tickDecimals:'2',
+                    ticks:6,
+                    autoscaleMargin:1,
+                 //   tickDecimals:1,
                     color: 'rgba(0,0,0,0)',
+                    show:true,
+                   // mode:number,
                     tickFormatter: function (val, axis) {
                     	if(String(val).indexOf('.') != -1){
                     		val=val.toFixed(2);
@@ -214,11 +218,10 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) { $scope.
                         }else{
                             return val;
                         }
-
                     },
                 },
                 xaxis: {
-                    //autoscaleMargin:'1',
+                  //  autoscaleMargin:'1',
                     color: 'rgba(0,0,0,0)',
                     tickFormatter: function (val, axis) {
                         //非波形
