@@ -164,7 +164,7 @@ public interface EquipmentMapper {
 	public int insertEquipment(Equipment equ);
 	
 	@Update("update equipments set name=#{name},dev_id=#{devId},type_cd=#{typeCd},model_id=#{modelId},"
-			+ "group_id=#{groupId},app_id=#{appId},verification=#{verification},support_code=#{supportCode},"
+			+ "group_id=#{groupId},group_adm_id=#{groupAdmId},app_id=#{appId},verification=#{verification},support_code=#{supportCode},"
 			+ "supporter=#{supporter},site=#{site},address=#{address},remark=#{remark},uid=#{uid},valid=#{valid},udp_uid=#{udpUid},udp_date=sysdate()"
 			+ " where id=#{id}")
 	public int editEquipment(Equipment equ);
