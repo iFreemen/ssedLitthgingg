@@ -65,7 +65,7 @@ public enum AttrEnum implements AttrAnalyze{
         }
     },
 
-    INT_TYPE_FOUR_NOSIGNED_ABCD("INT_TYPE","数值型","FOUR_NOSIGNED_ABCD","4字节无符号整数(AB CD)",4){
+    INT_TYPE__FOUR_NOSIGNED_ABCD("INT_TYPE","数值型","FOUR_NOSIGNED_ABCD","4字节无符号整数(AB CD)",4){
         @Override
         public String execute(ModelAttr modelAttr, String context) {
             String result="";
@@ -91,7 +91,7 @@ public enum AttrEnum implements AttrAnalyze{
             return result;
         }
     },
-    INT_TYPE_FOUR_NOSIGNED_CDAB("INT_TYPE","数值型","FOUR_NOSIGNED_CDAB","4字节无符号整数(CD AB)",4){
+    INT_TYPE__FOUR_NOSIGNED_CDAB("INT_TYPE","数值型","FOUR_NOSIGNED_CDAB","4字节无符号整数(CD AB)",4){
         @Override
         public String execute(ModelAttr modelAttr, String context) {
             String result="";
@@ -118,7 +118,7 @@ public enum AttrEnum implements AttrAnalyze{
         }
     },
 
-    INT_TYPE_FOUR_SIGNED_ABCD("INT_TYPE","数值型","FOUR_SIGNED_ABCD","4字节有符号整数(AB CD)",4){
+    INT_TYPE__FOUR_SIGNED_ABCD("INT_TYPE","数值型","FOUR_SIGNED_ABCD","4字节有符号整数(AB CD)",4){
         @Override
         public String execute(ModelAttr modelAttr, String context) {
             String result="";
@@ -145,7 +145,7 @@ public enum AttrEnum implements AttrAnalyze{
         }
     },
 
-    INT_TYPE_FOUR_SIGNED_CDAB("INT_TYPE","数值型","FOUR_SIGNED_CDAB","4字节有符号整数(CD AB)",4){
+    INT_TYPE__FOUR_SIGNED_CDAB("INT_TYPE","数值型","FOUR_SIGNED_CDAB","4字节有符号整数(CD AB)",4){
         @Override
         public String execute(ModelAttr modelAttr, String context) {
             String result="";
@@ -171,7 +171,7 @@ public enum AttrEnum implements AttrAnalyze{
             return result;
         }
     },
-    INT_TYPE_FOURFLOAT_ABCD("INT_TYPE","数值型","FOURFLOAT_ABCD","4字节浮点型(AB CD)",4){
+    INT_TYPE__FOURFLOAT_ABCD("INT_TYPE","数值型","FOURFLOAT_ABCD","4字节浮点型(AB CD)",4){
         @Override
         public String execute(ModelAttr modelAttr, String context) {
             String result="";
@@ -197,7 +197,7 @@ public enum AttrEnum implements AttrAnalyze{
             return result;
         }
     },
-    INT_TYPE_FOURFLOAT_CDAB("INT_TYPE","数值型","FOURFLOAT_CDAB","4字节浮点型(CD AB)",4){
+    INT_TYPE__FOURFLOAT_CDAB("INT_TYPE","数值型","FOURFLOAT_CDAB","4字节浮点型(CD AB)",4){
         @Override
         public String execute(ModelAttr modelAttr, String context) {
             String result="";
@@ -306,7 +306,10 @@ public enum AttrEnum implements AttrAnalyze{
     WAVE_TYPE("WAVE_TYPE","波形",null){
         @Override
         public String execute(ModelAttr modelAttr, String context) {
-
+            //波形可能会没有
+            if(StringUtil.isEmpty(context)){
+                return "";
+            }
             String result="";
             try{
                 if(!check(context)){
@@ -402,7 +405,7 @@ public enum AttrEnum implements AttrAnalyze{
     public static void main(String[] args) {
        // System.out.println( Float.intBitsToFloat(Integer.parseInt("3F9D70A4",16)));
         //System.out.println( Float.intBitsToFloat(Integer.parseInt("A4709D3F",16)));
-        System.out.println(INT_TYPE_FOUR_SIGNED_CDAB.execute(null,"00000001"));
+        System.out.println(INT_TYPE__FOUR_SIGNED_CDAB.execute(null,"00000001"));
     }
 
     boolean check(String context){
