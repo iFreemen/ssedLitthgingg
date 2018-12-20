@@ -43,8 +43,11 @@ public interface UserMapper {
 							@Param("sCompany")String sCompany,
 							@Param("sCompetence")Integer sCompetence);
 	
-	@Select("select id,company from users where (id=#{uid} or parent_uid=#{uid}) and valid = 'N'")
-	public List<User> getCompanySelectList(@Param("uid")Integer uid);
+	@Select("<script> select id,company from users where valid = 'N' "
+			+ "<if test=\"competence == 2 \"> and (id = #{uid} or parent_uid = #{uid}) </if>"
+			+ "<if test=\"competence == 3 \"> and id = #{uid}  </if>"
+			+ " order by id</script> ")
+	public List<User> getCompanySelectList(@Param("uid")Integer uid,@Param("competence")Integer competence);
 	
 	@Select("select count(1)>0 from users where (ACCOUNT = #{account} or company = #{company}) and valid = 'N' ")
 	public boolean duplicatedAccount(@Param("account")String account,@Param("company")String company);

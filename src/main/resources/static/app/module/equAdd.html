@@ -20,7 +20,7 @@
                          <div class="form-group "> 
                               <label  class="col-md-2 control-label ">所属用户<span style="color : red">*</span></label>  
 							  <div class="col-md-9">
-	                               <select  class="form-control" name="uid"  ng-model="addFrom.uid" ng-options="x for (x, y) in selCompanys" required>
+	                               <select  class="form-control" name="uid"  ng-model="addFrom.uid" ng-change="seledUser(addFrom.uid)" ng-options="x for (x, y) in selCompanys" required>
 									</select>
                               </div>
                          </div> 
@@ -122,13 +122,22 @@
 				</div>
 			</div>
 			<div class="col-md-3">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-	                    <h3 class="panel-title">说明</h3>
-	                </div>
-				<div class="panel-body">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+		                    <h3 class="panel-title">LORA设备说明</h3>
+		                </div>
+					<div class="panel-body">
+					添加LORA设备之前请确保已在LORA服务器对应的网关下添加了该LORA设备节点
+					</div>
 				</div>
-			</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+		                    <h3 class="panel-title">NBIOT设备说明</h3>
+		                </div>
+					<div class="panel-body">
+					添加NBIOT设备之前请确定该设备对应的应用和设备已在电信云开发平台添加，并为应用添加了订阅数据变化
+					</div>
+				</div>
 			</div>
 	</div>
 </div>

@@ -16,8 +16,8 @@
 						 <div class="row">
 						<div class="col-md-12">
 							<div class="panel panel-default" ng-show="dataOnReady">
-								<div class="panel-heading">
-				                    <button  type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#grp-add-modal" ng-click="addGrpClick()" >添加 <i class="fa fa-plus"></i></button>
+								<div class="panel-heading" ng-if="edit_cmp">
+				                    <button  type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#grp-add-modal" ng-click="$parent.addGrpClick()" >添加 <i class="fa fa-plus"></i></button>
 				                    <button id="dialog-equ-group"  data-toggle="modal" data-target="#grp-add-btn" style="display: none" ></button>
 				                </div>
 								<div class="panel-body">

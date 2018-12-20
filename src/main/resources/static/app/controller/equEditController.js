@@ -23,7 +23,7 @@ function equEditCtrl($scope, $http,$rootScope,$location,$timeout,$routeParams) {
 					$("#inlineRadio1").attr("checked","checked");
 				}else if($scope.addFrom.typeCd=='N'){
 					$("#inlineRadio2").attr("checked","checked");
-					
+					$scope.chkType=true;
 				}
 				  $scope.init();
 			}

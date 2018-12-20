@@ -47,4 +47,5 @@ public interface ModelService {
 
     void saveImport(Map map);
 	Map<String, Integer> queryUserAttr();
+	Map<String, Integer> queryUserModelByUid();
 }

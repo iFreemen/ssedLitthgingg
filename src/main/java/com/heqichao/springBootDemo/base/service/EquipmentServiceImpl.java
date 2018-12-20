@@ -160,11 +160,19 @@ public class EquipmentServiceImpl implements EquipmentService {
     	Equipment equ = new Equipment(map);
     	Integer uid = ServletUtil.getSessionUser().getId();
     	Integer cmp = ServletUtil.getSessionUser().getCompetence();
+    	Integer gid = equ.getGroupId();
     	if(equ.getName() == null ||equ.getDevId() == null || uid == null || cmp == 4) {
     		return new ResponeResult(true,"Add Equipment Input Error!","errorMsg");
     	}
     	if(eMapper.duplicatedEid(equ.getDevId(),equ.getUid())) {
     		return new ResponeResult(true,"设备编号重复","errorMsg");
+    	}
+    	if(cmp ==2) {
+    		equ.setGroupAdmId(gid);
+    		equ.setGroupId(1);
+    	}else {
+    		equ.setGroupAdmId(1);
+    		equ.setGroupId(gid);
     	}
 		equ.setAddUid(uid);
 		equ.setValid("N");
@@ -191,6 +199,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 		Equipment equ = new Equipment(map);
 		Integer uid = ServletUtil.getSessionUser().getId();
 		Integer cmp = ServletUtil.getSessionUser().getCompetence();
+		Integer gid = equ.getGroupId();
 		if(equ.getId()==null ||equ.getName() == null ||equ.getDevId() == null || uid == null || cmp == 4) {
 			return new ResponeResult(true,"Edit Equipment Input Error!","errorMsg");
 		}
@@ -199,6 +208,13 @@ public class EquipmentServiceImpl implements EquipmentService {
 		if(chgDevId&&eMapper.duplicatedEid(equ.getDevId(),equ.getUid())) {
 			return new ResponeResult(true,"设备编号重复","errorMsg");
 		}
+		if(cmp ==2) {
+    		equ.setGroupAdmId(gid);
+    		equ.setGroupId(1);
+    	}else {
+    		equ.setGroupAdmId(1);
+    		equ.setGroupId(gid);
+    	}
 		equ.setUdpUid(uid);
 		equ.setValid("N");
 		if(eMapper.editEquipment(equ)>0) {
