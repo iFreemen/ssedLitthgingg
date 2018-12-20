@@ -50,8 +50,14 @@ public class AlarmSettingServiceImpl implements AlarmSettingService {
     		return new ResponeResult(true,"此数据模板的这个数据点已存在相应报警设置","errorMsg");
     	}
     	try{
-    		BigDecimal da= new BigDecimal(as.getDataA());
-    		BigDecimal db= new BigDecimal(as.getDataB());
+    		BigDecimal da=new BigDecimal("0");
+    		BigDecimal db=new BigDecimal("0");
+    		if(!StringUtil.isEmpty(as.getDataA())) {
+    			 da= new BigDecimal(as.getDataA());
+    		}
+    		if(!StringUtil.isEmpty(as.getDataB())) {
+    			db= new BigDecimal(as.getDataB());
+    		}
     		if(("BAB".equals(as.getAlramType())||"OAB".equals(as.getAlramType()))&&da.compareTo(db) != -1) {
     			return new ResponeResult(true,"A的值大于或等于B，请检查输入","errorMsg");
     		}

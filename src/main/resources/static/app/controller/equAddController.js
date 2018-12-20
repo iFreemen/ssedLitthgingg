@@ -38,8 +38,8 @@ function equAddCtrl($scope, $http,$rootScope,$location,$timeout) {
     	});
     };
     //获取模板列表
-    $scope.seleUserModelLst = function(){
-    	$http.get("service/queryUserModel").success(function(data) {
+    $scope.seleUserModelLst = function(uid){
+    	$http.post("service/queryUserModelById",{uid:uid}).success(function(data) {
     		if(data.resultObj == "errorMsg"){
     			swal(data.message, null, "error");
     		}else{
@@ -58,7 +58,7 @@ function equAddCtrl($scope, $http,$rootScope,$location,$timeout) {
     $scope.init = function() {
     	$scope.getDevGroupsList();
     	$scope.seleUsersLst();
-    	$scope.seleUserModelLst();
+    	$scope.seleUserModelLst($scope.addFrom.uid);
     	$scope.seleAppLst();
     }
 	$scope.addEqu = function() {
@@ -89,6 +89,12 @@ function equAddCtrl($scope, $http,$rootScope,$location,$timeout) {
 			$scope.chkType=false;
 		}
 		$scope.addFrom.typeCd = type;
+	}
+	//切换所属用户
+	$scope.seledUser = function(uid){
+		if(uid){
+			$scope.seleUserModelLst(uid);
+		}
 	}
 	// 百度地图
 	$timeout(function () {

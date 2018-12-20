@@ -55,6 +55,12 @@ public interface ModelMapper {
             +" order by udp_date desc"
             +"</script>")
     List<Model> queryByUserIds(@Param("list") List<Integer> list,@Param("modelName")String modelName);
+    
+    @Select("<script>"
+    		+"select * from model  where 1=1  and add_uid = #{uid}  "
+    		+" order by udp_date desc"
+    		+"</script>")
+    List<Model> queryByUserId(@Param("uid")String uid);
 
     @Select("<script>"
             +" select m.model_name , a.*  from model m INNER JOIN model_attr a ON m.id = a.model_id where 1=1  "

@@ -116,6 +116,14 @@ public class ModelController extends BaseController{
     ResponeResult queryUserModel(){
         return new ResponeResult(modelService.queryUserModel());
     }
+    /**
+     * 查找选中用户所拥有的模板
+     * @return
+     */
+    @RequestMapping(value = "/queryUserModelById")
+    ResponeResult queryUserModelById(){
+    	return new ResponeResult(modelService.queryUserModelByUid());
+    }
     
     /**
      * 查找当前用户所拥有的数据点

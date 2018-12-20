@@ -87,6 +87,16 @@ function alarmSettingCtrl($scope, $http,$location, $rootScope) {
     $scope.clearEditModal=function(){
     	$scope.editFrom={};
     }
+    //改变添加框报警类型
+    $scope.addTypeChg=function(){
+    	$scope.addFrom.dataA=null;
+    	$scope.addFrom.dataB=null;
+    }
+    //改变添加框报警类型
+    $scope.editTypeChg=function(){
+    	$scope.editFrom.dataA=null;
+    	$scope.editFrom.dataB=null;
+    }
     $scope.addAlarm = function() {
     	$scope.loadCtl.addEnq = true;
         $http.post("service/addAlarmSetting",$scope.addFrom).success(function(data) {

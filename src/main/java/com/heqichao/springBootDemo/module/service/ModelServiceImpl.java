@@ -235,6 +235,21 @@ public class ModelServiceImpl implements ModelService {
         return res;
         // End Muzzy
     }
+    //  Muzzy
+    @Override
+    public Map<String, Integer> queryUserModelByUid() {
+    	Map map = RequestContext.getContext().getParamMap();
+    	String uid = StringUtil.getStringByMap(map,"uid");
+    	List<Model> list =modelMapper.queryByUserId(uid);
+    	Map<String, Integer> res = new HashMap<>();
+    	if(list!=null && list.size()>0){
+    		res =  list.stream().collect(
+    				Collectors.toMap(Model::getModelName,Model::getId, (k1,k2)->k1)
+    				);
+    	}
+    	return res;
+    }
+    // End Muzzy
     
     // Muzzy
     @Override
