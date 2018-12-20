@@ -13,9 +13,9 @@ import java.util.Map;
 public interface AlarmLogMapper {
     @Insert(
             "<script>"
-                    +" insert into alarm_log (add_date,udp_date,add_uid,udp_uid,model_id,dev_id,attr_id,setting_id,data_value,unit,data_status,dev_type,alram_type) values"
+                    +" insert into alarm_log (add_date,udp_date,add_uid,udp_uid,model_id,dev_id,attr_id,setting_id,data_value,unit,data_status,dev_type,alram_type,log_id) values"
                     + "<foreach  collection=\"list\"  separator=\",\" item=\"o\" >"
-                    +" (#{o.addDate},#{o.udpDate},#{o.addUid},#{o.udpUid},#{o.modelId},#{o.devId},#{o.attrId},#{o.settingId},#{o.dataValue},#{o.unit},#{o.dataStatus},#{o.devType},#{o.alramType}) "
+                    +" (#{o.addDate},#{o.udpDate},#{o.addUid},#{o.udpUid},#{o.modelId},#{o.devId},#{o.attrId},#{o.settingId},#{o.dataValue},#{o.unit},#{o.dataStatus},#{o.devType},#{o.alramType},#{o.logId}) "
                     + "</foreach>"
                     +"</script>"
     )
@@ -23,12 +23,9 @@ public interface AlarmLogMapper {
 
     @Update(
             "<script>"
-            + "update alarm_log set  data_status = #{status},udp_date=#{date} where dev_id = #{devId} and  data_status =#{srcStatus} and attr_id in "
-            + "<foreach  collection=\"list\" open=\"(\" close=\")\" separator=\",\" item=\"uid\" >"
-            + "#{uid}"
-            + "</foreach>"
+            + "update alarm_log set  data_status = #{status},udp_date=#{date},new_value= #{newValue} where dev_id = #{devId} and  data_status =#{srcStatus} and attr_id = #{attrId} "
             + "</script>")
-    void updateStatus(@Param("status")String status ,@Param("date")Date date , @Param("devId")String devId, @Param("list")List<Integer> list,@Param("srcStatus")String srcStatus);
+    void updateStatus(@Param("status")String status ,@Param("date")Date date , @Param("devId")String devId, @Param("attrId")Integer attrId,@Param("srcStatus")String srcStatus,@Param("newValue")String newValue);
 
     @Update(
             "<script>"
@@ -52,7 +49,7 @@ public interface AlarmLogMapper {
     List<Map> queryAlarmLogByDevIdAttrId(@Param("list") List<String> list ,@Param("devId") String devId, @Param("attrId")Integer attrId, @Param("status")String status, @Param("start") String start, @Param("end") String end);
 
     @Select("<script>"
-            +"select a.id,a.dev_id,a.attr_id,a.data_status,a.udp_date,a.alram_type,a.data_value,a.unit,e.name,m.attr_name,m.data_type from (alarm_log a LEFT JOIN equipments e on a.dev_id = e.dev_id) LEFT JOIN model_attr m on a.attr_id = m.id where a.id in ("
+            +"select a.id,a.dev_id,a.attr_id,a.data_status,a.udp_date,a.alram_type,a.data_value,a.new_value,a.unit,e.name,m.attr_name,m.data_type from (alarm_log a LEFT JOIN equipments e on a.dev_id = e.dev_id) LEFT JOIN model_attr m on a.attr_id = m.id where a.id in ("
             +"select MAX(id) from alarm_log  where 1=1  and dev_id in "
             + "<foreach  collection=\"list\" open=\"(\" close=\")\" separator=\",\" item=\"uid\" >"
             + "#{uid}"

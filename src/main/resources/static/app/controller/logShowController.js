@@ -207,15 +207,17 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) {
                 yaxis: {
                     //min: 0,
                     //max: $scope.max,
-                    ticks:6,
-                    autoscaleMargin:1,
+
+                 //   ticks:6,
+                //    autoscaleMargin:1,
+
                  //   tickDecimals:1,
                     color: 'rgba(0,0,0,0)',
                     show:true,
                    // mode:number,
                     tickFormatter: function (val, axis) {
                     	if(String(val).indexOf('.') != -1){
-                    		val=val.toFixed(2);
+                    		val=Number(val).toFixed(2);
                     	}
                         if($scope.unit){
                             return val+$scope.unit ; //单位
@@ -240,12 +242,15 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) {
                 },
                 tooltip: true,
                 tooltipOpts: {
-                    content: '%y (%x) ',
-                    shifts: {
+                   content: '%y(%x) ',
+                 /*   content : function(label, xval, yval, flotItem){
+                        return label+"设备:"+yval+"台";
+                    },*/
+                   /* shifts: {
                         x: -60,
                         y: 25
                     },
-                    defaultTheme: false
+                    defaultTheme: false*/
                 }
             });
     },

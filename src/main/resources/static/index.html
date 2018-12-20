@@ -400,33 +400,61 @@
 								for(var i=0;i<data.resultObj.chaneList.length;i++){
 									var mes =data.resultObj.chaneList[i];
 									var value="";
-									if(mes.data_type != 'ALARM_TYPE' && mes.data_type != 'SWITCH_TYPE'){
-										value =mes.data_value;
-										if(mes.unit){
-											value=value+mes.unit;
-										}
-									}else if(mes.data_type == 'SWITCH_TYPE'){
-										if(mes.data_value == '0000'){
-											value="开";
-										}else if(mes.data_value == '0001'){
-											value="关";
-										}else  if(mes.data_value == 'ERR'){
-											value="异常数据";
-										}
-									}else if(mes.data_type == 'ALARM_TYPE'){
-										if(mes.data_value == '0000'){
-											value="正常";
-										}else if(mes.data_value == '0001'){
-											value="报警";
-										}else  if(mes.data_value == 'ERR'){
-											value="异常数据";
-										}
-									}
+
 									if("A"==mes.data_status){
+										if(mes.data_type != 'ALARM_TYPE' && mes.data_type != 'SWITCH_TYPE'){
+											value =mes.data_value;
+											if(mes.unit){
+												value=value+mes.unit;
+											}
+										}else if(mes.data_type == 'SWITCH_TYPE'){
+											if(mes.data_value == '0000'){
+												value="开";
+											}else if(mes.data_value == '0001'){
+												value="关";
+											}else  if(mes.data_value == 'ERR'){
+												value="异常数据";
+											}
+										}else if(mes.data_type == 'ALARM_TYPE'){
+											if(mes.data_value == '0000'){
+												value="正常";
+											}else if(mes.data_value == '0001'){
+												value="报警";
+											}else  if(mes.data_value == 'ERR'){
+												value="异常数据";
+											}
+										}
 										$.Notification.notify('warning', 'top right', '设备数据点故障', mes.name+"的"+mes.attr_name+"报警,当前值为："+value);
+
 									}else if("N" == mes.data_status){
+
+										if(mes.data_type != 'ALARM_TYPE' && mes.data_type != 'SWITCH_TYPE'){
+											value =mes.new_value;
+											if(mes.unit){
+												value=value+mes.unit;
+											}
+										}else if(mes.data_type == 'SWITCH_TYPE'){
+											if(mes.new_value == '0000'){
+												value="开";
+											}else if(mes.new_value == '0001'){
+												value="关";
+											}else  if(mes.new_value == 'ERR'){
+												value="异常数据";
+											}
+										}else if(mes.data_type == 'ALARM_TYPE'){
+											if(mes.new_value == '0000'){
+												value="正常";
+											}else if(mes.new_value == '0001'){
+												value="报警";
+											}else  if(mes.new_value == 'ERR'){
+												value="异常数据";
+											}
+										}
 										$.Notification.notify('info', 'top right', '设备数据点恢复', mes.name+"的"+mes.attr_name+"恢复正常,当前值为："+value);
 									}
+
+
+
 								}
 							}
 

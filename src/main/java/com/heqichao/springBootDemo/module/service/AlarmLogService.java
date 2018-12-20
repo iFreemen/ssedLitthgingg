@@ -25,7 +25,7 @@ public interface AlarmLogService {
      * @param devId
      * @param attrId
      */
-    void updateNormalStatus(String devId,List<Integer> attrId,Date date);
+    void updateNormalStatus(String devId,List<Integer> attrId,Date date ,Map newValueMap);
 
     PageInfo queryAlarmLog(String devId,Integer attrId,String status, String startTime, String endTime);
 

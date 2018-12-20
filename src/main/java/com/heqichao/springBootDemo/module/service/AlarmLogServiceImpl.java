@@ -35,9 +35,12 @@ public class AlarmLogServiceImpl implements AlarmLogService {
     }
 
     @Override
-    public void updateNormalStatus(String devId, List<Integer> attrId,Date date ) {
-        if(StringUtil.isNotEmpty(devId) && attrId!=null && attrId.size()>0 ){
-            alarmLogMapper.updateStatus(NOIMAL_STATUS,date,devId,attrId,ALARM_STATUS);
+    public void updateNormalStatus(String devId, List<Integer> attrIds,Date date ,Map newValueMap) {
+        if(StringUtil.isNotEmpty(devId) && attrIds!=null && attrIds.size()>0 ){
+            for(Integer attrId : attrIds){
+                alarmLogMapper.updateStatus(NOIMAL_STATUS,date,devId,attrId,ALARM_STATUS, (String) newValueMap.get(attrId));
+            }
+
         }
 
     }
