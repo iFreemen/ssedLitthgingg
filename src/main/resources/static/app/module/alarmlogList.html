@@ -61,7 +61,7 @@
                                         <th>当前值</th>
                                         <th>报警时间</th>
                                         <th>状态</th>
-                                        <th>操作</th>
+                                        <th ng-if="$root.edit_cmp">操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -86,7 +86,7 @@
                                         <td ng-if="entity.data_status == 'N' ">已处理</td>
                                         <td ng-if="entity.data_status == 'ERR' ">数据异常</td>
 
-                                        <td >
+                                        <td ng-if="$root.edit_cmp">
                                          <!--   <button class="btn btn-icon waves-effect waves-light btn-info btn-sm m-b-5" ng-click="gotoModel(entity)">
                                                 <i class="fa fa-pencil" style="color:  #fff;"></i>
                                             </button>-->

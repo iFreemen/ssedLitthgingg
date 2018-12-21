@@ -21,10 +21,10 @@
                             </div>
                             <div  class="col-md-12 col-sm-12 col-xs-12 m-t-10">
                                 <div class="col-sm-1"></div>
-                                <div class="col-sm-9">
-                                 <button  class="btn btn-primary waves-effect waves-light" ng-click="addModel()"><i class="fa fa-plus"></i>新建模板</button>
-                                 <button type="button" class="btn btn-primary   waves-effect waves-light" btn-loading="loading" ng-click="exportAll()">全部导出</button>
-                                 <file-upload success-function="uploadSuccess()" url="/service/importModel" name="上传模板"  file-accept="application/vnd.ms-excel"></file-upload>
+                                <div class="col-sm-9" ng-if="$root.edit_cmp">
+                                    <button  class="btn btn-primary waves-effect waves-light" ng-click="addModel()"><i class="fa fa-plus"></i>新建模板</button>
+                                    <button type="button" class="btn btn-primary   waves-effect waves-light" btn-loading="loading" ng-click="exportAll()">全部导出</button>
+                                     <file-upload success-function="uploadSuccess()" url="/service/importModel" name="上传模板"  file-accept="application/vnd.ms-excel"></file-upload>
                                 </div>
                             </div>
                         </div>
@@ -51,7 +51,7 @@
                                         <th>创建人</th>
                                         <th>最后修改时间</th>
                                         <th>最后修改人</th>
-                                        <th>操作</th>
+                                        <th ng-if="$root.edit_cmp">操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -61,7 +61,7 @@
                                         <td ng-bind="entity.addName"  ></td>
                                         <td ng-bind="entity.udpDate | date:'yyyy-MM-dd HH:mm:ss'"  ></td>
                                         <td ng-bind="entity.udpName"  ></td>
-                                        <td >
+                                        <td  ng-if="$root.edit_cmp">
                                         <!--   <a ng-click="gotoModel(entity)" class="on-default edit-row" style="cursor:pointer"><i class="fa fa-pencil"></i></a>
                                             &lt;!&ndash;<a ng-click="deleteModel(entity)" class="on-default edit-row" style="cursor:pointer">删除</a>&ndash;&gt;
                                            &lt;!&ndash; <a class="on-default edit-row"  ng-if="entity.isEdit != true " ng-click="gotoModel(entity)" ><i class="fa fa-pencil"></i></a>&ndash;&gt;

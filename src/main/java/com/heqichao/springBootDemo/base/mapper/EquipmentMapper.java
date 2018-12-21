@@ -159,7 +159,7 @@ public interface EquipmentMapper {
 			+ " from upload_result where res_key=#{key} ")
 	public List<UploadResultEntity> getUploadResult(@Param("key")String key);
 	
-	@Insert("insert into equipments (name,dev_id,type_cd,model_id,group_id,,group_adm_id,app_id,verification,support_code,supporter,site,address,remark,uid,valid,add_uid,udp_uid,online)"
+	@Insert("insert into equipments (name,dev_id,type_cd,model_id,group_id,group_adm_id,app_id,verification,support_code,supporter,site,address,remark,uid,valid,add_uid,udp_uid,online)"
 			+ " values(#{name},#{devId},#{typeCd},#{modelId},#{groupId},#{groupAdmId},#{appId},#{verification},#{supportCode},#{supporter},#{site},#{address},#{remark},#{uid},#{valid},#{addUid},#{addUid},0) ")
 	public int insertEquipment(Equipment equ);
 	
