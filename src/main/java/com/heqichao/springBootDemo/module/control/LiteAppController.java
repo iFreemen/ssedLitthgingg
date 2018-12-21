@@ -1,5 +1,6 @@
 package com.heqichao.springBootDemo.module.control;
 
+import com.heqichao.springBootDemo.base.control.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,7 +10,7 @@ import com.heqichao.springBootDemo.module.service.LiteAppService;
 
 @RestController
 @RequestMapping(value = "/service")
-public class LiteAppController {
+public class LiteAppController extends BaseController{
 
 	@Autowired
 	private LiteAppService liteAppService;
@@ -37,16 +38,13 @@ public class LiteAppController {
 
 	@RequestMapping(value = "/deleteLiteApp")
 	ResponeResult deleteLiteApp() throws Exception {
-		return liteAppService.deleteAppByID();
+		Integer id =getIntegerParam("eid");
+		return liteAppService.deleteAppByID(id);
 	}
 	
 	@RequestMapping(value = "/subLiteDataChg")
 	ResponeResult subLiteDataChg() throws Exception {
 		return liteAppService.subLiteDataChg();
 	}
-	
-	@RequestMapping(value = "/deleteLiteDataAll")
-	ResponeResult deleteLiteAll() throws Exception {
-		return liteAppService.deleteAppByID();
-	}
+
 }

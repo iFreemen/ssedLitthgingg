@@ -11,7 +11,7 @@ public interface LiteAppService {
 	
 	PageInfo queryLiteApps();
 	ResponeResult addLiteApp();
-	ResponeResult deleteAppByID();
+	ResponeResult deleteAppByID(Integer id);
 	ResponeResult updLiteApp();
 	ResponeResult resetSecret();
 	ResponeResult subLiteDataChg() throws Exception;
