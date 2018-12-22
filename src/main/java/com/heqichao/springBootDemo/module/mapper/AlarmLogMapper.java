@@ -11,6 +11,16 @@ import java.util.Map;
  * Created by heqichao on 2018-12-16.
  */
 public interface AlarmLogMapper {
+
+	@Update(
+			"<script>"
+					+ "update alarm_log set  data_status = #{status},udp_date=#{date} where dev_id in "
+					+ "<foreach  collection=\"list\" open=\"(\" close=\")\" separator=\",\" item=\"uid\" >"
+					+ "#{uid}"
+					+ "</foreach>"
+					+ "</script>")
+	void updateDeleteStatus(@Param("status")String status , @Param("list") List<String> list, @Param("date")Date date);
+
     @Insert(
             "<script>"
                     +" insert into alarm_log (add_date,udp_date,add_uid,udp_uid,model_id,dev_id,attr_id,setting_id,data_value,unit,data_status,dev_type,alram_type,log_id) values"

@@ -266,6 +266,7 @@ public class DataLogServiceImpl implements DataLogService {
            List<String > ids = Arrays.asList(devId);
             dataLogMapper.updateStatus(UN_ENABLE_STATUS,ids,date);
             dataDetailMapper.updateStatus(UN_ENABLE_STATUS,ids,date);
+            alarmLogService.deleteAlarmLog(devId);
         }
     }
 

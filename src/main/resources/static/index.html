@@ -569,9 +569,14 @@
 			        });
 
 			    }
+
+				$scope.closeclearData=function(){
+					$("#clearDataId").click();
+				}
+
 				$scope.clearData = function(){
 					swal({   
-			            title: "是否清空所有设备的历史数据？",
+			            title: "是否清空本账号所有设备的历史数据和报警记录？",
 			           /* text: "该操作将清空NBIOT设备的所有上报数据记录，且无法恢复！\r\n请谨慎操作！",*/
 			            type: "warning",   
 			            showCancelButton: true,
@@ -773,6 +778,35 @@
              </div> 
          </div>
      </div>
+<!--
+
+		<div id="clear_data-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="clearModalLabel" aria-hidden="true" style="display: none">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closePwd()">×</button>
+						<h4 class="modal-title">清除数据</h4>
+					</div>
+					<form class="modal-body" ng-submit="clearData()"   name="clearDataForm" >
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<label  class="control-label">数据类型<span style="color: red">*</span></label>
+									&lt;!&ndash;<input type="password" class="form-control" required ng-model="dataType" name="dataType">&ndash;&gt;
+								</div>
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							<button id="clearDataId" type="button" class="btn btn-default waves-effect" data-dismiss="modal" ng-click="closeclearData()">关闭</button>
+							<button type="submit" class="btn btn-info waves-effect waves-light"  ng-disabled="clearDataForm.$invalid">确定</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+-->
+
 		</div>
 	</body>
 </html>

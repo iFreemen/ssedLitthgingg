@@ -20,6 +20,7 @@ public interface AlarmLogService {
     public static final String DELETE_STATUS="D";
     void save(List<AlarmLog> logs);
 
+    void deleteAlarmLog(String... devId);
     /**
      * 更新为正常数据
      * @param devId

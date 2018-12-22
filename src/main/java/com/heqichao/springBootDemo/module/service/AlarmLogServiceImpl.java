@@ -2,12 +2,10 @@ package com.heqichao.springBootDemo.module.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.heqichao.springBootDemo.base.exception.ResponeException;
 import com.heqichao.springBootDemo.base.param.ResponeResult;
 import com.heqichao.springBootDemo.base.service.EquipmentService;
-import com.heqichao.springBootDemo.base.util.DateUtil;
-import com.heqichao.springBootDemo.base.util.PageUtil;
-import com.heqichao.springBootDemo.base.util.ServletUtil;
-import com.heqichao.springBootDemo.base.util.StringUtil;
+import com.heqichao.springBootDemo.base.util.*;
 import com.heqichao.springBootDemo.module.entity.AlarmLog;
 import com.heqichao.springBootDemo.module.mapper.AlarmLogMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +31,18 @@ public class AlarmLogServiceImpl implements AlarmLogService {
             alarmLogMapper.save(logs);
         }
 
+    }
+
+    @Override
+    public void deleteAlarmLog(String... devId) {
+        if(!UserUtil.hasCRDPermission()){
+            throw new ResponeException("没有该权限操作！");
+        }
+        if(devId!=null && devId.length>0){
+            Date date =new Date();
+            List<String > ids = Arrays.asList(devId);
+            alarmLogMapper.updateDeleteStatus(DELETE_STATUS,ids,date);
+        }
     }
 
     @Override
