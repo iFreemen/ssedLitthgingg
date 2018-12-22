@@ -92,7 +92,7 @@ public interface AlarmLogMapper {
 
 	// Muzzy
     @Select("<script>"
-    		+" select a.model_id,a.dev_id,a.attr_id,a.setting_id,a.alram_type,ot.param_value,a.add_date," + 
+    		+"select * from ( select a.model_id,a.dev_id,a.attr_id,a.setting_id,a.alram_type,ot.param_value,a.add_date," +
     		" case a.data_status when 'A' then '报警' when 'N' then '已处理' end as status_name, " + 
     		" m.model_name,ma.attr_name,al.data_a,al.data_b,a.data_status " + 
     		" from alarm_log a" + 
@@ -106,7 +106,7 @@ public interface AlarmLogMapper {
 			+ "<if test=\"competence == 4 \"> and e.uid= #{parentId} </if>"
     		+ ")" + 
     		" order by a.add_date desc" + 
-    		" limit 5"
+    		" limit 5 ) alog  "
     		+"</script>")
     List<AlarmLog> queryAlarmNewestFive(
     		@Param("id")Integer id,

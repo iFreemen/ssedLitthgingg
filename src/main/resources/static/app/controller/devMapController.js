@@ -48,7 +48,7 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout,$interval) {
      		search:false,	
      		addEnq:false
      };
-	//$scope.countView=1;
+	$scope.countView=1;
 	//获取设备分组列表
     $scope.getDevGroupsList = function () {
     	$http.get("service/getEquGroups").success(function(data) {
@@ -66,7 +66,7 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout,$interval) {
 //                       }
                    }
                });
-	    		$('.easyui-combotree').combotree('setValue',1);
+	    		$('.easyui-combotree').combotree('setValue',-1);
     		},400);
     	});
     };
@@ -76,21 +76,21 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout,$interval) {
    	 $scope.loadCtl.search = true;
 //   	 $scope.init();
    	 $scope.getAlarmNewest();
-   	 $scope.quereyData.page=!page ? page : 1;
-        $scope.quereyData.gid=$('.easyui-combotree').combotree('getValue');
+   	 $scope.quereyData.page=page ? page : 1;
+   	$scope.quereyData.gid=$scope.countView==1?null:$('.easyui-combotree').combotree('getValue');
    	$scope.map = new BMap.Map("map", {enableMapClick: false});//关闭地图点击事件
     $scope.map.addControl(new BMap.NavigationControl()); //添加标准地图控件(左上角的放大缩小左右拖拽控件)
     $scope.map.addControl(new BMap.MapTypeControl()); //添加地图类型控件
     $scope.map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
      	$http.post("service/getEquipments",$scope.quereyData).success(function(data) {
-     		console.log(data.resultObj);
+     		//console.log(data.resultObj);
      		$scope.equipments = data.resultObj.list;
      		$scope.pages=data.resultObj.pages;
      		$scope.total=data.resultObj.total;
      		$scope.quereyData.page=data.resultObj.pageNum;
      		$scope.dataItemsTotal = data.resultObj.total;
             $scope.dataItems = data.resultObj.list;
-            //$scope.countView=2;
+            $scope.countView=2;
             try {
                 var markers = [];
                 var points = [];
@@ -210,7 +210,7 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout,$interval) {
   //获取设备分组列表
     $scope.getAlarmNewest = function () {
     	$http.get("service/queryAlarmNewestFive").success(function(data) {
-    		console.log(data);
+    		//console.log(data);
     		$scope.alarmItems=data.resultObj;
     	});
     }
@@ -240,7 +240,7 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout,$interval) {
    	 $interval.cancel(timeout_upd);
     })
 	var timeout_upd = $interval(function() {
-			$scope.getDevList($scope.quereyData.page);
+        $scope.getDevList($scope.quereyData.page);
 	}, 30*1000);
   //获取上下线图片
     $scope.getStatusImg = function (status) {

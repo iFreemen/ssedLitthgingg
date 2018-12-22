@@ -1,5 +1,6 @@
 package com.heqichao.springBootDemo.module.service;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.heqichao.springBootDemo.base.param.ResponeResult;
 import com.heqichao.springBootDemo.base.service.EquipmentService;
@@ -106,6 +107,7 @@ public class AlarmLogServiceImpl implements AlarmLogService {
     	Integer udid = ServletUtil.getSessionUser().getId();
     	Integer pid = ServletUtil.getSessionUser().getParentId();
     	Integer cmp = ServletUtil.getSessionUser().getCompetence();
+        //这里不知道为啥会有污染
         return alarmLogMapper.queryAlarmNewestFive(udid,pid,cmp);
     }
 

@@ -47,6 +47,9 @@ public class EquipmentServiceImpl implements EquipmentService {
     	Map map = RequestContext.getContext().getParamMap();
     	String eid = StringUtil.getStringByMap(map,"eid");
     	Integer gid = StringUtil.getIntegerByMap(map,"gid");
+		if(gid !=null && -1 == gid){
+			gid =null;
+		}
     	String type = StringUtil.getStringByMap(map,"type");
     	String seleStatus = StringUtil.getStringByMap(map,"seleStatus");
     	PageUtil.setPage();
@@ -63,6 +66,9 @@ public class EquipmentServiceImpl implements EquipmentService {
     	Map map = RequestContext.getContext().getParamMap();
     	String eid = StringUtil.getStringByMap(map,"eid");
     	Integer gid = StringUtil.getIntegerByMap(map,"gid");
+		if(gid !=null && -1 == gid){
+			gid =null;
+		}
     	String type = StringUtil.getStringByMap(map,"type");
     	String seleStatus = StringUtil.getStringByMap(map,"seleStatus");
     	List<Map<String,Object>> newLst = new ArrayList<Map<String,Object>>();

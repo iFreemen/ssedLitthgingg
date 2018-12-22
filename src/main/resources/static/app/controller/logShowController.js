@@ -246,11 +246,11 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) {
                  /*   content : function(label, xval, yval, flotItem){
                         return label+"设备:"+yval+"台";
                     },*/
-                   /* shifts: {
+                    shifts: {
                         x: -60,
                         y: 25
                     },
-                    defaultTheme: false*/
+                    defaultTheme: false
                 }
             });
     },
