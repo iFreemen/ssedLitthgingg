@@ -57,8 +57,8 @@ function equCtrl($scope, $http,$location, $rootScope) {
     	$location.path("/module/equEdit/"+devId+"/"+id);
     }
     
-	$scope.delEqu = function(eid){
-		console.log(eid)
+	$scope.delEqu = function(entity){
+		//console.log(eid)
 		swal({   
             title: "是否确定删除该设备？",   
             type: "warning",   
@@ -70,7 +70,7 @@ function equCtrl($scope, $http,$location, $rootScope) {
             closeOnCancel: false 
         }, function(isConfirm){   
             if (isConfirm) {     
-            	$scope.delEquById(eid);
+            	$scope.delEquById(entity);
             }  else {     
                 swal("操作取消", null, "error");   
             } 
@@ -78,8 +78,9 @@ function equCtrl($scope, $http,$location, $rootScope) {
 		
 	}
 	 
-	$scope.delEquById = function(eid){
-		$http.post("service/delEqu",{eid:eid}).success(function(data) {
+	$scope.delEquById = function(entity){
+	    console.info(entity);
+		$http.post("service/delEqu",{eid:entity.id,devId:entity.devId}).success(function(data) {
 				if(data.resultObj == "errorMsg"){
 					swal(data.message, null, "error");
 				}else{
