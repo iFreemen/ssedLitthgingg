@@ -64,7 +64,7 @@ public interface ModelMapper {
 
     @Select("<script>"
             +" select m.model_name , a.*  from model m INNER JOIN model_attr a ON m.id = a.model_id where 1=1  "
-            + "<if test =\"list !=null \">  and addUid in "
+            + "<if test =\"list !=null \">  and m.add_uid in "
             + "<foreach  collection=\"list\" open=\"(\" close=\")\" separator=\",\" item=\"uid\" >"
             + "#{uid}"
             + "</foreach>"

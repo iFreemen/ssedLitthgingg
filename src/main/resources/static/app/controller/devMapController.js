@@ -55,6 +55,7 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout,$interval) {
     		setTimeout(function () {
 	    		//构建下拉树
 	    		var treeFmt=angular.fromJson(angular.toJson(data.resultObj));
+                treeFmt.unshift({grpSort:-1,id:-1,name:"全部",pid:-1,text:"全部"});
 	    		$('.easyui-combotree').combotree({
 	    			data:treeFmt
 	    		});

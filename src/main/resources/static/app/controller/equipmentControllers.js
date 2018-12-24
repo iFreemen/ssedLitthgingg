@@ -79,7 +79,6 @@ function equCtrl($scope, $http,$location, $rootScope) {
 	}
 	 
 	$scope.delEquById = function(entity){
-	    console.info(entity);
 		$http.post("service/delEqu",{eid:entity.id,devId:entity.devId}).success(function(data) {
 				if(data.resultObj == "errorMsg"){
 					swal(data.message, null, "error");

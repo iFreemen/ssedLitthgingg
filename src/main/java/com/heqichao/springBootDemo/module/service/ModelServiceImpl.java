@@ -35,6 +35,9 @@ public class ModelServiceImpl implements ModelService {
     @Autowired
     private EquipmentService equipmentService;
 
+    @Autowired
+    private AlarmSettingService alarmSettingService;
+
     @Override
     public Integer saveOrUpdateModel(Integer modelId,String modelName,List<Map> attrs,String deleteIds) {
         Date date = new Date();
@@ -147,6 +150,8 @@ public class ModelServiceImpl implements ModelService {
             modelMapper.deleteByModelId(modelId);
             //删除所有的属性
             modelAttrService.deleteByModelId(modelId);
+            //删除报警设置
+            alarmSettingService.deleteByModelId(modelId);
         }
     }
 

@@ -142,7 +142,7 @@ public interface EquipmentMapper {
 			"  left join applications a on e.app_id=a.id" + 
 			"  where e.valid = 'N' and e.type_cd= #{type} "
 			+ "<if test=\"competence == 2 \"> and e.group_adm_id=g.id </if>"
-			+ "<if test=\"competence == 3 \"> and e.group_id=g.id and e.uid = #{id} </if>"
+			+ "<if test=\"competence == 3 \"> and e.group_id=g.id and e.uid = #{uid} </if>"
 			+ "<if test=\"competence == 4 \"> and e.group_id=g.id and e.uid = #{parentId} </if>"
 			+ " </script>")
 	public List<Map<String,Object>> getEquipmentsForExport(
@@ -191,7 +191,7 @@ public interface EquipmentMapper {
 	@Update("update equipments set  e_valid = #{status} where eid=#{eid} and valid = 'N' ")
 	public int setEquStatus(@Param("eid")String eid,@Param("status")String status);
 	
-	@Select("select count(1)>0 from equipments where dev_id = #{devId} and valid = 'N' and uid=#{uid} ")
+	@Select("select count(1)>0 from equipments where dev_id = #{devId} and valid = 'N' ")
 	public boolean duplicatedEid(@Param("devId")String devId,@Param("uid")Integer uid);
 	
 	@Select("select dev_id from equipments where id = #{id} and valid = 'N'  ")
