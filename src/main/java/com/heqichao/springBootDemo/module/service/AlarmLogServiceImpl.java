@@ -113,7 +113,7 @@ public class AlarmLogServiceImpl implements AlarmLogService {
     
     // Muzzy 获取报警最新5条记录
     @Override
-    public List<AlarmLog>  queryAlarmNewestFive() {
+    public List<Map>  queryAlarmNewestFive() {
     	Integer udid = ServletUtil.getSessionUser().getId();
     	Integer pid = ServletUtil.getSessionUser().getParentId();
     	Integer cmp = ServletUtil.getSessionUser().getCompetence();

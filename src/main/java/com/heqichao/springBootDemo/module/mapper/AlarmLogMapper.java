@@ -54,13 +54,13 @@ public interface AlarmLogMapper {
             + "<if test =\"status !=null and status !=''\"> and  a.data_status= #{status}  </if>"
             + "<if test =\"start !=null  and start!=''\"> and a.udp_date &gt;= #{start} </if>" //大于等于
             + "<if test =\"end !=null  and end!='' \"> and a.udp_date &lt;= #{end} </if>"  // 小于等于
-            +" order by udp_date desc"
+            +" and  a.data_status != 'D' order by udp_date desc"
             +"</script>")
     List<Map> queryAlarmLogByDevIdAttrId(@Param("list") List<String> list ,@Param("devId") String devId, @Param("attrId")Integer attrId, @Param("status")String status, @Param("start") String start, @Param("end") String end);
 
     @Select("<script>"
             +"select a.id,a.dev_id,a.attr_id,a.data_status,a.udp_date,a.alram_type,a.data_value,a.new_value,a.unit,e.name,m.attr_name,m.data_type from (alarm_log a LEFT JOIN equipments e on a.dev_id = e.dev_id and e.valid ='N') LEFT JOIN model_attr m on a.attr_id = m.id where a.id in ("
-            +"select MAX(id) from alarm_log  where 1=1  and dev_id in "
+            +"select MAX(id) from alarm_log  where 1=1 and  a.data_status != 'D' and dev_id in "
             + "<foreach  collection=\"list\" open=\"(\" close=\")\" separator=\",\" item=\"uid\" >"
             + "#{uid}"
             + "</foreach>"
@@ -75,7 +75,7 @@ public interface AlarmLogMapper {
 	//查找今年的按年按月按日统计
 	@Select("<script>"
 			+"select DATE_FORMAT(add_date,#{timeType}) times,count(id) count from alarm_log where  add_date &gt; year(SYSDATE()) "
-			+" and dev_id in "
+			+" and  data_status != 'D' and dev_id in "
 			+ "<foreach  collection=\"list\" open=\"(\" close=\")\" separator=\",\" item=\"uid\" >"
 			+ "#{uid}"
 			+ "</foreach>"
@@ -88,7 +88,7 @@ public interface AlarmLogMapper {
 	//查找某个时间段内的统计
 	@Select("<script>"
 			+"select DATE_FORMAT(add_date,'%j') times,count(id) count from alarm_log where 1=1  "
-			+" and dev_id in "
+			+" and  data_status != 'D' and dev_id in "
 			+ "<foreach  collection=\"list\" open=\"(\" close=\")\" separator=\",\" item=\"uid\" >"
 			+ "#{uid}"
 			+ "</foreach>"
@@ -101,7 +101,7 @@ public interface AlarmLogMapper {
 
 
 	// Muzzy
-    @Select("<script>"
+   /* @Select("<script>"
     		+"select * from ( select a.model_id,a.dev_id,a.attr_id,a.setting_id,a.alram_type,ot.param_value,a.add_date," +
     		" case a.data_status when 'A' then '报警' when 'N' then '已处理' end as status_name, " + 
     		" m.model_name,ma.attr_name,al.data_a,al.data_b,a.data_status " + 
@@ -117,8 +117,22 @@ public interface AlarmLogMapper {
     		+ ")" + 
     		" order by a.add_date desc" + 
     		" limit 5 ) alog  "
-    		+"</script>")
-    List<AlarmLog> queryAlarmNewestFive(
+    		+"</script>")*/
+	@Select(
+			"<script>"
+			+"select * from ("
+			+"select a.id,a.dev_id,a.attr_id,a.data_status, " +
+					" case a.data_status when 'A' then '报警' when 'N' then '已处理' end as status_name, "+
+					"a.udp_date,a.alram_type,a.data_value,a.new_value,a.unit,e.name,ma.attr_name,ma.data_type,m.model_name from (alarm_log a LEFT JOIN equipments e on a.dev_id = e.dev_id and e.valid ='N') LEFT JOIN model_attr ma on a.attr_id = ma.id left join model m on m.id = ma.model_id where "
+			+"   a.data_status != 'D' and  a.dev_id in "
+			+"  (select e.dev_id from equipments e where e.valid = 'N'"
+			+ "<if test=\"competence == 3 \"> and e.uid= #{id} </if>"
+			+ "<if test=\"competence == 4 \"> and e.uid= #{parentId} </if>"
+			+ ") order by a.add_date desc limit 5"
+			+") alog"
+			+"</script>"
+	)
+    List<Map> queryAlarmNewestFive(
     		@Param("id")Integer id,
 			@Param("parentId")Integer pid,
 			@Param("competence")Integer cmp

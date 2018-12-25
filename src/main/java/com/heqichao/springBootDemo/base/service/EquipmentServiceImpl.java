@@ -446,6 +446,12 @@ public class EquipmentServiceImpl implements EquipmentService {
     		groupId=1;
     		res.setErrReason("此用户没有该设备分组，分配至默认分组");
     	}
+
+		if(cmp ==2) {
+			equ.setGroupAdmId(groupId);
+		}else {
+			equ.setGroupAdmId(1);
+		}
     	equ.setUid(currId);
     	equ.setModelId(modelId);
     	equ.setGroupId(groupId);

@@ -37,7 +37,7 @@ public interface AlarmLogService {
      */
     Map queryAlarm(Map map);
 
-	List<AlarmLog> queryAlarmNewestFive();
+	List<Map> queryAlarmNewestFive();
 
     List<Map> queryCountByTimeType( String start,String end);
 
