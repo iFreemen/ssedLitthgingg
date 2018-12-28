@@ -33,7 +33,7 @@ public class BaseController {
                 }else if(value instanceof String){
                     if(StringUtil.isNotEmpty((String)value)){
                         try{
-                            integer=  Integer.parseInt((String) value);
+                            integer=  Integer.parseInt(((String) value).trim());
                         }catch (Exception e){
                             logger.error("getIntegerParam error ! "+key,e);
                             throw  new ResponeException("获取数值型参数有误："+key,e);

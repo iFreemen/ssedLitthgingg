@@ -32,4 +32,6 @@ public interface AlarmSettingService {
 	 * @return
 	 */
 	Map<Integer,AlarmSetting> queryEnableByModelId(Integer modelId);
+
+	void deleteByModelId( Integer modelId);
 }

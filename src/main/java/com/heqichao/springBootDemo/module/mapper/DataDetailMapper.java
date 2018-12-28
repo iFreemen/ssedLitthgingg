@@ -35,7 +35,7 @@ public interface DataDetailMapper {
     void updateStatus(@Param("status")String status , @Param("list") List<String> list, @Param("date")Date date);
 
     @Select("<script>"
-            +"select data_name,add_date,unit,data_value,data_type,attr_id from data_detail  where data_value != '' and dev_id = #{devId} and attr_id = #{attrId} and data_status = #{status}"
+            +"select data_name,add_date,unit,data_value,data_type,attr_id from data_detail  where data_value != '' and dev_id = #{devId} and attr_id = #{attrId} and data_status = #{status} and data_status!='D' "
             + "<if test =\"start !=null  and start!=''\"> and add_date &gt;= #{start} </if>" //大于等于
             + "<if test =\"end !=null  and end!='' \"> and add_date &lt;= #{end} </if>"  // 小于等于
             +" order by add_date desc "
@@ -45,12 +45,12 @@ public interface DataDetailMapper {
 
 
     @Select("<script>" +
-            "select DISTINCT dev_id from equipments where online =#{onLine} and type_cd= #{type} and dev_id not in (select DISTINCT dev_id from data_log where add_date > #{date} and dev_type=#{type} )" +
+            "select DISTINCT dev_id from equipments where  online =#{onLine} and type_cd= #{type} and dev_id not in (select DISTINCT dev_id from data_log where data_status != 'D' and add_date > #{date} and dev_type=#{type} )" +
             "</script>")
     List<String> checkOffLineDev(@Param("type") String type,@Param("onLine") String onLine,@Param("date")Date date);
 
     @Select("<script>" +
-            "select DISTINCT dev_id from data_log where  dev_type=#{type} and add_date > #{date} " +
+            "select DISTINCT dev_id from data_log where data_status != 'D' and dev_type=#{type} and add_date > #{date} " +
             "</script>")
     List<String> checkOnLineDev(@Param("type") String type,@Param("date")Date date);
 

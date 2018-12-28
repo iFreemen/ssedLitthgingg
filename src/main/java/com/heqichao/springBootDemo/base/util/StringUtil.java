@@ -37,7 +37,7 @@ public class StringUtil {
     		return null;
     	}
     	try {
-    		return Integer.valueOf(map.get(key).toString());
+    		return Integer.valueOf(map.get(key).toString().trim());
     	} catch (Exception e) {
 //			e.printStackTrace();
     		return null;
@@ -50,7 +50,7 @@ public class StringUtil {
 			return null;
 		}
 		try {
-			return Float.valueOf(map.get(key).toString());
+			return Float.valueOf(map.get(key).toString().trim());
 		} catch (Exception e) {
 //			e.printStackTrace();
 			return null;
@@ -62,7 +62,7 @@ public class StringUtil {
     		return null;
     	}
     	try {
-    		return new BigDecimal(map.get(key).toString());
+    		return new BigDecimal(map.get(key).toString().trim());
     	} catch (Exception e) {
 //			e.printStackTrace();
     		return null;

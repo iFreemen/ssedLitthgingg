@@ -138,14 +138,13 @@ public class LiteAppServiceImp implements LiteAppService {
 	}
 
 	@Override
-    public ResponeResult deleteAppByID() {
+    public ResponeResult deleteAppByID(Integer id) {
     	Integer udid = ServletUtil.getSessionUser().getId();
-    	Integer pid = ServletUtil.getSessionUser().getParentId();
     	Integer cmp = ServletUtil.getSessionUser().getCompetence();
     	if(  udid == null || cmp == 4) {
     		return new ResponeResult(true,"Delete fail!","errorMsg");
     	}else {
-    		if(liteAppMapper.deleteLiteAll(udid,pid,cmp)>0) {
+    		if(liteAppMapper.deleteById(id,udid)>0) {
     			return new ResponeResult();
     		}
     	}

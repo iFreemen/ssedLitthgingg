@@ -24,6 +24,7 @@ function devLstCtrl($scope, $http,$rootScope,$location,$timeout, $anchorScroll,$
      		setTimeout(function () {
  	    		//构建下拉树
  	    		var treeFmt=angular.fromJson(angular.toJson(data.resultObj));
+                treeFmt.unshift({grpSort:-1,id:-1,name:"全部",pid:-1,text:"全部"});
  	    		$('.easyui-combotree').combotree({
  	    			data:treeFmt
  	    		});
@@ -33,13 +34,13 @@ function devLstCtrl($scope, $http,$rootScope,$location,$timeout, $anchorScroll,$
                         $scope.getDevList();
                     }
                 });
- 	    		$('.easyui-combotree').combotree('setValue',1);
+ 	    		$('.easyui-combotree').combotree('setValue',-1);
      		},400);
      	});
      };
      $scope.getDevList=function(page){
     	 $scope.loadCtl.search = true;
-    	 $scope.quereyData.page=!page ? page : 1;
+    	 $scope.quereyData.page=page ? page : 1;
     	 $scope.quereyData.gid=$scope.countView==1?null:$('.easyui-combotree').combotree('getValue');
       	$http.post("service/getEquPage",$scope.quereyData).success(function(data) {
 //      		console.log(data.resultObj);

@@ -14,6 +14,7 @@ import com.heqichao.springBootDemo.base.util.PageUtil;
 import com.heqichao.springBootDemo.base.util.ServletUtil;
 import com.heqichao.springBootDemo.base.util.StringUtil;
 import com.heqichao.springBootDemo.module.mqtt.MqttUtil;
+import com.heqichao.springBootDemo.module.service.DataLogService;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,8 @@ import javax.servlet.http.HttpServletResponse;
 @Service
 @Transactional(rollbackFor = { Exception.class })
 public class EquipmentServiceImpl implements EquipmentService {
+	@Autowired
+	private DataLogService dataLogService;
     @Autowired
     private EquipmentMapper eMapper ;
 
@@ -47,6 +50,9 @@ public class EquipmentServiceImpl implements EquipmentService {
     	Map map = RequestContext.getContext().getParamMap();
     	String eid = StringUtil.getStringByMap(map,"eid");
     	Integer gid = StringUtil.getIntegerByMap(map,"gid");
+		if(gid !=null && -1 == gid){
+			gid =null;
+		}
     	String type = StringUtil.getStringByMap(map,"type");
     	String seleStatus = StringUtil.getStringByMap(map,"seleStatus");
     	PageUtil.setPage();
@@ -63,6 +69,9 @@ public class EquipmentServiceImpl implements EquipmentService {
     	Map map = RequestContext.getContext().getParamMap();
     	String eid = StringUtil.getStringByMap(map,"eid");
     	Integer gid = StringUtil.getIntegerByMap(map,"gid");
+		if(gid !=null && -1 == gid){
+			gid =null;
+		}
     	String type = StringUtil.getStringByMap(map,"type");
     	String seleStatus = StringUtil.getStringByMap(map,"seleStatus");
     	List<Map<String,Object>> newLst = new ArrayList<Map<String,Object>>();
@@ -259,14 +268,19 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Override
     public ResponeResult deleteEquByID(Map map) {
     	Integer eid = StringUtil.objectToInteger(StringUtil.getStringByMap(map,"eid"));
+    	String devId = StringUtil.getStringByMap(map,"devId");
     	Integer udid = ServletUtil.getSessionUser().getId();
     	Integer cmp = ServletUtil.getSessionUser().getCompetence();
     	if(  eid == null || udid == null || cmp == 4) {
     		return new ResponeResult(true,"Delete fail!","errorMsg");
     	}else {
+			if(StringUtil.isNotEmpty(devId)){
+				dataLogService.deleteDataLog(devId);
+			}
     		if(eMapper.delEquById(eid,udid)>0) {
     			return new ResponeResult();
     		}
+
     	}
     	return  new ResponeResult(true,"Delete Equipment fail","errorMsg");
     }
@@ -432,6 +446,12 @@ public class EquipmentServiceImpl implements EquipmentService {
     		groupId=1;
     		res.setErrReason("此用户没有该设备分组，分配至默认分组");
     	}
+
+		if(cmp ==2) {
+			equ.setGroupAdmId(groupId);
+		}else {
+			equ.setGroupAdmId(1);
+		}
     	equ.setUid(currId);
     	equ.setModelId(modelId);
     	equ.setGroupId(groupId);

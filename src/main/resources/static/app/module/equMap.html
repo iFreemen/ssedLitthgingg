@@ -49,12 +49,12 @@
                     </thead>
                     <tbody id="device_content">
                     <tr ng-repeat="alarmItem in alarmItems">
-                        <td>{{alarmItem.devId}}</td>
-                        <td>{{alarmItem.modelName}}</td>
-                        <td>{{alarmItem.attrName}}</td>
-                        <td>{{alarmItem.alramTypeFmt}}</td>
-                        <td>{{alarmItem.addDate}}</td>
-                        <td style="color:{{alarmItem.dataStatus == 'N'?'blue':'red'}}">{{alarmItem.statusName}}</td>
+                        <td>{{alarmItem.dev_id}}</td>
+                        <td>{{alarmItem.model_name}}</td>
+                        <td>{{alarmItem.attr_name}}</td>
+                        <td>当前{{alarmItem.attr_name}}值为{{alarmItem.data_value}}{{alarmItem.unit}}</td>
+                        <td>{{alarmItem.udp_date  | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                        <td style="color:{{alarmItem.data_status == 'N'?'blue':'red'}}">{{alarmItem.status_name}}</td>
                         <td></td>
                     </tr>
                     </tbody>

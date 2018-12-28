@@ -126,4 +126,9 @@ public class AlarmSettingServiceImpl implements AlarmSettingService {
 		}
 		return map;
 	}
+
+	@Override
+	public void deleteByModelId(Integer modelId) {
+		aMapper.deleteByModelId(modelId, UN_ENABLE_STATUS);
+	}
 }
