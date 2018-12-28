@@ -55,6 +55,7 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout,$interval) {
     		setTimeout(function () {
 	    		//构建下拉树
 	    		var treeFmt=angular.fromJson(angular.toJson(data.resultObj));
+                treeFmt.unshift({grpSort:-1,id:-1,name:"全部",pid:-1,text:"全部"});
 	    		$('.easyui-combotree').combotree({
 	    			data:treeFmt
 	    		});
@@ -66,7 +67,7 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout,$interval) {
 //                       }
                    }
                });
-	    		$('.easyui-combotree').combotree('setValue',1);
+	    		$('.easyui-combotree').combotree('setValue',-1);
     		},400);
     	});
     };
@@ -76,14 +77,14 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout,$interval) {
    	 $scope.loadCtl.search = true;
 //   	 $scope.init();
    	 $scope.getAlarmNewest();
-   	 $scope.quereyData.page=!page ? page : 1;
+   	 $scope.quereyData.page=page ? page : 1;
    	$scope.quereyData.gid=$scope.countView==1?null:$('.easyui-combotree').combotree('getValue');
    	$scope.map = new BMap.Map("map", {enableMapClick: false});//关闭地图点击事件
     $scope.map.addControl(new BMap.NavigationControl()); //添加标准地图控件(左上角的放大缩小左右拖拽控件)
     $scope.map.addControl(new BMap.MapTypeControl()); //添加地图类型控件
     $scope.map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
      	$http.post("service/getEquipments",$scope.quereyData).success(function(data) {
-     		console.log(data.resultObj);
+     		//console.log(data.resultObj);
      		$scope.equipments = data.resultObj.list;
      		$scope.pages=data.resultObj.pages;
      		$scope.total=data.resultObj.total;
@@ -210,7 +211,7 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout,$interval) {
   //获取设备分组列表
     $scope.getAlarmNewest = function () {
     	$http.get("service/queryAlarmNewestFive").success(function(data) {
-    		console.log(data);
+    		//console.log(data);
     		$scope.alarmItems=data.resultObj;
     	});
     }
@@ -240,7 +241,7 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout,$interval) {
    	 $interval.cancel(timeout_upd);
     })
 	var timeout_upd = $interval(function() {
-			$scope.getDevList($scope.quereyData.page);
+        $scope.getDevList($scope.quereyData.page);
 	}, 30*1000);
   //获取上下线图片
     $scope.getStatusImg = function (status) {

@@ -233,9 +233,13 @@
 			</footer>
 		</div>
 		<iframe name="downLoadFileFrame" hidden="hidden"></iframe>
-<script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&amp;ak=TmYyujvLywBDOj91omCGrbmS0YQ6oswu"></script> 
-<!-- <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&amp;ak=0UeqWhqYsjiNbWkLdaPdvSqc"></script>
-<script type="text/javascript" src="https://api.map.baidu.com/getscript?v=3.0&amp;ak=0UeqWhqYsjiNbWkLdaPdvSqc&amp;services=&amp;t=20181204121730"></script>-->
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&amp;ak=TmYyujvLywBDOj91omCGrbmS0YQ6oswu"></script>
+
+<!--
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&amp;ak=0UeqWhqYsjiNbWkLdaPdvSqc"></script>
+<script type="text/javascript" src="https://api.map.baidu.com/getscript?v=3.0&amp;ak=0UeqWhqYsjiNbWkLdaPdvSqc&amp;services=&amp;t=20181204121730"></script>
+-->
+
 <script type="text/javascript" src="https://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
 <script type="text/javascript" src="https://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
 
@@ -400,33 +404,61 @@
 								for(var i=0;i<data.resultObj.chaneList.length;i++){
 									var mes =data.resultObj.chaneList[i];
 									var value="";
-									if(mes.data_type != 'ALARM_TYPE' && mes.data_type != 'SWITCH_TYPE'){
-										value =mes.data_value;
-										if(mes.unit){
-											value=value+mes.unit;
-										}
-									}else if(mes.data_type == 'SWITCH_TYPE'){
-										if(mes.data_value == '0000'){
-											value="开";
-										}else if(mes.data_value == '0001'){
-											value="关";
-										}else  if(mes.data_value == 'ERR'){
-											value="异常数据";
-										}
-									}else if(mes.data_type == 'ALARM_TYPE'){
-										if(mes.data_value == '0000'){
-											value="正常";
-										}else if(mes.data_value == '0001'){
-											value="报警";
-										}else  if(mes.data_value == 'ERR'){
-											value="异常数据";
-										}
-									}
+
 									if("A"==mes.data_status){
+										if(mes.data_type != 'ALARM_TYPE' && mes.data_type != 'SWITCH_TYPE'){
+											value =mes.data_value;
+											if(mes.unit){
+												value=value+mes.unit;
+											}
+										}else if(mes.data_type == 'SWITCH_TYPE'){
+											if(mes.data_value == '0000'){
+												value="开";
+											}else if(mes.data_value == '0001'){
+												value="关";
+											}else  if(mes.data_value == 'ERR'){
+												value="异常数据";
+											}
+										}else if(mes.data_type == 'ALARM_TYPE'){
+											if(mes.data_value == '0000'){
+												value="正常";
+											}else if(mes.data_value == '0001'){
+												value="报警";
+											}else  if(mes.data_value == 'ERR'){
+												value="异常数据";
+											}
+										}
 										$.Notification.notify('warning', 'top right', '设备数据点故障', mes.name+"的"+mes.attr_name+"报警,当前值为："+value);
+
 									}else if("N" == mes.data_status){
+
+										if(mes.data_type != 'ALARM_TYPE' && mes.data_type != 'SWITCH_TYPE'){
+											value =mes.new_value;
+											if(mes.unit){
+												value=value+mes.unit;
+											}
+										}else if(mes.data_type == 'SWITCH_TYPE'){
+											if(mes.new_value == '0000'){
+												value="开";
+											}else if(mes.new_value == '0001'){
+												value="关";
+											}else  if(mes.new_value == 'ERR'){
+												value="异常数据";
+											}
+										}else if(mes.data_type == 'ALARM_TYPE'){
+											if(mes.new_value == '0000'){
+												value="正常";
+											}else if(mes.new_value == '0001'){
+												value="报警";
+											}else  if(mes.new_value == 'ERR'){
+												value="异常数据";
+											}
+										}
 										$.Notification.notify('info', 'top right', '设备数据点恢复', mes.name+"的"+mes.attr_name+"恢复正常,当前值为："+value);
 									}
+
+
+
 								}
 							}
 
@@ -539,9 +571,14 @@
 			        });
 
 			    }
+
+				$scope.closeclearData=function(){
+					$("#clearDataId").click();
+				}
+
 				$scope.clearData = function(){
 					swal({   
-			            title: "是否清空所有设备的历史数据？",
+			            title: "是否清空本账号所有设备的历史数据和报警记录？",
 			           /* text: "该操作将清空NBIOT设备的所有上报数据记录，且无法恢复！\r\n请谨慎操作！",*/
 			            type: "warning",   
 			            showCancelButton: true,
@@ -743,6 +780,35 @@
              </div> 
          </div>
      </div>
+<!--
+
+		<div id="clear_data-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="clearModalLabel" aria-hidden="true" style="display: none">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closePwd()">×</button>
+						<h4 class="modal-title">清除数据</h4>
+					</div>
+					<form class="modal-body" ng-submit="clearData()"   name="clearDataForm" >
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<label  class="control-label">数据类型<span style="color: red">*</span></label>
+									&lt;!&ndash;<input type="password" class="form-control" required ng-model="dataType" name="dataType">&ndash;&gt;
+								</div>
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							<button id="clearDataId" type="button" class="btn btn-default waves-effect" data-dismiss="modal" ng-click="closeclearData()">关闭</button>
+							<button type="submit" class="btn btn-info waves-effect waves-light"  ng-disabled="clearDataForm.$invalid">确定</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+-->
+
 		</div>
 	</body>
 </html>

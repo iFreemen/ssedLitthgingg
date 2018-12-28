@@ -32,7 +32,7 @@ public interface UserMapper {
 	@Select("<script>SELECT id,parent_uid parentId,account,company,contact,phone,fax,email,site,remark,competence"
 			+ " FROM users "
 			+ "where valid = 'N'  "
-			+ "<if test=\"competence == 3 \"> and id = #{id} or parent_uid = #{id} </if>"
+			+ "<if test=\"competence == 3 \"> and ( id = #{id} or parent_uid = #{id} ) </if>"
 			+ "<if test =\"sAccount !=null  and sAccount!='' \"> and account like CONCAT(CONCAT('%',#{sAccount}),'%')  </if>"
 			+ "<if test =\"sCompany !=null  and sCompany!='' \"> and company like CONCAT(CONCAT('%',#{sCompany}),'%')  </if>"
 			+ "<if test =\"sCompetence !=null  and sCompetence!=0 \"> and competence = #{sCompetence}  </if>"
@@ -68,7 +68,7 @@ public interface UserMapper {
 	@Update("update users set company=#{company},parent_uid=#{parentId},competence=#{competence}, contact=#{contact}, phone=#{phone}, fax=#{fax}, email=#{email}, site=#{site}, remark=#{remark}, udp_date = sysdate(), udp_uid = #{upadteUID} where id=#{id} and valid = 'N' ")
 	public int updateUserById(User user);
 	
-	@Update("update users set  udp_date = sysdate(), udp_uid = #{udid}, valid = 'N' where id=#{id} and valid = 'N' ")
+	@Update("update users set  udp_date = sysdate(), udp_uid = #{udid}, valid = 'D' where id=#{id} and valid = 'N' ")
 	public int delUserById(@Param("id")Integer uid,@Param("udid")Integer udid);
 
 }

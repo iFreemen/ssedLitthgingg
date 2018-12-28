@@ -35,6 +35,9 @@ public class ModelServiceImpl implements ModelService {
     @Autowired
     private EquipmentService equipmentService;
 
+    @Autowired
+    private AlarmSettingService alarmSettingService;
+
     @Override
     public Integer saveOrUpdateModel(Integer modelId,String modelName,List<Map> attrs,String deleteIds) {
         Date date = new Date();
@@ -147,6 +150,8 @@ public class ModelServiceImpl implements ModelService {
             modelMapper.deleteByModelId(modelId);
             //删除所有的属性
             modelAttrService.deleteByModelId(modelId);
+            //删除报警设置
+            alarmSettingService.deleteByModelId(modelId);
         }
     }
 
@@ -170,7 +175,12 @@ public class ModelServiceImpl implements ModelService {
             if (UserService.ROOT.equals(cmp)) {
                 PageUtil.setPage();
                 pageInfo=new PageInfo(modelMapper.queryAll(modelName));
-            }else {
+            }else if (UserService.CUSTOMER.equals(cmp)){
+                List<Integer> userList =new ArrayList<>();
+                userList.add(userId);
+                PageUtil.setPage();
+                pageInfo=new PageInfo(modelMapper.queryByUserIds(userList,modelName));
+            }else if(UserService.VISTOR.equals(cmp)){
                 Integer parentId =equipmentService.getUserParent(userId);
                 List<Integer> userList =new ArrayList<>();
                 userList.add(userId);
@@ -188,9 +198,6 @@ public class ModelServiceImpl implements ModelService {
                 map.put("addName",UserCache.getUserName(model.getAddUid()));
                 map.put("udpName",UserCache.getUserName(model.getUdpUid()));
                 returnList.add(map);
-
-
-                
             }
         }
         pageInfo.setList(returnList);
@@ -207,7 +214,12 @@ public class ModelServiceImpl implements ModelService {
             if (UserService.ROOT.equals(cmp)) {
                 PageUtil.setPage();
                 list=modelMapper.queryAll("");
-            }else {
+            }else if(UserService.CUSTOMER.equals(cmp)){
+                List<Integer> userList =new ArrayList<>();
+                userList.add(userId);
+                PageUtil.setPage();
+                list= modelMapper.queryByUserIds(userList,"");
+            }else if(UserService.VISTOR.equals(cmp)){
                 Integer parentId =equipmentService.getUserParent(userId);
                 List<Integer> userList =new ArrayList<>();
                 userList.add(userId);
@@ -278,7 +290,9 @@ public class ModelServiceImpl implements ModelService {
             //管理员查询所有
             if (UserService.ROOT.equals(cmp)) {
                 userList=null;
-            }else {
+            }else if(UserService.CUSTOMER.equals(cmp)){
+                userList.add(userId);
+            }else if(UserService.VISTOR.equals(cmp)){
                 Integer parentId =equipmentService.getUserParent(userId);
                 userList.add(userId);
                 userList.add(parentId);

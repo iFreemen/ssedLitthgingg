@@ -20,12 +20,13 @@ public interface AlarmLogService {
     public static final String DELETE_STATUS="D";
     void save(List<AlarmLog> logs);
 
+    void deleteAlarmLog(String... devId);
     /**
      * 更新为正常数据
      * @param devId
      * @param attrId
      */
-    void updateNormalStatus(String devId,List<Integer> attrId,Date date);
+    void updateNormalStatus(String devId,List<Integer> attrId,Date date ,Map newValueMap);
 
     PageInfo queryAlarmLog(String devId,Integer attrId,String status, String startTime, String endTime);
 
@@ -36,7 +37,7 @@ public interface AlarmLogService {
      */
     Map queryAlarm(Map map);
 
-	List<AlarmLog> queryAlarmNewestFive();
+	List<Map> queryAlarmNewestFive();
 
     List<Map> queryCountByTimeType( String start,String end);
 

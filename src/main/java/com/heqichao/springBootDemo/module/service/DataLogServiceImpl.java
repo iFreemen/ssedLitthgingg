@@ -63,6 +63,8 @@ public class DataLogServiceImpl implements DataLogService {
     @Override
     public void saveDataLog(String devId,String data, String srcData,String devType){
         Date date =new Date();
+        //报警恢复映射
+        Map alramNewValue =new HashMap();
         //去除前后的主数据
         String mainData="";
         DataLog dataLog =new DataLog();
@@ -182,6 +184,7 @@ public class DataLogServiceImpl implements DataLogService {
                                 alarmLogs.add(log);
                             }else{
                                 //解除报警
+                                alramNewValue.put(attr.getId(),res);
                                 normalAttrId.add(attr.getId());
                             }
                         }
@@ -206,9 +209,15 @@ public class DataLogServiceImpl implements DataLogService {
                 dataDetailMapper.save(dataDetails);
             }
             //保存报警数据
-            alarmLogService.save(alarmLogs);
+            if(alarmLogs.size()>0){
+                for(AlarmLog log :alarmLogs){
+                    log.setLogId(dataLog.getId());
+                }
+                alarmLogService.save(alarmLogs);
+            }
+
             //解除报警数据
-            alarmLogService.updateNormalStatus(devId,normalAttrId,date);
+            alarmLogService.updateNormalStatus(devId,normalAttrId,date,alramNewValue);
         }
     }
 
@@ -257,6 +266,7 @@ public class DataLogServiceImpl implements DataLogService {
            List<String > ids = Arrays.asList(devId);
             dataLogMapper.updateStatus(UN_ENABLE_STATUS,ids,date);
             dataDetailMapper.updateStatus(UN_ENABLE_STATUS,ids,date);
+            alarmLogService.deleteAlarmLog(devId);
         }
     }
 

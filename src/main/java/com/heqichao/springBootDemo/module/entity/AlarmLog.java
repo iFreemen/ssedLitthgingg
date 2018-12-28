@@ -25,6 +25,14 @@ public class AlarmLog extends BaseEntity {
 
     //数据值
     private String  dataValue;
+
+
+    //报警后恢复正常时的数据值
+    private String  newValue;
+
+    //日志id
+    private Integer  logId;
+
     //单位
     private String  unit;
 
@@ -43,6 +51,23 @@ public class AlarmLog extends BaseEntity {
     private String dataA;
 	private String dataB;
     // End Muzzy
+
+
+    public String getNewValue() {
+        return newValue;
+    }
+
+    public void setNewValue(String newValue) {
+        this.newValue = newValue;
+    }
+
+    public Integer getLogId() {
+        return logId;
+    }
+
+    public void setLogId(Integer logId) {
+        this.logId = logId;
+    }
 
     public String getAlramType() {
         return alramType;

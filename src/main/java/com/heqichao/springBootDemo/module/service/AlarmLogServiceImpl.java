@@ -1,12 +1,11 @@
 package com.heqichao.springBootDemo.module.service;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.heqichao.springBootDemo.base.exception.ResponeException;
 import com.heqichao.springBootDemo.base.param.ResponeResult;
 import com.heqichao.springBootDemo.base.service.EquipmentService;
-import com.heqichao.springBootDemo.base.util.DateUtil;
-import com.heqichao.springBootDemo.base.util.PageUtil;
-import com.heqichao.springBootDemo.base.util.ServletUtil;
-import com.heqichao.springBootDemo.base.util.StringUtil;
+import com.heqichao.springBootDemo.base.util.*;
 import com.heqichao.springBootDemo.module.entity.AlarmLog;
 import com.heqichao.springBootDemo.module.mapper.AlarmLogMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +34,24 @@ public class AlarmLogServiceImpl implements AlarmLogService {
     }
 
     @Override
-    public void updateNormalStatus(String devId, List<Integer> attrId,Date date ) {
-        if(StringUtil.isNotEmpty(devId) && attrId!=null && attrId.size()>0 ){
-            alarmLogMapper.updateStatus(NOIMAL_STATUS,date,devId,attrId,ALARM_STATUS);
+    public void deleteAlarmLog(String... devId) {
+        if(!UserUtil.hasCRDPermission()){
+            throw new ResponeException("没有该权限操作！");
+        }
+        if(devId!=null && devId.length>0){
+            Date date =new Date();
+            List<String > ids = Arrays.asList(devId);
+            alarmLogMapper.updateDeleteStatus(DELETE_STATUS,ids,date);
+        }
+    }
+
+    @Override
+    public void updateNormalStatus(String devId, List<Integer> attrIds,Date date ,Map newValueMap) {
+        if(StringUtil.isNotEmpty(devId) && attrIds!=null && attrIds.size()>0 ){
+            for(Integer attrId : attrIds){
+                alarmLogMapper.updateStatus(NOIMAL_STATUS,date,devId,attrId,ALARM_STATUS, (String) newValueMap.get(attrId));
+            }
+
         }
 
     }
@@ -99,10 +113,11 @@ public class AlarmLogServiceImpl implements AlarmLogService {
     
     // Muzzy 获取报警最新5条记录
     @Override
-    public List<AlarmLog>  queryAlarmNewestFive() {
+    public List<Map>  queryAlarmNewestFive() {
     	Integer udid = ServletUtil.getSessionUser().getId();
     	Integer pid = ServletUtil.getSessionUser().getParentId();
     	Integer cmp = ServletUtil.getSessionUser().getCompetence();
+        //这里不知道为啥会有污染
         return alarmLogMapper.queryAlarmNewestFive(udid,pid,cmp);
     }
 

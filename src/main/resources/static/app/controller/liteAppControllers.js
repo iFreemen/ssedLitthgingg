@@ -98,7 +98,7 @@ function liteAppCtrl($scope, $http, $rootScope) {
 	$scope.delEquById = function(eid){
 		$scope.currDel = eid;
 		$http.post("service/deleteLiteApp",
-				{eid:$scope.currDel,}).success(function(data) {
+				{eid:$scope.currDel}).success(function(data) {
 				if(data.resultObj == "errorMsg"){
 					swal(data.message, null, "error");
 				}else{

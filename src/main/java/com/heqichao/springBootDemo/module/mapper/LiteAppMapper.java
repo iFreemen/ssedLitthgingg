@@ -48,19 +48,6 @@ public interface LiteAppMapper {
 
 
     @Delete("update applications set valid = 'D',udp_date=sysdate(),udp_uid=#{uid} where valid = 'N' and id= #{id}   ")
-    int deleteById(@Param("id")Integer id,@Param("uid")Integer uid);
-    
-    @Delete("<script>"
-    		+"update lite_log l,lite_equipment e set l.l_valid = 'D',"
-    		+ "l.updateTime=sysdate(),l.udp_uid=#{uid} where l.valid = 'N' and e.deviceId=l.deviceId "
-    		+ "<if test =\"cmp == 3 \"> and  e.uid= #{uid}  </if>"
-            + "<if test =\"cmp == 4 \"> and  e.uid= 0  </if>"
-    		+ "   "
-    		+"</script>")
-    int deleteLiteAll(@Param("uid") Integer uid,
-   		 @Param("pId") Integer pId,
-   		 @Param("cmp") Integer cmp);
-    
-
+	public int deleteById(@Param("id")Integer id,@Param("uid")Integer uid);
 
 }
