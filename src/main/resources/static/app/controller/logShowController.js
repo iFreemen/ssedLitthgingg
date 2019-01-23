@@ -6,7 +6,12 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) {
     //滚动置顶
     window.scrollTo(0, 0);
 
-    $scope.pages=0;
+    $scope.pages=1;
+    //当前页
+    $scope.curpage=1;
+    //记录
+    $scope.log=new Array();
+    $scope.logArr =new Array();
     $scope.param={};
     $scope.param.devId="";
     $scope.param.attrId="";
@@ -19,6 +24,13 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) {
         $scope.param.initOption='TRUE';
     }
 
+    $scope.changePage =function(page){
+        $scope.curpage=page;
+        $scope.logArr =new Array();
+        for (var i =0; i < defaultSize; i++) {
+            $scope.logArr.push($scope.log[(page-1)*defaultSize+i]);
+        }
+    }
 
 
     $scope.fmtDate = function(date){
@@ -42,8 +54,7 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) {
 
     //设备信息
     $scope.equip={};
-    //记录
-    $scope.log=new Array();
+
 
     $scope.unit="";
 
@@ -82,6 +93,10 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) {
 
             if(data.resultObj.log){
                 $scope.log=data.resultObj.log;
+                if($scope.log && $scope.log.length>0){
+                    $scope.pages =Math.ceil($scope.log.length/defaultSize);
+                    $scope.changePage(1);
+                }
                 $scope.showChart();
             }
             if(data.resultObj.equip){
