@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import com.heqichao.springBootDemo.base.entity.Equipment;
 import com.heqichao.springBootDemo.base.entity.UploadResultEntity;
+import com.heqichao.springBootDemo.base.entity.User;
 import com.heqichao.springBootDemo.module.entity.DataDetail;
 
 /**
@@ -150,6 +151,20 @@ public interface EquipmentMapper {
 			@Param("uid")Integer uid,
 			@Param("parentId")Integer parentId,
 			@Param("type")String type);
+	
+	@Select("<script>select dev_id,name from equipments where valid = 'N' "
+			+ "<if test=\"competence == 3 \">  and e.uid = #{uid} </if>"
+			+ "<if test=\"competence == 4 \">  and e.uid = #{parentId} </if>"
+			+ " order by add_date desc </script>")
+	public List<Equipment> getEquSelectList(
+			@Param("competence")Integer competence,
+			@Param("uid")Integer uid,
+			@Param("parentId")Integer parentId);
+	
+	@Select("<script>SELECT e.add_date,e.dev_id,e.src_data,e.dev_type,e.data_status"+  
+			" FROM data_log e  where e.dev_id= #{eid} "
+			+ " order by add_date desc </script>")
+	public List<Map<String,Object>> getDataLogForExport(@Param("eid")String eid);
 	
 	@Insert("insert into upload_result (add_uid,res_index,res_status,err_reason,res_key)"
 			+ " values(#{addUid},#{resIndex},#{resStatus},#{errReason},#{resKey}) ")

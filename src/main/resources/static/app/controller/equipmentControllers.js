@@ -115,9 +115,6 @@ function equCtrl($scope, $http,$location, $rootScope) {
     		}
     	});
     }
-    $scope.closeUploadModal=function () {
-//		$scope.uploadRes = null;
-    }
     $scope.clearUploadModal=function () {
 		$scope.uploadRes = null;
     }

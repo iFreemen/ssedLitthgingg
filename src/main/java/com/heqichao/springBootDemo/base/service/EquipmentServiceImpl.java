@@ -5,7 +5,9 @@ import com.heqichao.springBootDemo.base.param.RequestContext;
 import com.heqichao.springBootDemo.base.param.ResponeResult;
 import com.github.pagehelper.PageInfo;
 import com.heqichao.springBootDemo.base.entity.Equipment;
+import com.heqichao.springBootDemo.base.entity.ParamObject;
 import com.heqichao.springBootDemo.base.entity.UploadResultEntity;
+import com.heqichao.springBootDemo.base.entity.User;
 import com.heqichao.springBootDemo.base.exception.ResponeException;
 import com.heqichao.springBootDemo.base.util.CollectionUtil;
 import com.heqichao.springBootDemo.base.util.ExcelWriter;
@@ -28,6 +30,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -318,6 +321,70 @@ public class EquipmentServiceImpl implements EquipmentService {
 
 
         }
+    }
+    
+    @Override
+    public ResponeResult getEquSelectList() {
+    	Integer uid = ServletUtil.getSessionUser().getId();
+    	Integer pid = ServletUtil.getSessionUser().getParentId();
+    	Integer cmp = ServletUtil.getSessionUser().getCompetence();
+    	if(uid==null) {
+    		return new ResponeResult(true,"页面过期请刷新页面","errorMsg");
+    	}
+		Map<String, String> res =  eMapper.getEquSelectList(cmp,uid,pid).stream().collect(
+						Collectors.toMap(Equipment::getName,Equipment::getDevId, (k1,k2)->k1)
+					);
+		if(res.size()>0) {
+			return new ResponeResult(res);
+		}
+    	return  new ResponeResult(false,"");
+    }
+    
+    @Override
+    public ResponeResult setDataLogParam(Map map) {
+    	String eid = StringUtil.getStringByMap(map,"eid");
+    	if(StringUtil.isEmpty(eid)) {
+    		return new ResponeResult(true,"没选中设备","errorMsg");
+    	}
+    	ParamObject param = new ParamObject();
+    	param.setExcelParam(eid);
+    	ServletUtil.setSessionParam(param);
+    	return new ResponeResult();
+    }
+    
+    @Override
+    public void exportDataLogByParam() {
+    	if(ServletUtil.getSessionUser().getCompetence()!=2) {
+    		return;
+    	}
+    	List<Map<String,Object>> lst = eMapper.getDataLogForExport(ServletUtil.getSessionParam().getExcelParam());
+    	if(lst!=null){
+    		
+    		FileOutputStream fos = null;
+    		File file =null;
+    		try{
+    			file = FileUtil.createTempDownloadFile("DataLog"+System.currentTimeMillis()+".xls");
+    			fos= new FileOutputStream(file);
+    			// 声明一个工作薄
+    			HSSFWorkbook workbook = ExcelWriter.createWorkBook();
+    			ExcelWriter.export(workbook,"DataLog",titleDataLog,lst,codeDataLog);
+    			workbook.write(fos);
+    		}catch (Exception e){
+    			e.printStackTrace();
+    		}finally {
+    			if(fos!=null){
+    				try {
+    					fos.close();
+    					// logger.info("文件地址:"+file.getPath());
+    					download(file);
+    				} catch (IOException e) {
+    					e.printStackTrace();
+    				}
+    			}
+    		}
+    		
+    		
+    	}
     }
     @Override
     public String saveUploadImport(Map map,String[] typecode,String type) {

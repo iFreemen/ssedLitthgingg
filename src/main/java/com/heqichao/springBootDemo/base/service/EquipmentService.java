@@ -36,6 +36,8 @@ public interface EquipmentService {
  	String[] codeNbiot = new String[]{"name","dev_id","typeName","model_name", "groupName","app_name","uName","verification","support_code","supporter","site","remark"};
  	String[] titleGPRS = new String[]{"设备名称","设备编号","设备类型","数据模板","所属分组","所属用户","验证码","厂商ID","厂商名称","经纬度","备注"};
 	String[] codeGPRS = new String[]{"name","dev_id","typeName","model_name", "groupName","uName","verification","support_code","supporter","site","remark"};
+	String[] titleDataLog = new String[]{"接收时间","设备编号","接收数据","接收结果","数据状态"};
+	String[] codeDataLog = new String[]{"add_date","dev_id","src_data","dev_type","data_status"};
 	PageInfo queryEquipmentList();
 
 	List<Map<String, String>> getUserEquipmentIdList(Integer uid);
@@ -102,4 +104,10 @@ public interface EquipmentService {
 	String saveUploadImport(Map map, String[] typecode, String type);
 
 	List<UploadResultEntity> getUploadResult();
+
+	ResponeResult setDataLogParam(Map map);
+
+	void exportDataLogByParam();
+
+	ResponeResult getEquSelectList();
 }

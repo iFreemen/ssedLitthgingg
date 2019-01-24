@@ -1,5 +1,6 @@
 package com.heqichao.springBootDemo.base.util;
 
+import com.heqichao.springBootDemo.base.entity.ParamObject;
 import com.heqichao.springBootDemo.base.entity.User;
 import com.heqichao.springBootDemo.base.param.RequestContext;
 import com.heqichao.springBootDemo.base.param.ResponeResult;
@@ -14,6 +15,7 @@ import java.io.PrintWriter;
  */
 public class ServletUtil {
     public static String SESSION_USER="SESSION_USER";
+    public static String SESSION_PARAM="SESSION_PARAM";
     public static ResponeResult NO_LOGIN_RESULT=new ResponeResult(false,"isNotLogin");
 
 
@@ -47,6 +49,21 @@ public class ServletUtil {
     	if(session != null){
     		session.setAttribute(SESSION_USER,user);
     	}
+    }
+    //session传参
+    public static void setSessionParam( ParamObject param){
+    	HttpSession session = RequestContext.getContext().getSession();
+    	if(session != null){
+    		session.setAttribute(SESSION_PARAM,param);
+    	}
+    }
+    public static ParamObject getSessionParam(){
+        HttpSession session = RequestContext.getContext().getSession();
+        if(session == null || session.getAttribute(SESSION_PARAM) == null){
+            return null;
+        }else{
+            return (ParamObject) session.getAttribute(SESSION_PARAM);
+        }
     }
 
 /*    public static boolean   checkLoginForHtml(HttpServletRequest request ,  HttpServletResponse response ) throws IOException {

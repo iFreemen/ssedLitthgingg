@@ -75,13 +75,31 @@ public class EquipmentController extends BaseController{
     public void exprLora() throws Exception {
     	 eService.exportEquipments("Lora", "L", eService.titleLora, eService.codeLora);
     }
+    
     @RequestMapping(value = "/exprNbiot" )
     public void exprNbiot() throws Exception {
     	eService.exportEquipments("Nbiot", "N", eService.titleNbiot, eService.codeNbiot);
     }
+    
+    
     @RequestMapping(value = "/exprGprs" )
     public void exprGprs() throws Exception {
     	eService.exportEquipments("GPRS", "G", eService.titleGPRS, eService.codeGPRS);
+    }
+    
+    @RequestMapping(value = "/getEquSelectList" )
+    public ResponeResult getCompanySeleList() throws Exception {
+    	return eService.getEquSelectList();
+    }
+    @RequestMapping(value = "/setDataLogParam" )
+    @ResponseBody
+    public ResponeResult setDataLogParam(@RequestBody Map map) throws Exception {
+    	return eService.setDataLogParam(map);
+    }
+    
+    @RequestMapping(value = "/exprDataLogByParam" )
+    public void exprDataLogByParam() throws Exception {
+    	eService.exportDataLogByParam();
     }
     
     @RequestMapping(value = "/importLora")
