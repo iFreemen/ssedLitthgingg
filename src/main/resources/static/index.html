@@ -9,7 +9,7 @@
 
 		<link rel="shortcut icon" href="assets/images/favicon_1.ico">
 
-	 <title>圣斯尔监控系统</title>
+	 <title>圣斯尔物联网监测平台</title>
 
 		<!-- notify -->
 		<link href="assets/plugins/notifications/notification.css" rel="stylesheet">
@@ -57,7 +57,7 @@
 				<div class="text-center">
 					<a href="/" class="logo">
 					<!-- <i class="md md-terrain"></i>  -->
-					<span>圣斯尔 </span></a>
+					<span>圣斯尔物联网监测平台 </span></a>
 				</div>
 			</div>
 			<!-- Button mobile view to collapse sidebar menu -->
@@ -672,13 +672,13 @@
 							<div class="col-md-12">
 								<div class="form-group">
 									<label  class="control-label">新密码<span style="color: red">*</span></label>
-									<input type="password" class="form-control" ng-minlength="6" ng-maxlength="16" required  ng-model="newPwd" name="newPwd">
+									<input type="password" class="form-control" ng-minlength="6" ng-maxlength="16" required placeholder="必须由大于6位小于16位数字或字母组成" ng-model="newPwd" name="newPwd">
 								</div>
 							</div>
 							<div class="col-md-12">
 								<div class="form-group">
 									<label  class="control-label">确认密码<span style="color: red">*</span></label>
-									<input type="password" class="form-control" ng-minlength="6" ng-maxlength="16" required ng-model="checkPwd" name="checkPwd">
+									<input type="password" class="form-control" ng-minlength="6" ng-maxlength="16" required ng-model="checkPwd" placeholder="两次输入密码必须一致" name="checkPwd">
 								</div>
 								<div style="color: red" ng-show="updatePwdForm.newPwd.$invalid && updatePwdForm.newPwd.$dirty">
                       		  		*密码最小长度为6，最大长度为16

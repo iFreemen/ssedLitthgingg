@@ -17,7 +17,6 @@ function devLstCtrl($scope, $http,$rootScope,$location,$timeout, $anchorScroll,$
      		search:false,	
      		addEnq:false
      };
- 	$scope.countView=1;
    //获取设备分组列表
      $scope.getDevGroupsList = function () {
      	$http.get("service/getEquGroups").success(function(data) {
@@ -41,14 +40,13 @@ function devLstCtrl($scope, $http,$rootScope,$location,$timeout, $anchorScroll,$
      $scope.getDevList=function(page){
     	 $scope.loadCtl.search = true;
     	 $scope.quereyData.page=page ? page : 1;
-    	 $scope.quereyData.gid=$scope.countView==1?null:$('.easyui-combotree').combotree('getValue');
+    	 $scope.quereyData.gid=$('.easyui-combotree').combotree('getValue');
       	$http.post("service/getEquPage",$scope.quereyData).success(function(data) {
 //      		console.log(data.resultObj);
       		$scope.equipments = data.resultObj.list;
       		$scope.pages=data.resultObj.pages;
       		$scope.total=data.resultObj.total;
       		$scope.quereyData.page=data.resultObj.pageNum;
-      		$scope.countView=2;
       		$scope.loadCtl.search = false;
       	});
      }

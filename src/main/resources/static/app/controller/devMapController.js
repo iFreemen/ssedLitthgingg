@@ -48,7 +48,6 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout,$interval) {
      		search:false,	
      		addEnq:false
      };
-	$scope.countView=1;
 	//获取设备分组列表
     $scope.getDevGroupsList = function () {
     	$http.get("service/getEquGroups").success(function(data) {
@@ -78,7 +77,7 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout,$interval) {
 //   	 $scope.init();
    	 $scope.getAlarmNewest();
    	 $scope.quereyData.page=page ? page : 1;
-   	$scope.quereyData.gid=$scope.countView==1?null:$('.easyui-combotree').combotree('getValue');
+   	$scope.quereyData.gid=$('.easyui-combotree').combotree('getValue');
    	$scope.map = new BMap.Map("map", {enableMapClick: false});//关闭地图点击事件
     $scope.map.addControl(new BMap.NavigationControl()); //添加标准地图控件(左上角的放大缩小左右拖拽控件)
     $scope.map.addControl(new BMap.MapTypeControl()); //添加地图类型控件
@@ -91,7 +90,6 @@ function devMapCtrl($scope, $http, $rootScope,$routeParams,$timeout,$interval) {
      		$scope.quereyData.page=data.resultObj.pageNum;
      		$scope.dataItemsTotal = data.resultObj.total;
             $scope.dataItems = data.resultObj.list;
-            $scope.countView=2;
             try {
                 var markers = [];
                 var points = [];
