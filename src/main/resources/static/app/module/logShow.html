@@ -78,7 +78,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr ng-repeat="entity in log" ng-click="showWave(entity)">
+                                            <tr ng-repeat="entity in logArr" ng-click="showWave(entity)">
                                                 <td  ng-if="attrType != 'WAVE_TYPE'">
                                                     <span ng-if="attrType != 'ALARM_TYPE' && attrType != 'SWITCH_TYPE'">{{entity.dataValue}}{{entity.unit}}</span>
                                                     <span  ng-if="attrType == 'ALARM_TYPE'">
@@ -95,11 +95,15 @@
                                                 <td  ><span ng-bind="entity.addDate"></span></td>
                                                 <td  ng-if="attrType == 'WAVE_TYPE'"><span ng-bind="log.length - $index"></span></td>
                                             </tr>
+
                                             </tbody>
+
                                         </table>
                                     </div>
+
                                 </div>
                             </div>
+                            <page-info pages="pages" curpage="curpage" total="log.length" change="changePage(page)"></page-info>
                         </div>
                     </div>
 
