@@ -28,9 +28,6 @@ function logShowCtrl($scope, $http, $rootScope,$routeParams,$location) {
         $scope.curpage=page;
         $scope.logArr =new Array();
         for (var i =0; i < defaultSize; i++) {
-        	if((page-1)*defaultSize+i>=$scope.log.length){
-                return;
-            }
             $scope.logArr.push($scope.log[(page-1)*defaultSize+i]);
         }
     }
